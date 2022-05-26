@@ -5,7 +5,14 @@ import { Portal, Overlay } from "components";
 
 import "./Drawer.scss";
 
-export const Drawer = ({ position, isOpen, toggle, children, className }) => {
+export const Drawer = ({
+  position,
+  isOpen,
+  toggle,
+  children,
+  className,
+  node,
+}) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -22,7 +29,7 @@ export const Drawer = ({ position, isOpen, toggle, children, className }) => {
   if (!show) return;
 
   return (
-    <Portal>
+    <Portal node={node}>
       <div>
         <div
           className={classNames("rc-drawer", {
@@ -46,11 +53,13 @@ Drawer.propType = {
   toggle: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
+  node: PropTypes.node,
 };
 
 Drawer.defaultProps = {
   isOpen: false,
   position: "left",
   className: "",
+  node: document.getElementById("root") ?? document.body,
   toggle: () => {},
 };

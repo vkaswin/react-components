@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-components/static/css/main.3ff09093.css",
-    "main.js": "/react-components/static/js/main.43151eab.js",
+    "main.css": "/react-components/static/css/main.fed060d6.css",
+    "main.js": "/react-components/static/js/main.95092f86.js",
     "pages-404.js": "/react-components/static/js/pages-404.ce09721b.chunk.js",
     "assets-fonts-Poppins-OFL-txt.js": "/react-components/static/js/assets-fonts-Poppins-OFL-txt.eeb8f21b.chunk.js",
     "assets-fonts-Poppins-Poppins-Bold-ttf.js": "/react-components/static/js/assets-fonts-Poppins-Poppins-Bold-ttf.b4f98f28.chunk.js",
@@ -149,8 +149,8 @@
     "static/media/carousel-1.jpg": "/react-components/static/media/carousel-1.7b925f2134ef57a9e55d.jpg",
     "static/media/OFL.txt": "/react-components/static/media/OFL.a41dfc83c78dc22edf7a.txt",
     "index.html": "/react-components/index.html",
-    "main.3ff09093.css.map": "/react-components/static/css/main.3ff09093.css.map",
-    "main.43151eab.js.map": "/react-components/static/js/main.43151eab.js.map",
+    "main.fed060d6.css.map": "/react-components/static/css/main.fed060d6.css.map",
+    "main.95092f86.js.map": "/react-components/static/js/main.95092f86.js.map",
     "pages-404.ce09721b.chunk.js.map": "/react-components/static/js/pages-404.ce09721b.chunk.js.map",
     "assets-scss-_abstracts-scss.b305bca5.chunk.css.map": "/react-components/static/css/assets-scss-_abstracts-scss.b305bca5.chunk.css.map",
     "assets-scss-_abstracts-scss.6084a7ab.chunk.js.map": "/react-components/static/js/assets-scss-_abstracts-scss.6084a7ab.chunk.js.map",
@@ -272,7 +272,7 @@
     "4089.282d8f89.chunk.js.map": "/react-components/static/js/4089.282d8f89.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3ff09093.css",
-    "static/js/main.43151eab.js"
+    "static/css/main.fed060d6.css",
+    "static/js/main.95092f86.js"
   ]
 }

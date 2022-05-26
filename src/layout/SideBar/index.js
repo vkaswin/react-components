@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { classNames } from "utils";
-import { Drawer } from "components";
 import { useWindowSize } from "hooks";
 
 import "./SideBar.scss";
@@ -15,9 +14,9 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
     toggleNavBar();
   };
 
-  const NavBar = () => {
-    return (
-      <div className={classNames("side-bar", { fixed: width > 992 })}>
+  return (
+    <Fragment>
+      <div className={classNames("side-bar", { show: isOpen })}>
         <div className="nav-title">
           <b>React Components</b>
         </div>
@@ -42,18 +41,10 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
             })}
         </ul>
       </div>
-    );
-  };
-
-  return (
-    <Fragment>
-      {width > 992 ? (
-        <NavBar />
-      ) : (
-        <Drawer isOpen={isOpen} position="left" toggle={toggleNavBar}>
-          <NavBar />
-        </Drawer>
-      )}
+      <div
+        className={classNames("nav-overlay", { show: isOpen })}
+        onClick={toggleNavBar}
+      ></div>
     </Fragment>
   );
 };

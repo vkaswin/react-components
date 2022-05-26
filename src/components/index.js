@@ -29,4 +29,3 @@ export { DatePicker } from "./DatePicker";
 export { DropZone } from "./DropZone";
 export { Drawer } from "./Drawer";
 export { Portal } from "./Portal";
-export { Overlay } from "./Overlay";

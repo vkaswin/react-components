@@ -4,6 +4,22 @@
   z-index: 1025;
 }
 
+.rc-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1024;
+  display: none;
+  &:is(.show) {
+    display: block;
+    animation: rc_fadeIn 0.3s;
+    animation-fill-mode: forwards;
+  }
+}
+
 .rc-drawer[data-position="left"],
 .rc-drawer[data-position="right"] {
   top: 0px;

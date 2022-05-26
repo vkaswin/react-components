@@ -149,11 +149,6 @@ export const routes = [
         componentPath: "pages/Drawer",
         title: "Drawer",
       },
-      {
-        path: "overlay",
-        componentPath: "pages/Overlay",
-        title: "Overlay",
-      },
     ],
   },
 ];

@@ -1,0 +1,102 @@
+.product-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 30px 15px;
+  margin: 20px 0px;
+}
+.product-card {
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  background: white;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 6px 6px 0px 0px;
+  cursor: pointer;
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 350px;
+    padding: 15px;
+    .product-img {
+      display: flex;
+      justify-content: center;
+      height: 200px;
+      img {
+        max-width: 100%;
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+      img:not([src]) {
+        opacity: 0;
+      }
+    }
+    .rating {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      b {
+        color: #5e5873;
+      }
+    }
+    .product-title {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      b {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        color: #5e5873;
+        word-break: break-all;
+      }
+      span {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        color: #747181;
+        word-break: break-all;
+      }
+    }
+  }
+  .product-btn {
+    display: flex;
+    flex-direction: column;
+    button {
+      border: none;
+      width: 100%;
+      padding: 10px 0px;
+      i {
+        margin-right: 5px;
+      }
+    }
+    .wishlist-btn {
+      background-color: #f6f6f6;
+      color: #434748;
+      &:hover {
+        background-color: #e3e3e3;
+      }
+    }
+    .cart-btn {
+      background-color: #7367f0;
+      color: white;
+      border-radius: 0px 0px 6px 6px;
+    }
+  }
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 25px 0 rgba(34, 41, 47, 0.25);
+  }
+}
+
+.lazy-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0px;
+  span {
+    font-size: 18px;
+  }
+}

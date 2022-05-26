@@ -1,0 +1,69 @@
+.rc-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  animation: rc_fadeOut 0.3s;
+  animation-fill-mode: forwards;
+  &:is(.show) {
+    animation: rc_fadeIn 0.3s;
+  }
+  .rc-modal-dialog {
+    position: relative;
+    display: flex;
+    z-index: 1050;
+    animation-fill-mode: forwards;
+    .rc-modal-content {
+      width: 100%;
+      background-color: white;
+      padding: 30px 20px;
+      margin: 15px 0px;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .rc-modal {
+    overflow-y: auto;
+    &:is(.show) {
+      .rc-modal-dialog {
+        animation: rc_slideInTop 0.3s;
+      }
+    }
+    .rc-modal-dialog {
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      animation: rc_slideOutTop 0.3s;
+    }
+    .rc-modal-content {
+      max-width: 550px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .rc-modal {
+    overflow-y: hidden;
+    &:is(.show) {
+      .rc-modal-dialog {
+        animation: rc_slideInBottom 0.3s;
+      }
+    }
+    .rc-modal-dialog {
+      height: 100%;
+      justify-content: center;
+      align-items: flex-end;
+      animation: rc_slideOutBottom 0.3s;
+      .rc-modal-content {
+        max-height: 80vh;
+        overflow-y: auto;
+        margin: 0px;
+        border-radius: 10px 10px 0px 0px;
+      }
+    }
+  }
+}

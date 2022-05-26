@@ -1,0 +1,102 @@
+.header {
+  position: fixed;
+  top: 15px;
+  left: 265px;
+  right: 15px;
+  z-index: 1003;
+  transition: left 0.3s;
+  &:is(.expand) {
+    left: 85px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 15px;
+    background: #ffffff;
+    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+    .header-left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
+      i {
+        color: #6e6b7b;
+        font-weight: lighter;
+        font-size: 20px;
+        cursor: pointer;
+        display: none;
+      }
+    }
+    .header-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      .header-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        width: 200px;
+        padding: 5px 10px;
+        background-color: rgb(243, 246, 249);
+        color: rgb(62, 80, 96);
+        border: 1px solid rgb(224, 227, 231);
+        border-radius: 10px;
+        cursor: pointer;
+        .search-icon {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          i {
+            font-size: 14px;
+          }
+          span {
+            font-size: 16px;
+          }
+        }
+        label {
+          font-size: 14px;
+          background-color: rgb(255, 255, 255);
+          border: 1px solid rgb(224, 227, 231);
+          border-radius: 5px;
+          padding: 0px 5px;
+        }
+      }
+      .header-icon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .github-icon {
+          margin-top: 4px;
+        }
+        i {
+          color: #6e6b7b;
+          font-size: 20px;
+          cursor: pointer;
+        }
+        svg {
+          width: 22px;
+          height: 22px;
+          color: #6e6b7b;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .header {
+    left: 15px;
+    header {
+      .header-left {
+        i {
+          display: block;
+        }
+      }
+    }
+  }
+}

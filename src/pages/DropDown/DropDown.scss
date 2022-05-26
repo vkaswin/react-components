@@ -1,0 +1,12 @@
+.drop-down-btn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .drop-down-btn {
+    margin-top: 50px;
+  }
+}

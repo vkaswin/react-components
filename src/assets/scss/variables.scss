@@ -1,0 +1,11 @@
+html[data-theme="dark"] {
+  --light-bg: #283046;
+  --dark-bg: #161d32;
+  --text-color: white;
+}
+
+html[data-theme="light"] {
+  --light-bg: #ffffff;
+  --dark-bg: #f4f4f4;
+  --text-color: #6e6b7b;
+}

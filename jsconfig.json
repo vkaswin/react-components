@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src"
+    },
+    "include": ["src", "src/layout/SideBar/.js"],
+    "exclude": ["node_modules"]
+}

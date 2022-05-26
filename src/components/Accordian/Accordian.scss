@@ -1,0 +1,38 @@
+.accordian-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px 0px;
+  .accordian-title {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    label {
+      margin: 0px;
+      transition: color 0.3s ease-in-out;
+      p {
+        margin: 0px;
+      }
+    }
+    i {
+      font-size: 14px;
+      transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+  }
+  .accordian-body {
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+    .accordian-content {
+      margin: 10px 15px;
+      p {
+        margin: 0px;
+      }
+    }
+  }
+}

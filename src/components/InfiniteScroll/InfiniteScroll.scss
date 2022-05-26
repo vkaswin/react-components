@@ -1,0 +1,14 @@
+.rc-scroll-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0px;
+  .loader-text {
+    font-size: 18px;
+  }
+}
+
+.rc-scroll-loader[aria-hidden="false"] {
+  display: none;
+}

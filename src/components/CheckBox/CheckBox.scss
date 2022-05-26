@@ -41,7 +41,7 @@
       border: none;
       &::after {
         opacity: 1;
-        animation: tick-anime 0.2s ease-in;
+        animation: tick-anime 0.2s linear forwards;
       }
     }
   }

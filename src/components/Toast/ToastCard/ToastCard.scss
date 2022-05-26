@@ -21,11 +21,9 @@
   cursor: pointer;
   border-radius: 4px;
   position: relative;
-  animation: var(--animation-show) 0.3s;
-  animation-fill-mode: forwards;
+  animation: var(--animation-show) 0.3s linear forwards;
   &:is(.hide) {
-    animation: var(--animation-hide) 0.3s;
-    animation-fill-mode: forwards;
+    animation: var(--animation-hide) 0.3s linear forwards;
   }
   .icon {
     i {
@@ -57,7 +55,7 @@
     height: 5px;
     bottom: 0px;
     left: 0px;
-    animation: rc_trackProgress var(--progress-animation) linear;
+    animation: rc_trackProgress var(--progress-animation) linear forwards;
     overflow: hidden;
     border-radius: 0px 0px 0px 4px;
   }

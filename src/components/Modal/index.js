@@ -29,7 +29,9 @@ export const Modal = ({ isOpen, toggle, children }) => {
       <div>
         <div
           className={classNames("rc-modal", { show: isOpen })}
-          onClick={toggle}
+          onClick={() => {
+            isOpen && toggle();
+          }}
         >
           <div
             className={classNames("rc-modal-dialog")}

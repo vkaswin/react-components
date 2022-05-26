@@ -5,16 +5,9 @@
   width: 100%;
   height: 100%;
   z-index: 1050;
-  animation: rc_fadeOut 0.3s;
-  animation-fill-mode: forwards;
-  &:is(.show) {
-    animation: rc_fadeIn 0.3s;
-  }
   .rc-modal-dialog {
     position: relative;
     display: flex;
-    z-index: 1050;
-    animation-fill-mode: forwards;
     .rc-modal-content {
       width: 100%;
       background-color: white;
@@ -33,11 +26,9 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1049;
-  display: none;
+  animation: rc_fadeOut 0.3s linear forwards;
   &:is(.show) {
-    display: block;
-    animation: rc_fadeIn 0.3s;
-    animation-fill-mode: forwards;
+    animation: rc_fadeIn 0.3s linear forwards;
   }
 }
 
@@ -46,14 +37,14 @@
     overflow-y: auto;
     &:is(.show) {
       .rc-modal-dialog {
-        animation: rc_slideInTop 0.3s;
+        animation: rc_slideInTop 0.5s linear forwards;
       }
     }
     .rc-modal-dialog {
       min-height: 100vh;
       justify-content: center;
       align-items: center;
-      animation: rc_slideOutTop 0.3s;
+      animation: rc_slideOutTop 0.5s linear forwards;
     }
     .rc-modal-content {
       max-width: 550px;
@@ -66,14 +57,14 @@
     overflow-y: hidden;
     &:is(.show) {
       .rc-modal-dialog {
-        animation: rc_slideInBottom 0.3s;
+        animation: rc_slideInBottom 0.5s linear forwards;
       }
     }
     .rc-modal-dialog {
       height: 100%;
       justify-content: center;
       align-items: flex-end;
-      animation: rc_slideOutBottom 0.3s;
+      animation: rc_slideOutBottom 0.5s linear forwards;
       .rc-modal-content {
         max-height: 80vh;
         overflow-y: auto;

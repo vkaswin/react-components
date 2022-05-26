@@ -12,11 +12,9 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1024;
-  display: none;
+  animation: rc_fadeOut 0.3s linear forwards;
   &:is(.show) {
-    display: block;
-    animation: rc_fadeIn 0.3s;
-    animation-fill-mode: forwards;
+    animation: rc_fadeIn 0.3s linear forwards;
   }
 }
 
@@ -36,36 +34,32 @@
 
 .rc-drawer[data-position="left"] {
   left: 0px;
-  animation: rc_slideOutLeft 0.3s;
-  animation-fill-mode: forwards;
+  animation: rc_slideOutLeft 0.3s linear forwards;
   &:is(.show) {
-    animation: rc_slideInLeft 0.3s;
+    animation: rc_slideInLeft 0.3s linear forwards;
   }
 }
 
 .rc-drawer[data-position="right"] {
   right: 0px;
-  animation: rc_slideOutRight 0.3s;
-  animation-fill-mode: forwards;
+  animation: rc_slideOutRight 0.3s linear forwards;
   &:is(.show) {
-    animation: rc_slideInRight 0.3s;
+    animation: rc_slideInRight 0.3s linear forwards;
   }
 }
 
 .rc-drawer[data-position="top"] {
   top: 0px;
-  animation: rc_slideOutTop 0.3s;
-  animation-fill-mode: forwards;
+  animation: rc_slideOutTop 0.3s linear forwards;
   &:is(.show) {
-    animation: rc_slideInTop 0.3s;
+    animation: rc_slideInTop 0.3s linear forwards;
   }
 }
 
 .rc-drawer[data-position="bottom"] {
   bottom: 0px;
-  animation: rc_slideOutBottom 0.3s;
-  animation-fill-mode: forwards;
+  animation: rc_slideOutBottom 0.3s linear forwards;
   &:is(.show) {
-    animation: rc_slideInBottom 0.3s;
+    animation: rc_slideInBottom 0.3s linear forwards;
   }
 }

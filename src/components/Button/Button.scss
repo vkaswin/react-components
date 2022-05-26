@@ -6,7 +6,7 @@ button {
     background-color: #fff;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    animation: ripple 0.5s ease-in;
+    animation: ripple 0.5s linear forwards;
     opacity: 0.1;
     z-index: 0;
   }

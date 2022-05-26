@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/pages-FormValidation.51037383.chunk.css","mappings":"AAAA,WAGE,aAAc,CAFd,aAAc,CACd,cAAe,CAEf,cAAe","sources":["pages/FormValidation/FormValidation.scss"],"sourcesContent":[".error-msg {\n  display: block;\n  font-size: 14px;\n  color: #f90500;\n  margin-top: 5px;\n}\n"],"names":[],"sourceRoot":""}

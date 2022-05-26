@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5654],{19533:function(n,e,t){t.r(e);var s=t(70885),c=t(72791),o=t(59930),u=t(80184);e.default=function(){var n=(0,c.useState)(!1),e=(0,s.Z)(n,2),t=e[0],i=e[1],r=function(){i(!t)};return(0,u.jsxs)("div",{children:[(0,u.jsx)("h1",{children:"Light Box"}),(0,u.jsx)(o.Button,{className:"btn btn-outline-secondary",label:"Toggle",onClick:function(){return r()}}),(0,u.jsx)(o.LightBox,{isOpen:t,toggle:r})]})}}}]);
+//# sourceMappingURL=pages-LightBox.000361b7.chunk.js.map

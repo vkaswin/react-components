@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[1967],{31503:function(e,n,s){s.r(n);var c=s(66241),l=(s(72791),s(80184));n.default=function(){return(0,l.jsxs)("div",{children:[(0,l.jsx)("h1",{children:"Collapse"}),(0,l.jsx)("button",{id:"toggle",children:"Click Me"}),(0,l.jsx)(c.Collapse,{trigger:"toggle",children:(0,l.jsx)("span",{children:"Loreum Ispum"})})]})}}}]);
+//# sourceMappingURL=pages-Collapse.5441b6e3.chunk.js.map

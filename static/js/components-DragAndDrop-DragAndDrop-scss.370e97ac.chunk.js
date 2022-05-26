@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[3675],{29067:function(e,c,n){n.r(c),c.default={}}}]);
+//# sourceMappingURL=components-DragAndDrop-DragAndDrop-scss.370e97ac.chunk.js.map

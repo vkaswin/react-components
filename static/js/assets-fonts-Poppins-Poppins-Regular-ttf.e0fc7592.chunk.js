@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[7667],{49434:function(c,e,t){c.exports=t.p+"static/media/Poppins-Regular.35d26b781dc5fda684cc.ttf"}}]);

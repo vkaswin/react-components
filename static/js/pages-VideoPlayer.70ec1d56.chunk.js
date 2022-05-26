@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[7452],{82627:function(e,t,o){o.r(t);o(72791);var s=o(59930),a=o(80184);t.default=function(){return(0,a.jsx)("div",{children:(0,a.jsx)(s.VideoPlayer,{url:"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",posterUrl:"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"})})}}}]);
+//# sourceMappingURL=pages-VideoPlayer.70ec1d56.chunk.js.map

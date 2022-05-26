@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[9284],{60197:function(t,e,n){n.r(e);var a=n(70885),s=n(72791),c=n(59930),u=n(80184);e.default=function(){var t=(0,s.useState)(["hello","world"]),e=(0,a.Z)(t,2),n=e[0],o=e[1];return(0,u.jsx)("div",{style:{maxWidth:"350px"},children:(0,u.jsx)(c.TagInput,{onChange:function(t){o(t)},tagList:n})})}}}]);
+//# sourceMappingURL=pages-TagInput.2e8091c2.chunk.js.map

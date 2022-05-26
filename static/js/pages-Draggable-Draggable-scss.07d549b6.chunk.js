@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[8120],{17317:function(e,c,n){n.r(c),c.default={}}}]);
+//# sourceMappingURL=pages-Draggable-Draggable-scss.07d549b6.chunk.js.map

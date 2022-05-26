@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[8263],{30989:function(n,o,t){t.r(o);t(72791);var e=t(59930),c=t(80184);o.default=function(){return(0,c.jsx)(e.Otp,{inputBox:6,onChange:function(n){console.log(n)},isAutoFocus:!0})}}}]);
+//# sourceMappingURL=pages-Otp.0ffd4d04.chunk.js.map

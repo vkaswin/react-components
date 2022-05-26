@@ -11,7 +11,7 @@ export const Drawer = ({
   toggle,
   children,
   className,
-  node,
+  portal,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -29,7 +29,7 @@ export const Drawer = ({
   if (!show) return;
 
   return (
-    <Portal node={node}>
+    <Portal portal={portal}>
       <div>
         <div
           className={classNames("rc-drawer", {
@@ -53,13 +53,13 @@ Drawer.propType = {
   toggle: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
-  node: PropTypes.node,
+  portal: PropTypes.bool,
 };
 
 Drawer.defaultProps = {
   isOpen: false,
   position: "left",
   className: "",
-  node: document.getElementById("root") ?? document.body,
+  portal: false,
   toggle: () => {},
 };

@@ -19,29 +19,17 @@ export const Overlay = ({ isOpen, toggle, zIndex, portal }) => {
     }
   };
 
-  const Element = () => {
-    return (
+  if (!show) return;
+
+  return (
+    <Portal portal={portal}>
       <div
         style={{ "--overlay-zindex": zIndex }}
         className={classNames("rc-overlay", { show: isOpen })}
         onClick={toggle}
         onAnimationEnd={handleAnimationEnd}
       ></div>
-    );
-  };
-
-  if (!show) return;
-
-  return (
-    <Fragment>
-      {portal ? (
-        <Portal>
-          <Element></Element>
-        </Portal>
-      ) : (
-        <Element />
-      )}
-    </Fragment>
+    </Portal>
   );
 };
 

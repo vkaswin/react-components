@@ -1,15 +1,20 @@
+import React, { Fragment } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
-export const Portal = ({ children, node }) => {
-  return createPortal(children, node);
+export const Portal = ({ children, portal }) => {
+  return (
+    <Fragment>
+      {portal ? createPortal(children, document.body) : children}
+    </Fragment>
+  );
 };
 
 Portal.propTypes = {
   children: PropTypes.node.isRequired,
-  node: PropTypes.instanceOf(Element),
+  portal: PropTypes.bool,
 };
 
 Portal.defaultProps = {
-  node: document.getElementById("root") ?? document.body,
+  portal: true,
 };

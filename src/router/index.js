@@ -1,9 +1,21 @@
-import { lazy, Suspense } from "react";
+import { Fragment, lazy, Suspense, useEffect } from "react";
 import { HashRouter, Routes, Navigate, Route } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import PropTypes from "prop-types";
 import { routes } from "router/Routes";
 import { Loader } from "layout/Loader";
 const PageNotFound = lazy(() => import("../pages/404"));
+
+const Wrapper = ({ title, children }) => {
+  useEffect(() => {
+    document.title = `React Components | ${title}`;
+  }, [title]);
+
+  return <Fragment>{children}</Fragment>;
+};
+
+Wrapper.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export const Router = () => {
   return (
@@ -22,12 +34,9 @@ export const Router = () => {
                   key={path}
                   path={path}
                   element={
-                    <HelmetProvider>
-                      <Helmet>
-                        <title>React Components | {title}</title>
-                      </Helmet>
+                    <Wrapper title={title}>
                       <PageComponent />
-                    </HelmetProvider>
+                    </Wrapper>
                   }
                 />
               );
@@ -55,12 +64,9 @@ export const Router = () => {
                           key={childPath}
                           path={childPath}
                           element={
-                            <HelmetProvider>
-                              <Helmet>
-                                <title>React Components | {childTitle}</title>
-                              </Helmet>
+                            <Wrapper title={childTitle}>
                               <ChildComponent />
-                            </HelmetProvider>
+                            </Wrapper>
                           }
                         />
                       );

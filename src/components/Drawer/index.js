@@ -63,6 +63,6 @@ Drawer.defaultProps = {
   isOpen: false,
   position: "left",
   className: "",
-  portal: false,
+  portal: true,
   toggle: () => {},
 };

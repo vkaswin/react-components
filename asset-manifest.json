@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-components/static/css/main.d57a4617.css",
-    "main.js": "/react-components/static/js/main.4f0fca19.js",
+    "main.js": "/react-components/static/js/main.725d37fc.js",
     "pages-404.js": "/react-components/static/js/pages-404.ce09721b.chunk.js",
     "assets-fonts-Poppins-OFL-txt.js": "/react-components/static/js/assets-fonts-Poppins-OFL-txt.eeb8f21b.chunk.js",
     "assets-fonts-Poppins-Poppins-Bold-ttf.js": "/react-components/static/js/assets-fonts-Poppins-Poppins-Bold-ttf.b4f98f28.chunk.js",
@@ -151,7 +151,7 @@
     "static/media/OFL.txt": "/react-components/static/media/OFL.a41dfc83c78dc22edf7a.txt",
     "index.html": "/react-components/index.html",
     "main.d57a4617.css.map": "/react-components/static/css/main.d57a4617.css.map",
-    "main.4f0fca19.js.map": "/react-components/static/js/main.4f0fca19.js.map",
+    "main.725d37fc.js.map": "/react-components/static/js/main.725d37fc.js.map",
     "pages-404.ce09721b.chunk.js.map": "/react-components/static/js/pages-404.ce09721b.chunk.js.map",
     "assets-scss-_abstracts-scss.b305bca5.chunk.css.map": "/react-components/static/css/assets-scss-_abstracts-scss.b305bca5.chunk.css.map",
     "assets-scss-_abstracts-scss.6084a7ab.chunk.js.map": "/react-components/static/js/assets-scss-_abstracts-scss.6084a7ab.chunk.js.map",
@@ -275,6 +275,6 @@
   },
   "entrypoints": [
     "static/css/main.d57a4617.css",
-    "static/js/main.4f0fca19.js"
+    "static/js/main.725d37fc.js"
   ]
 }

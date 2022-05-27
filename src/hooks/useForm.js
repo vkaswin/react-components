@@ -37,26 +37,45 @@ export const useForm = () => {
 
   const handleChange = ({ target: { name, value } }) => {
     if (!validate.current) return;
-    setErrors((prev) => {
-      return { ...prev, ...handleValidate({ name, value }) };
-    });
+
+    const formError = handleValidate({ name, value });
+
+    if (Object.keys(formError).length === 0) {
+      setErrors((prev) => {
+        delete prev[name];
+        return { ...prev };
+      });
+    } else {
+      setErrors((prev) => {
+        return { ...prev, ...formError };
+      });
+    }
   };
 
-  const validateForm = (cb) => {
+  const handleSubmit = (cb) => () => {
+    validate.current = true;
+
     const formErrors = formFields.current.reduce(
       (initial, { name, ref: { value } }) => {
         return { ...initial, ...handleValidate({ name, value }) };
       },
       {}
     );
+
     setErrors((prev) => {
+      if (Object.keys(formErrors).length === 0) {
+        let data = {};
+
+        formFields.current.forEach(
+          ({ rules: { isNumber }, ref: { value }, name }) => {
+            data[name] = isNumber ? parseInt(value) : value;
+          }
+        );
+
+        cb(data);
+      }
       return { ...prev, ...formErrors };
     });
-  };
-
-  const handleSubmit = (cb) => () => {
-    validate.current = true;
-    validateForm(cb);
   };
 
   const handleValidate = ({ name, value }) => {
@@ -78,35 +97,23 @@ export const useForm = () => {
 
     if (required && String(value).trim() == "") {
       formError[name] = { type: "required", ref };
+      return formError;
     }
     if (minLength && String(value.length).trim() < minLength) {
       formError[name] = { type: "minLength", ref };
+      return formError;
     }
     if (maxLength && String(value.length).trim() > maxLength) {
       formError[name] = { type: "maxLength", ref };
+      return formError;
     }
     if (pattern && !RegExp(pattern).test(value)) {
       formError[name] = { type: "pattern", ref };
+      return formError;
     }
 
     return formError;
   };
-
-  // const updateError = (formErrors, cb) => {
-  //   let isValid = Object.keys(formErrors).length == 0 ? true : false;
-  //   if (isValid) {
-  //     let data = {};
-  //     formFields.current.forEach(
-  //       ({ rules: { isNumber }, ref: { value }, name }) => {
-  //         data[name] = isNumber ? parseInt(value) : value;
-  //       }
-  //     );
-  //     cb(data);
-  //   } else {
-  //     Object.values(formErrors)[0]?.ref?.focus();
-  //   }
-  //   setErrors({ ...errors, ...formErrors });
-  // };
 
   const getValue = (fieldName = "") => {
     let formValue = formFields.current.find(({ name }) => {

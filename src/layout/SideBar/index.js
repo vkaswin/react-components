@@ -9,7 +9,7 @@ import "./SideBar.scss";
 export const SideBar = ({ isOpen, toggle, options }) => {
   const { width } = useWindowSize();
 
-  const Element = () => {
+  const NavBar = () => {
     return (
       <div>
         <div className={classNames("side-bar", { show: isOpen })}>
@@ -44,10 +44,10 @@ export const SideBar = ({ isOpen, toggle, options }) => {
   return (
     <Fragment>
       {width > 992 ? (
-        <Element />
+        <NavBar />
       ) : (
         <Drawer toggle={toggle} isOpen={isOpen} position="left">
-          <Element />
+          <NavBar />
         </Drawer>
       )}
     </Fragment>

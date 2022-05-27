@@ -47,16 +47,14 @@ const FormValidationPage = () => {
   const { errors, register, handleSubmit, reset, getValue } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(data);
-    // reset();
+    console.log(data);
+    reset();
   };
 
   const ErrorMessage = ({ error, message }) => {
     if (!error) return null;
     return error && <span className="error-msg">{message[error.type]}</span>;
   };
-
-  console.log(errors);
 
   return (
     <Fragment>
@@ -156,6 +154,8 @@ const FormValidationPage = () => {
           />
         </div>
       </div>
+      {/* <input type="radio" name="gender" value="Male" /> Male
+      <input type="radio" name="gender" value="Female" /> Female */}
       <button onClick={handleSubmit(onSubmit)}>Submit</button>
     </Fragment>
   );

@@ -30,7 +30,7 @@ export const Drawer = ({ position, isOpen, toggle, children, className }) => {
             [className]: className,
           })}
           data-position={position}
-          // onAnimationEnd={handleAnimationEnd}
+          onAnimationEnd={handleAnimationEnd}
         >
           {children}
         </div>

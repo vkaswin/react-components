@@ -4,28 +4,12 @@ import { classNames } from "utils";
 
 import "./Overlay.scss";
 
-export const Overlay = ({ isOpen, toggle, zIndex, portal }) => {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    setShow(isOpen);
-  }, [isOpen]);
-
-  const handleAnimationEnd = ({ animationName }) => {
-    if (animationName == "rc_fadeOut") {
-      setShow(false);
-    }
-  };
-
-  if (!show) return;
-
+export const Overlay = ({ isOpen, toggle, zIndex }) => {
   return (
     <div
       style={{ "--overlay-zindex": zIndex }}
       className={classNames("rc-overlay", { show: isOpen })}
       onClick={toggle}
-      // onAnimationEnd={handleAnimationEnd}
     ></div>
   );
 };

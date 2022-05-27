@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-components/static/css/main.fed060d6.css",
-    "main.js": "/react-components/static/js/main.6d3d90fe.js",
+    "main.css": "/react-components/static/css/main.9118f767.css",
+    "main.js": "/react-components/static/js/main.4b7e0ff0.js",
     "pages-404.js": "/react-components/static/js/pages-404.ce09721b.chunk.js",
     "assets-fonts-Poppins-OFL-txt.js": "/react-components/static/js/assets-fonts-Poppins-OFL-txt.eeb8f21b.chunk.js",
     "assets-fonts-Poppins-Poppins-Bold-ttf.js": "/react-components/static/js/assets-fonts-Poppins-Poppins-Bold-ttf.b4f98f28.chunk.js",
@@ -37,7 +37,7 @@
     "components-Table-Table-scss.js": "/react-components/static/js/components-Table-Table-scss.04b218a0.chunk.js",
     "components-Toast-EventEmitter.js": "/react-components/static/js/components-Toast-EventEmitter.2499d4f3.chunk.js",
     "layout.css": "/react-components/static/css/layout.65cd619f.chunk.css",
-    "layout.js": "/react-components/static/js/layout.b02ceebe.chunk.js",
+    "layout.js": "/react-components/static/js/layout.b1fd6191.chunk.js",
     "layout-Header.css": "/react-components/static/css/layout-Header.2a96fbbc.chunk.css",
     "layout-Header.js": "/react-components/static/js/layout-Header.33b4f22f.chunk.js",
     "layout-Header-Header-scss.css": "/react-components/static/css/layout-Header-Header-scss.2a96fbbc.chunk.css",
@@ -45,7 +45,7 @@
     "layout-Layout-scss.css": "/react-components/static/css/layout-Layout-scss.f3c32ffb.chunk.css",
     "layout-Layout-scss.js": "/react-components/static/js/layout-Layout-scss.f5108226.chunk.js",
     "layout-SideBar.css": "/react-components/static/css/layout-SideBar.0c39a0a5.chunk.css",
-    "layout-SideBar.js": "/react-components/static/js/layout-SideBar.4d253d5b.chunk.js",
+    "layout-SideBar.js": "/react-components/static/js/layout-SideBar.f7bab93d.chunk.js",
     "layout-SideBar-SideBar-scss.css": "/react-components/static/css/layout-SideBar-SideBar-scss.0c39a0a5.chunk.css",
     "layout-SideBar-SideBar-scss.js": "/react-components/static/js/layout-SideBar-SideBar-scss.2e4dbf29.chunk.js",
     "pages-Accordian.js": "/react-components/static/js/pages-Accordian.03bf48e5.chunk.js",
@@ -111,6 +111,7 @@
     "pages-Switch.js": "/react-components/static/js/pages-Switch.7fc16fee.chunk.js",
     "pages-Switch-Switch-scss.css": "/react-components/static/css/pages-Switch-Switch-scss.0173eb23.chunk.css",
     "pages-Switch-Switch-scss.js": "/react-components/static/js/pages-Switch-Switch-scss.98dd03c3.chunk.js",
+    "pages-Tab.js": "/react-components/static/js/pages-Tab.5ae29a83.chunk.js",
     "pages-TagInput.js": "/react-components/static/js/pages-TagInput.2e8091c2.chunk.js",
     "pages-Toast.css": "/react-components/static/css/pages-Toast.2fd92827.chunk.css",
     "pages-Toast.js": "/react-components/static/js/pages-Toast.c3412940.chunk.js",
@@ -149,8 +150,8 @@
     "static/media/carousel-1.jpg": "/react-components/static/media/carousel-1.7b925f2134ef57a9e55d.jpg",
     "static/media/OFL.txt": "/react-components/static/media/OFL.a41dfc83c78dc22edf7a.txt",
     "index.html": "/react-components/index.html",
-    "main.fed060d6.css.map": "/react-components/static/css/main.fed060d6.css.map",
-    "main.6d3d90fe.js.map": "/react-components/static/js/main.6d3d90fe.js.map",
+    "main.9118f767.css.map": "/react-components/static/css/main.9118f767.css.map",
+    "main.4b7e0ff0.js.map": "/react-components/static/js/main.4b7e0ff0.js.map",
     "pages-404.ce09721b.chunk.js.map": "/react-components/static/js/pages-404.ce09721b.chunk.js.map",
     "assets-scss-_abstracts-scss.b305bca5.chunk.css.map": "/react-components/static/css/assets-scss-_abstracts-scss.b305bca5.chunk.css.map",
     "assets-scss-_abstracts-scss.6084a7ab.chunk.js.map": "/react-components/static/js/assets-scss-_abstracts-scss.6084a7ab.chunk.js.map",
@@ -176,7 +177,7 @@
     "components-Table-Table-scss.04b218a0.chunk.js.map": "/react-components/static/js/components-Table-Table-scss.04b218a0.chunk.js.map",
     "components-Toast-EventEmitter.2499d4f3.chunk.js.map": "/react-components/static/js/components-Toast-EventEmitter.2499d4f3.chunk.js.map",
     "layout.65cd619f.chunk.css.map": "/react-components/static/css/layout.65cd619f.chunk.css.map",
-    "layout.b02ceebe.chunk.js.map": "/react-components/static/js/layout.b02ceebe.chunk.js.map",
+    "layout.b1fd6191.chunk.js.map": "/react-components/static/js/layout.b1fd6191.chunk.js.map",
     "layout-Header.2a96fbbc.chunk.css.map": "/react-components/static/css/layout-Header.2a96fbbc.chunk.css.map",
     "layout-Header.33b4f22f.chunk.js.map": "/react-components/static/js/layout-Header.33b4f22f.chunk.js.map",
     "layout-Header-Header-scss.2a96fbbc.chunk.css.map": "/react-components/static/css/layout-Header-Header-scss.2a96fbbc.chunk.css.map",
@@ -184,7 +185,7 @@
     "layout-Layout-scss.f3c32ffb.chunk.css.map": "/react-components/static/css/layout-Layout-scss.f3c32ffb.chunk.css.map",
     "layout-Layout-scss.f5108226.chunk.js.map": "/react-components/static/js/layout-Layout-scss.f5108226.chunk.js.map",
     "layout-SideBar.0c39a0a5.chunk.css.map": "/react-components/static/css/layout-SideBar.0c39a0a5.chunk.css.map",
-    "layout-SideBar.4d253d5b.chunk.js.map": "/react-components/static/js/layout-SideBar.4d253d5b.chunk.js.map",
+    "layout-SideBar.f7bab93d.chunk.js.map": "/react-components/static/js/layout-SideBar.f7bab93d.chunk.js.map",
     "layout-SideBar-SideBar-scss.0c39a0a5.chunk.css.map": "/react-components/static/css/layout-SideBar-SideBar-scss.0c39a0a5.chunk.css.map",
     "layout-SideBar-SideBar-scss.2e4dbf29.chunk.js.map": "/react-components/static/js/layout-SideBar-SideBar-scss.2e4dbf29.chunk.js.map",
     "pages-Accordian.03bf48e5.chunk.js.map": "/react-components/static/js/pages-Accordian.03bf48e5.chunk.js.map",
@@ -249,6 +250,7 @@
     "pages-Switch.7fc16fee.chunk.js.map": "/react-components/static/js/pages-Switch.7fc16fee.chunk.js.map",
     "pages-Switch-Switch-scss.0173eb23.chunk.css.map": "/react-components/static/css/pages-Switch-Switch-scss.0173eb23.chunk.css.map",
     "pages-Switch-Switch-scss.98dd03c3.chunk.js.map": "/react-components/static/js/pages-Switch-Switch-scss.98dd03c3.chunk.js.map",
+    "pages-Tab.5ae29a83.chunk.js.map": "/react-components/static/js/pages-Tab.5ae29a83.chunk.js.map",
     "pages-TagInput.2e8091c2.chunk.js.map": "/react-components/static/js/pages-TagInput.2e8091c2.chunk.js.map",
     "pages-Toast.2fd92827.chunk.css.map": "/react-components/static/css/pages-Toast.2fd92827.chunk.css.map",
     "pages-Toast.c3412940.chunk.js.map": "/react-components/static/js/pages-Toast.c3412940.chunk.js.map",
@@ -272,7 +274,7 @@
     "4089.282d8f89.chunk.js.map": "/react-components/static/js/4089.282d8f89.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fed060d6.css",
-    "static/js/main.6d3d90fe.js"
+    "static/css/main.9118f767.css",
+    "static/js/main.4b7e0ff0.js"
   ]
 }

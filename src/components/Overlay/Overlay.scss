@@ -7,7 +7,6 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: var(--overlay-zindex);
   animation: rc_fadeOut 0.3s linear forwards;
-  animation-iteration-count: 1;
   &:is(.show) {
     animation: rc_fadeIn 0.3s linear forwards;
   }

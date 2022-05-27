@@ -9,9 +9,12 @@ import imageFour from "assets/images/light-box/image-4.jpg";
 import imageFive from "assets/images/light-box/image-5.jpg";
 
 import "./LightBox.scss";
+import { classNames } from "utils";
 
 export const LightBox = ({ isOpen, toggle, images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const [show, setShow] = useState(false);
 
   const imageRef = useRef();
 
@@ -21,6 +24,11 @@ export const LightBox = ({ isOpen, toggle, images }) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setShow(isOpen);
+  }, [isOpen]);
 
   useEffect(() => {
     handleFocus();
@@ -60,11 +68,21 @@ export const LightBox = ({ isOpen, toggle, images }) => {
     }
   };
 
-  if (!isOpen) return null;
+  const handleAnimationEnd = ({ animationName }) => {
+    if (animationName == "rc_fadeOut") {
+      setShow(false);
+    }
+  };
+
+  if (!show) return;
 
   return (
     <Portal>
-      <div className="light-box-container" onClick={toggle}>
+      <div
+        className={classNames("light-box-container", { show: isOpen })}
+        onClick={toggle}
+        onAnimationEnd={handleAnimationEnd}
+      >
         <div
           className="light-box-next-arrow"
           onClick={(e) => {

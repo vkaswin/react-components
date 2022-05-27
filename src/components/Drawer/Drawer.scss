@@ -21,7 +21,6 @@
 .rc-drawer[data-position="left"] {
   left: 0px;
   animation: rc_slideOutLeft 0.3s linear forwards;
-  animation-iteration-count: 1;
   &:is(.show) {
     animation: rc_slideInLeft 0.3s linear forwards;
   }

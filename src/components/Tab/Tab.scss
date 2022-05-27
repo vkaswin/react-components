@@ -11,9 +11,10 @@
     .tab-indicator {
       position: absolute;
       bottom: 0;
-      height: 3px;
       background-color: #2676d2;
       transition: all 0.2s;
+      height: 4px;
+      border-radius: 4px 4px 0px 0px;
     }
   }
 }

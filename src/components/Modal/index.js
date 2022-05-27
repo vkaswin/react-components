@@ -14,10 +14,7 @@ export const Modal = ({ isOpen, toggle, children }) => {
   }, [isOpen]);
 
   const handleAnimationEnd = ({ animationName }) => {
-    if (
-      animationName == "rc_slideOutTop" ||
-      animationName == "rc_slideOutBottom"
-    ) {
+    if (animationName == "hide_modal" || animationName == "rc_slideOutBottom") {
       setShow(false);
     }
   };

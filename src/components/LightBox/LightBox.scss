@@ -5,8 +5,11 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1001;
-  animation: rc_fadeIn 0.5s linear forwards;
+  z-index: 1025;
+  animation: rc_fadeOut 0.5s linear forwards;
+  &:is(.show) {
+    animation: rc_fadeIn 0.5s linear forwards;
+  }
   .light-box-next-arrow,
   .light-box-prev-arrow {
     position: absolute;

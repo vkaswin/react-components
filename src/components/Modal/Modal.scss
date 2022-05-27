@@ -23,14 +23,14 @@
     overflow-y: auto;
     &:is(.show) {
       .rc-modal-dialog {
-        animation: rc_slideInTop 0.3s linear forwards;
+        animation: show_modal 0.3s ease-in-out forwards;
       }
     }
     .rc-modal-dialog {
       min-height: 100vh;
       justify-content: center;
       align-items: center;
-      animation: rc_slideOutTop 0.3s linear forwards;
+      animation: hide_modal 0.3s ease-in-out forwards;
     }
     .rc-modal-content {
       max-width: 550px;

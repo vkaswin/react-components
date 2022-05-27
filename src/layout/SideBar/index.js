@@ -27,7 +27,7 @@ export const SideBar = ({ isOpen, toggle, options }) => {
                     key={index}
                     to={to}
                     className={({ isActive }) =>
-                      "nav-item " + (isActive ? "active" : "")
+                      classNames("nav-item", { isActive })
                     }
                     onClick={toggle}
                   >

@@ -47,12 +47,7 @@ export const SideBar = ({ isOpen, toggle, options }) => {
       {width > 992 ? (
         <Element />
       ) : (
-        <Drawer
-          toggle={toggle}
-          isOpen={isOpen}
-          position="left"
-          // portal={false}
-        >
+        <Drawer toggle={toggle} isOpen={isOpen} position="left" portal={false}>
           <Element />
         </Drawer>
       )}

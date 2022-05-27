@@ -2,12 +2,12 @@ import React from "react";
 
 import "./Header.scss";
 
-export const Header = ({ toggleNavBar }) => {
+export const Header = ({ toggle }) => {
   return (
     <div className="header">
       <header>
         <div className="header-left">
-          <i className="fas fa-bars" onClick={toggleNavBar}></i>
+          <i className="fas fa-bars" onClick={toggle}></i>
         </div>
         <div className="header-right">
           <button className="header-search">

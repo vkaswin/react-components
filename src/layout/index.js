@@ -131,16 +131,16 @@ const options = [
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleNavBar = () => {
-    let { matches } = window.matchMedia("(max-width: 992px)");
+  const toggle = () => {
+    let { matches } = window.matchMedia(`(max-width: 992px)`);
     if (!matches) return;
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="layout">
-      <SideBar isOpen={isOpen} toggleNavBar={toggleNavBar} options={options} />
-      <Header toggleNavBar={toggleNavBar} />
+      <SideBar isOpen={isOpen} toggle={toggle} options={options} />
+      <Header toggle={toggle} />
       <Outlet />
     </div>
   );

@@ -6,7 +6,7 @@ import { useWindowSize } from "hooks";
 
 import "./SideBar.scss";
 
-export const SideBar = ({ isOpen, toggleNavBar, options }) => {
+export const SideBar = ({ isOpen, toggle, options }) => {
   console.log(isOpen, "isOpen");
   const { width } = useWindowSize();
 
@@ -30,7 +30,7 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
                     className={({ isActive }) =>
                       "nav-item " + (isActive ? "active" : "")
                     }
-                    onClick={toggleNavBar}
+                    onClick={toggle}
                   >
                     <li>{label}</li>
                   </NavLink>
@@ -48,7 +48,7 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
         <Element />
       ) : (
         <Drawer
-          toggle={toggleNavBar}
+          toggle={toggle}
           isOpen={isOpen}
           position="left"
           // portal={false}

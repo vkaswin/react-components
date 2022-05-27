@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Portal } from "components/Portal";
+import { Portal } from "components";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
 
@@ -36,7 +36,7 @@ export const Overlay = ({ isOpen, toggle, zIndex, portal }) => {
     <Fragment>
       {portal ? (
         <Portal>
-          <Element></Element>
+          <Element />
         </Portal>
       ) : (
         <Element />

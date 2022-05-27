@@ -132,6 +132,8 @@ const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavBar = () => {
+    let { matches } = window.matchMedia("(max-width: 992px)");
+    if (!matches) return;
     setIsOpen(!isOpen);
   };
 

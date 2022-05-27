@@ -10,12 +10,6 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
   console.log(isOpen, "isOpen");
   const { width } = useWindowSize();
 
-  const handleNavBar = () => {
-    let { matches } = window.matchMedia(`(max-width: 992px)`);
-    if (!matches) return;
-    toggleNavBar();
-  };
-
   const Element = () => {
     return (
       <div>
@@ -36,7 +30,7 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
                     className={({ isActive }) =>
                       "nav-item " + (isActive ? "active" : "")
                     }
-                    onClick={handleNavBar}
+                    onClick={toggleNavBar}
                   >
                     <li>{label}</li>
                   </NavLink>

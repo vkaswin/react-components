@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { Portal } from "components/Portal";
 
 import imageOne from "assets/images/light-box/image-1.jpg";
 import imageTwo from "assets/images/light-box/image-2.jpg";
@@ -62,7 +63,7 @@ export const LightBox = ({ isOpen, toggle, images }) => {
   if (!isOpen) return null;
 
   return (
-    <Fragment>
+    <Portal>
       <div className="light-box-container" onClick={toggle}>
         <div
           className="light-box-next-arrow"
@@ -113,7 +114,7 @@ export const LightBox = ({ isOpen, toggle, images }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </Portal>
   );
 };
 

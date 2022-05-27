@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Portal } from "components";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
 
@@ -19,42 +18,26 @@ export const Overlay = ({ isOpen, toggle, zIndex, portal }) => {
     }
   };
 
-  const Element = () => {
-    return (
-      <div
-        style={{ "--overlay-zindex": zIndex }}
-        className={classNames("rc-overlay", { show: isOpen })}
-        onClick={toggle}
-        onAnimationEnd={handleAnimationEnd}
-      ></div>
-    );
-  };
-
   if (!show) return;
 
   return (
-    <Fragment>
-      {portal ? (
-        <Portal>
-          <Element />
-        </Portal>
-      ) : (
-        <Element />
-      )}
-    </Fragment>
+    <div
+      style={{ "--overlay-zindex": zIndex }}
+      className={classNames("rc-overlay", { show: isOpen })}
+      onClick={toggle}
+      // onAnimationEnd={handleAnimationEnd}
+    ></div>
   );
 };
 
 Overlay.propTypes = {
   isOpen: PropTypes.bool,
   zIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  portal: PropTypes.bool,
   toggle: () => {},
 };
 
 Overlay.defaultProps = {
   zIndex: 1025,
   isOpen: false,
-  portal: true,
   toggle: () => {},
 };

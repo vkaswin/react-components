@@ -5,14 +5,7 @@ import { classNames } from "utils";
 
 import "./Drawer.scss";
 
-export const Drawer = ({
-  position,
-  isOpen,
-  toggle,
-  children,
-  className,
-  portal,
-}) => {
+export const Drawer = ({ position, isOpen, toggle, children, className }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -29,7 +22,7 @@ export const Drawer = ({
   if (!show) return;
 
   return (
-    <Portal portal={portal}>
+    <Portal>
       <div>
         <div
           className={classNames("rc-drawer", {
@@ -37,7 +30,7 @@ export const Drawer = ({
             [className]: className,
           })}
           data-position={position}
-          onAnimationEnd={handleAnimationEnd}
+          // onAnimationEnd={handleAnimationEnd}
         >
           {children}
         </div>

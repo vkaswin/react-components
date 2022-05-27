@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-components/static/css/main.fed060d6.css",
-    "main.js": "/react-components/static/js/main.3f1f3c6a.js",
+    "main.js": "/react-components/static/js/main.99326e2f.js",
     "pages-404.js": "/react-components/static/js/pages-404.ce09721b.chunk.js",
     "assets-fonts-Poppins-OFL-txt.js": "/react-components/static/js/assets-fonts-Poppins-OFL-txt.eeb8f21b.chunk.js",
     "assets-fonts-Poppins-Poppins-Bold-ttf.js": "/react-components/static/js/assets-fonts-Poppins-Poppins-Bold-ttf.b4f98f28.chunk.js",
@@ -125,16 +125,14 @@
     "pages-VerticalStepper-VerticalStepper-scss.css": "/react-components/static/css/pages-VerticalStepper-VerticalStepper-scss.5840795c.chunk.css",
     "pages-VerticalStepper-VerticalStepper-scss.js": "/react-components/static/js/pages-VerticalStepper-VerticalStepper-scss.87adb11e.chunk.js",
     "pages-VideoPlayer.js": "/react-components/static/js/pages-VideoPlayer.70ec1d56.chunk.js",
-    "service-worker.js": "/react-components/service-worker.js",
     "service-Api.js": "/react-components/static/js/service-Api.d3b42745.chunk.js",
     "service-axiosInstance.js": "/react-components/static/js/service-axiosInstance.437fae7b.chunk.js",
     "service-endpoints.js": "/react-components/static/js/service-endpoints.242360b0.chunk.js",
     "setupTests.js": "/react-components/static/js/setupTests.ec4a0490.chunk.js",
-    "utils-ErrorBoundary.js": "/react-components/static/js/utils-ErrorBoundary.c5cf2a5e.chunk.js",
+    "utils-ErrorBoundary.js": "/react-components/static/js/utils-ErrorBoundary.c63aa93c.chunk.js",
     "static/js/787.e56f57c5.chunk.js": "/react-components/static/js/787.e56f57c5.chunk.js",
     "static/js/4569.42432947.chunk.js": "/react-components/static/js/4569.42432947.chunk.js",
     "static/js/4089.282d8f89.chunk.js": "/react-components/static/js/4089.282d8f89.chunk.js",
-    "static/js/4827.626d5236.chunk.js": "/react-components/static/js/4827.626d5236.chunk.js",
     "static/css/6392.31d6cfe0.chunk.css": "/react-components/static/css/6392.31d6cfe0.chunk.css",
     "static/css/5284.31d6cfe0.chunk.css": "/react-components/static/css/5284.31d6cfe0.chunk.css",
     "static/media/image-3.jpg": "/react-components/static/media/image-3.f4d7fbf468d06849b812.jpg",
@@ -152,7 +150,7 @@
     "static/media/OFL.txt": "/react-components/static/media/OFL.a41dfc83c78dc22edf7a.txt",
     "index.html": "/react-components/index.html",
     "main.fed060d6.css.map": "/react-components/static/css/main.fed060d6.css.map",
-    "main.3f1f3c6a.js.map": "/react-components/static/js/main.3f1f3c6a.js.map",
+    "main.99326e2f.js.map": "/react-components/static/js/main.99326e2f.js.map",
     "pages-404.ce09721b.chunk.js.map": "/react-components/static/js/pages-404.ce09721b.chunk.js.map",
     "assets-scss-_abstracts-scss.b305bca5.chunk.css.map": "/react-components/static/css/assets-scss-_abstracts-scss.b305bca5.chunk.css.map",
     "assets-scss-_abstracts-scss.6084a7ab.chunk.js.map": "/react-components/static/js/assets-scss-_abstracts-scss.6084a7ab.chunk.js.map",
@@ -265,18 +263,16 @@
     "pages-VerticalStepper-VerticalStepper-scss.5840795c.chunk.css.map": "/react-components/static/css/pages-VerticalStepper-VerticalStepper-scss.5840795c.chunk.css.map",
     "pages-VerticalStepper-VerticalStepper-scss.87adb11e.chunk.js.map": "/react-components/static/js/pages-VerticalStepper-VerticalStepper-scss.87adb11e.chunk.js.map",
     "pages-VideoPlayer.70ec1d56.chunk.js.map": "/react-components/static/js/pages-VideoPlayer.70ec1d56.chunk.js.map",
-    "service-worker.c68be2b7.chunk.js.map": "/react-components/static/js/service-worker.c68be2b7.chunk.js.map",
     "service-Api.d3b42745.chunk.js.map": "/react-components/static/js/service-Api.d3b42745.chunk.js.map",
     "service-axiosInstance.437fae7b.chunk.js.map": "/react-components/static/js/service-axiosInstance.437fae7b.chunk.js.map",
     "service-endpoints.242360b0.chunk.js.map": "/react-components/static/js/service-endpoints.242360b0.chunk.js.map",
-    "utils-ErrorBoundary.c5cf2a5e.chunk.js.map": "/react-components/static/js/utils-ErrorBoundary.c5cf2a5e.chunk.js.map",
+    "utils-ErrorBoundary.c63aa93c.chunk.js.map": "/react-components/static/js/utils-ErrorBoundary.c63aa93c.chunk.js.map",
     "787.e56f57c5.chunk.js.map": "/react-components/static/js/787.e56f57c5.chunk.js.map",
     "4569.42432947.chunk.js.map": "/react-components/static/js/4569.42432947.chunk.js.map",
-    "4089.282d8f89.chunk.js.map": "/react-components/static/js/4089.282d8f89.chunk.js.map",
-    "4827.626d5236.chunk.js.map": "/react-components/static/js/4827.626d5236.chunk.js.map"
+    "4089.282d8f89.chunk.js.map": "/react-components/static/js/4089.282d8f89.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fed060d6.css",
-    "static/js/main.3f1f3c6a.js"
+    "static/js/main.99326e2f.js"
   ]
 }

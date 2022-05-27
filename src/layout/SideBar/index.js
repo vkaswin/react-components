@@ -7,7 +7,6 @@ import { Drawer } from "components";
 import "./SideBar.scss";
 
 export const SideBar = ({ isOpen, toggleNavBar, options }) => {
-  console.log(isOpen, "isOpen");
   const { width } = useWindowSize();
 
   const handleNavBar = () => {
@@ -19,7 +18,7 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
   const Element = () => {
     return (
       <div>
-        <div className={classNames("side-bar", { show: isOpen ?? false })}>
+        <div className={classNames("side-bar", { show: isOpen })}>
           <div className="nav-title">
             <b>React Components</b>
           </div>
@@ -53,7 +52,7 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
       {width > 992 ? (
         <Element />
       ) : (
-        <Drawer toggle={toggleNavBar} isOpen={isOpen ?? false} position="left">
+        <Drawer toggle={toggleNavBar} isOpen={isOpen} position="left">
           <Element />
         </Drawer>
       )}

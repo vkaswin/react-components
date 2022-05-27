@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { classNames } from "utils";
 
-import "./Tabs.scss";
+import "./Tab.scss";
 
-export const Tabs = ({ tab = 0, children }) => {
+export const Tab = ({ tab = 0, children }) => {
   let [width, setWidth] = useState();
   let [left, setLeft] = useState();
   let tabRef = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLeft(tabRef.current.children[tab]?.offsetLeft);
     setWidth(tabRef.current.children[tab]?.offsetWidth);
   }, [tab]);
+
   return (
     <div className="tab-container">
       <div className="tab-wrapper" ref={tabRef}>
@@ -24,10 +26,17 @@ export const Tabs = ({ tab = 0, children }) => {
   );
 };
 
-export const TabItem = ({ className, label, onClick }) => {
+const Item = ({ className, children, onClick }) => {
   return (
-    <div className={`tab-item ${className}`} onClick={onClick}>
-      {label}
+    <div
+      className={classNames("tab-item", {
+        [className]: className,
+      })}
+      onClick={onClick}
+    >
+      {children}
     </div>
   );
 };
+
+Tab.Item = Item;

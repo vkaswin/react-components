@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { Drawer } from "components";
 import { classNames } from "utils";
 import { useWindowSize } from "hooks";
-import { Drawer } from "components";
 
 import "./SideBar.scss";
 
 export const SideBar = ({ isOpen, toggleNavBar, options }) => {
+  console.log(isOpen, "isOpen");
   const { width } = useWindowSize();
 
   const handleNavBar = () => {
@@ -52,7 +53,12 @@ export const SideBar = ({ isOpen, toggleNavBar, options }) => {
       {width > 992 ? (
         <Element />
       ) : (
-        <Drawer toggle={toggleNavBar} isOpen={isOpen} position="left">
+        <Drawer
+          toggle={toggleNavBar}
+          isOpen={isOpen}
+          position="left"
+          // portal={false}
+        >
           <Element />
         </Drawer>
       )}

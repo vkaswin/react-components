@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Portal, Overlay } from "components";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
-import { Portal } from "components";
 
 import "./Drawer.scss";
 
@@ -41,10 +41,7 @@ export const Drawer = ({
         >
           {children}
         </div>
-        <div
-          className={classNames("rc-drawer-overlay", { show: isOpen })}
-          onClick={toggle}
-        ></div>
+        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1024} portal={false} />
       </div>
     </Portal>
   );

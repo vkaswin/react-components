@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Portal, Overlay } from "components";
 import { classNames } from "utils";
 import PropTypes from "prop-types";
-import { Portal } from "components";
 
 import "./Modal.scss";
 
@@ -45,7 +45,7 @@ export const Modal = ({ isOpen, toggle, children }) => {
             </div>
           </div>
         </div>
-        <div className={classNames("rc-modal-overlay", { show: isOpen })}></div>
+        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} portal={false} />
       </div>
     </Portal>
   );

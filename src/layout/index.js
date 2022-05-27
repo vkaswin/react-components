@@ -122,6 +122,10 @@ const options = [
     label: "Drawer",
     to: "drawer",
   },
+  {
+    label: "Tab",
+    to: "tab",
+  },
 ];
 
 const Layout = () => {

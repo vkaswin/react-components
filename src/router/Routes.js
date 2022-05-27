@@ -149,6 +149,11 @@ export const routes = [
         componentPath: "pages/Drawer",
         title: "Drawer",
       },
+      {
+        path: "tab",
+        componentPath: "pages/Tab",
+        title: "Tab",
+      },
     ],
   },
 ];

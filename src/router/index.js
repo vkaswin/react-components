@@ -5,24 +5,12 @@ import { routes } from "router/Routes";
 import { Loader } from "layout/Loader";
 const PageNotFound = lazy(() => import("../pages/404"));
 
-const Wrapper = ({ title, children }) => {
-  useEffect(() => {
-    document.title = `React Components | ${title}`;
-  }, [title]);
-
-  return <Fragment>{children}</Fragment>;
-};
-
-Wrapper.propTypes = {
-  title: PropTypes.string.isRequired,
-};
-
 export const Router = () => {
   return (
     <Suspense fallback={<Loader />}>
       <HashRouter>
         <Routes>
-          {routes.map(({ path, componentPath, children = [], title }) => {
+          {routes.map(({ path, componentPath, children = [] }) => {
             if (children.length === 0) {
               const PageComponent = lazy(() =>
                 import(
@@ -30,15 +18,7 @@ export const Router = () => {
                 )
               );
               return (
-                <Route
-                  key={path}
-                  path={path}
-                  element={
-                    <Wrapper title={title}>
-                      <PageComponent />
-                    </Wrapper>
-                  }
-                />
+                <Route key={path} path={path} element={<PageComponent />} />
               );
             } else {
               const LayoutComponent = lazy(() =>
@@ -52,7 +32,6 @@ export const Router = () => {
                     ({
                       path: childPath,
                       componentPath: childComponentPath,
-                      title: childTitle,
                     }) => {
                       const ChildComponent = lazy(() =>
                         import(
@@ -63,11 +42,7 @@ export const Router = () => {
                         <Route
                           key={childPath}
                           path={childPath}
-                          element={
-                            <Wrapper title={childTitle}>
-                              <ChildComponent />
-                            </Wrapper>
-                          }
+                          element={<ChildComponent />}
                         />
                       );
                     }

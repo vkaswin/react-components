@@ -1,8 +1,8 @@
+import React, { Fragment } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
-import { Fragment } from "react";
 
-export const Portal = ({ children }) => {
+export const Portal = ({ children, portal }) => {
   return (
     <Fragment>
       {portal ? createPortal(children, document.body) : children}

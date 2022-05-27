@@ -7,7 +7,6 @@ import { useWindowSize } from "hooks";
 import "./SideBar.scss";
 
 export const SideBar = ({ isOpen, toggle, options }) => {
-  console.log(isOpen, "isOpen");
   const { width } = useWindowSize();
 
   const Element = () => {

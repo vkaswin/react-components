@@ -1,10 +1,7 @@
-.rc-tooltip-container {
-  position: relative;
-  display: inline-block;
-}
-
 .rc-tooltip {
   position: absolute;
+  top: 0;
+  left: 0;
   max-width: 200px;
   width: max-content;
   padding: 0.25rem 0.5rem;
@@ -12,12 +9,12 @@
   text-align: center;
   background-color: #000;
   border-radius: 0.25rem;
-  z-index: 1000;
-  opacity: 1;
-  transition: opacity 0.5s;
+  z-index: 1050;
   font-size: 14px;
-  &:not(.show) {
-    opacity: 0;
+  animation: rc_fadeOut 0.3s linear forwards;
+  pointer-events: none;
+  &:is(.show) {
+    animation: rc_fadeIn 0.3s linear forwards;
   }
 }
 
@@ -38,8 +35,6 @@
 }
 
 .rc-tooltip[data-position="left-center"] {
-  top: 50%;
-  transform: translateY(-50%);
   &::before {
     top: 50%;
     --tooltip-translate: translateY(-50%);
@@ -50,8 +45,6 @@
 }
 
 .rc-tooltip[data-position="right-center"] {
-  top: 50%;
-  transform: translateY(-50%);
   &::before {
     top: 50%;
     --tooltip-translate: translateY(-50%);
@@ -62,8 +55,6 @@
 }
 
 .rc-tooltip[data-position="top-center"] {
-  left: 50%;
-  transform: translateX(-50%);
   &::before {
     left: 50%;
     --tooltip-translate: translateX(-50%);
@@ -74,8 +65,6 @@
 }
 
 .rc-tooltip[data-position="bottom-center"] {
-  left: 50%;
-  transform: translateX(-50%);
   &::before {
     left: 50%;
     --tooltip-translate: translateX(-50%);

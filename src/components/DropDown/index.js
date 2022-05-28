@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { positionElement } from "utils/positionElement";
 
 import "./DropDown.scss";
+import { clickOutside, positionElement } from "utils";
 
 const DropDownContext = createContext();
 
@@ -15,20 +15,13 @@ export const DropDown = ({ children }) => {
 
   const offset = 5;
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  });
-
-  const handleResize = () => {
-    if (!dropdownRef.current.classList.contains("show")) return;
-    handleDropDown({ isOpen: true });
-  };
-
   const toggle = ({ isOpen }) => {
     if (isOpen) {
       dropdownRef.current.classList.add("show");
-      window.addEventListener("click", handleClickOutside);
+      clickOutside({
+        ref: dropdownRef.current,
+        onClose: () => toggle({ isOpen: false }),
+      });
     } else {
       dropdownRef.current.classList.remove("show");
     }
@@ -47,20 +40,7 @@ export const DropDown = ({ children }) => {
       },
     } = dropdownRef.current;
 
-    positionElement({
-      parent,
-      child,
-      position,
-      offset,
-    });
-  };
-
-  const handleClickOutside = ({ target }) => {
-    console.log(dropdownRef.current);
-    if (!dropdownRef.current.contains(target)) {
-      toggle({ isOpen: false });
-      window.removeEventListener("click", handleClickOutside);
-    }
+    positionElement({ reference: parent, element: child, position, offset });
   };
 
   return (

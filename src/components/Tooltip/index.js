@@ -1,62 +1,74 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Portal } from "components/Portal";
 import PropTypes from "prop-types";
+import { classNames, positionElement } from "utils";
 
 import "./Tooltip.scss";
-import { positionElement } from "utils/positionElement";
 
-export const Tooltip = ({ children, position, text, offset, arrow }) => {
-  let toolTipRef = useRef();
+export const Tooltip = ({ children, position, arrow, id }) => {
+  const toolTipRef = useRef();
+
+  const referenceRef = useRef();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    referenceRef.current = document.getElementById(id);
+    referenceRef.current.addEventListener("mouseenter", handleMouseEnter);
+    referenceRef.current.addEventListener("mouseleave", handleMouseLeave);
+    // window.addEventListener("resize", handlePosition);
+    return () => {
+      referenceRef.current.addEventListener("mouseenter", handleMouseEnter);
+      referenceRef.current.addEventListener("mouseleave", handleMouseLeave);
+      // window.addEventListener("resize", handlePosition);
+    };
   }, []);
 
-  const handleMouseEnter = () => {
-    let { current } = toolTipRef;
+  useEffect(() => {
+    if (!isOpen) return;
+    handlePosition();
+  }, [isOpen]);
 
-    let tooltip = current.querySelector(".rc-tooltip") ?? null;
-
-    if (!tooltip) {
-      tooltip = document.createElement("div");
-      tooltip.textContent = text;
-      tooltip.classList.add("rc-tooltip");
-      current.appendChild(tooltip);
-    }
-
+  const handlePosition = () => {
     positionElement({
-      parent: current,
-      child: tooltip,
-      position: `${position}-center`,
-      offset,
+      reference: referenceRef.current,
+      element: toolTipRef.current,
+      position,
+      offset: 10,
     });
-
-    tooltip.classList.add("show");
   };
 
-  const handleResize = () => {
-    let { current } = toolTipRef;
-    let tooltip = current.querySelector(".rc-tooltip");
-    if (!tooltip) return;
-    handleMouseEnter();
+  const handleMouseEnter = () => {
+    setIsOpen(true);
+    setShow(true);
   };
 
   const handleMouseLeave = () => {
-    let { current } = toolTipRef;
-    let tooltip = current.querySelector(".rc-tooltip");
-    tooltip.remove();
+    setShow(false);
   };
 
+  const handleAnimationEnd = ({ animationName }) => {
+    if (animationName === "rc_fadeOut") {
+      setIsOpen(false);
+    }
+  };
+
+  if (!isOpen) return;
+
   return (
-    <div ref={toolTipRef} className="rc-tooltip-container">
+    <Portal>
       <div
+        ref={toolTipRef}
+        className={classNames("rc-tooltip", { show })}
+        onAnimationEnd={handleAnimationEnd}
         data-arrow={arrow}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        data-position={`${position}-center`}
       >
         {children}
       </div>
-    </div>
+    </Portal>
   );
 };
 

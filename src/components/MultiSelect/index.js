@@ -11,18 +11,18 @@ export const MultiSelect = ({
   let [isOpen, setIsOpen] = useState(false);
   let [focus, setFocus] = useState(0);
 
-  const addOption = async (option) => {
+  const addOption = (option) => () => {
     let list = selectedOptions;
     list.push(option);
-    await onChange(list);
-    await setIsOpen(false);
+    onChange(list);
+    setIsOpen(false);
   };
 
-  const deleteOption = async (id) => {
+  const deleteOption = (id) => () => {
     let list = selectedOptions;
     list.splice(id, 1);
-    await onChange(list);
-    await setIsOpen(false);
+    onChange(list);
+    setIsOpen(false);
   };
 
   return (
@@ -43,7 +43,7 @@ export const MultiSelect = ({
                   <span
                     className="delete-tag"
                     style={{ color: "black" }}
-                    onClick={() => deleteOption(index)}
+                    onClick={deleteOption(index)}
                   >
                     &#x2715;
                   </span>
@@ -74,7 +74,7 @@ export const MultiSelect = ({
                       backgroundColor: focus === index ? "lightgray" : "white",
                     }}
                     onMouseEnter={() => setFocus(index)}
-                    onClick={() => addOption(list)}
+                    onClick={addOption(list)}
                   >
                     <span>{list}</span>
                   </div>

@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
-import { classNames } from "utils";
+import { classNames, clickOutside } from "utils";
 import PropTypes from "prop-types";
-import { useOnClickOutSide } from "hooks";
 
 import "./DatePicker.scss";
 
@@ -31,10 +30,6 @@ export const DatePicker = ({ placeholder, name, value, onChange }) => {
 
   const datePickerRef = useRef();
 
-  const [observe, unObserve] = useOnClickOutSide(datePickerRef, () =>
-    setIsOpen(false)
-  );
-
   const handleNext = () => {
     if (date.getMonth() === 11) {
       setDate(
@@ -59,7 +54,6 @@ export const DatePicker = ({ placeholder, name, value, onChange }) => {
 
   const handleSelect = (value) => () => {
     onChange({ name, value });
-    unObserve();
     setTimeout(() => {
       setIsOpen(false);
     }, 200);
@@ -87,8 +81,11 @@ export const DatePicker = ({ placeholder, name, value, onChange }) => {
   }, [date]);
 
   const handleFocus = () => {
-    observe();
     setIsOpen(true);
+    clickOutside({
+      ref: datePickerRef.current,
+      onClose: () => setIsOpen(false),
+    });
   };
 
   return (

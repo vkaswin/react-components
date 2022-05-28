@@ -102,6 +102,70 @@ export const getDateType = (data) => {
     .replace(/^\[object (\S+)\]$/, "$1");
 };
 
+export const clickOutside = ({ ref, onClose }) => {
+  if (!ref) return;
+
+  const handleClickOutside = ({ target }) => {
+    if (ref.contains(target)) return;
+    onClose();
+    document.removeEventListener("click", handleClickOutside);
+  };
+
+  document.addEventListener("click", handleClickOutside);
+};
+
+export const positionElement = ({ reference, element, position, offset }) => {
+  // { bottom, height, left, right, top, width, x, y }
+  const ref = reference.getBoundingClientRect();
+  const ele = element.getBoundingClientRect();
+
+  console.log(ref, ele);
+
+  const showOnLeft = () => {
+    const left = ref.x - ele.width - offset;
+    const top = ref.y - (ele.height / 2 - ref.height / 2);
+
+    element.style.cssText = `transform: translate(${left}px,${top}px);`;
+  };
+
+  const showOnRight = () => {
+    const left = ref.x + ref.width + offset;
+    const top = ref.y - (ele.height / 2 - ref.height / 2);
+
+    element.style.cssText = `transform: translate(${left}px,${top}px);`;
+  };
+
+  const showOnBottom = () => {
+    const top = ref.y + (ref.height + offset);
+    const left = ref.x + (ref.width / 2 - ele.width / 2);
+
+    element.style.cssText = `transform: translate(${left}px,${top}px);`;
+  };
+
+  const showOnTop = () => {
+    const left = ref.x + (ref.width / 2 - ele.width / 2);
+    const top = ref.y - (ele.height + offset);
+
+    element.style.cssText = `transform: translate(${left}px,${top}px);`;
+  };
+
+  if (position === "left") {
+    showOnLeft();
+  }
+
+  if (position === "right") {
+    showOnRight();
+  }
+
+  if (position === "top") {
+    showOnTop();
+  }
+
+  if (position === "bottom") {
+    showOnBottom();
+  }
+};
+
 export const fileType = (fileName) => {
   return String(fileName).split(".")[String(fileName).split(".").length - 1];
 };

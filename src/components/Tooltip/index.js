@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Portal } from "components/Portal";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
@@ -6,10 +12,14 @@ import { Popper } from "components";
 
 import "./Tooltip.scss";
 
-const offset = 10;
+const ToolTipContext = createContext();
 
-export const Tooltip = ({ children, position, arrow, id }) => {
-  const toolTipRef = useRef();
+const useToolTip = () => {
+  return useContext(ToolTipContext);
+};
+
+export const Tooltip = ({ children }) => {
+  const tooltipRef = useRef();
 
   const targetRef = useRef();
 
@@ -17,30 +27,49 @@ export const Tooltip = ({ children, position, arrow, id }) => {
 
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    targetRef.current = document.getElementById(id);
-    targetRef.current.addEventListener("mouseenter", handleMouseEnter);
-    targetRef.current.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      targetRef.current.addEventListener("mouseenter", handleMouseEnter);
-      targetRef.current.addEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-
-  const handleMouseEnter = () => {
+  const openToolTip = () => {
     setIsOpen(true);
     setShow(true);
   };
 
-  const handleMouseLeave = () => {
+  const closeToolTip = () => {
     setShow(false);
   };
 
-  const handleAnimationEnd = ({ animationName }) => {
+  const onAnimationEnd = ({ animationName }) => {
     if (animationName === "rc_fadeOut") {
       setIsOpen(false);
     }
   };
+
+  return (
+    <ToolTipContext.Provider
+      value={{
+        tooltipRef,
+        targetRef,
+        isOpen,
+        show,
+        openToolTip,
+        closeToolTip,
+        onAnimationEnd,
+      }}
+    >
+      {children}
+    </ToolTipContext.Provider>
+  );
+};
+
+const Toggle = ({ children }) => {
+  const { openToolTip, closeToolTip, targetRef } = useToolTip();
+  return (
+    <div ref={targetRef} onMouseEnter={openToolTip} onMouseLeave={closeToolTip}>
+      {children}
+    </div>
+  );
+};
+
+const Menu = ({ children, position, arrow, offset }) => {
+  const { isOpen, show, tooltipRef, targetRef, onAnimationEnd } = useToolTip();
 
   if (!isOpen) return;
 
@@ -53,9 +82,9 @@ export const Tooltip = ({ children, position, arrow, id }) => {
         render={({ styles, attributes }) => {
           return (
             <div
-              ref={toolTipRef}
+              ref={tooltipRef}
               className={classNames("rc-tooltip", { show })}
-              onAnimationEnd={handleAnimationEnd}
+              onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               style={styles}
               {...attributes}
@@ -69,13 +98,27 @@ export const Tooltip = ({ children, position, arrow, id }) => {
   );
 };
 
-Tooltip.defaultProps = {
+Tooltip.Toggle = Toggle;
+Tooltip.Menu = Menu;
+
+// Tooltip
+Tooltip.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+// Tooltip Toggle
+Toggle.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+// Tooltip Menu
+Menu.defaultProps = {
   position: "top",
   arrow: true,
   offset: 10,
 };
 
-Tooltip.propTypes = {
+Menu.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.oneOf([
     "left",
@@ -91,7 +134,6 @@ Tooltip.propTypes = {
     "bottom-start",
     "bottom-end",
   ]),
-  text: PropTypes.string,
   offset: PropTypes.number,
   arrow: PropTypes.bool,
 };

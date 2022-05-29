@@ -6,15 +6,15 @@ import "./DropDown.scss";
 const DropDownPage = () => {
   const dropDown = [
     {
-      label: "Left Start",
+      label: "Left",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "left-start",
+      position: "left",
       action: "click",
     },
     {
-      label: "Left Center",
+      label: "Left Start",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "left-center",
+      position: "left-start",
       action: "click",
     },
     {
@@ -24,15 +24,15 @@ const DropDownPage = () => {
       action: "click",
     },
     {
-      label: "Right Start",
+      label: "Right",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "right-start",
+      position: "right",
       action: "click",
     },
     {
-      label: "Right Center",
+      label: "Right Start",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "right-center",
+      position: "right-start",
       action: "click",
     },
     {
@@ -42,15 +42,15 @@ const DropDownPage = () => {
       action: "click",
     },
     {
-      label: "Top Start",
+      label: "Top",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "top-start",
+      position: "top",
       action: "click",
     },
     {
-      label: "Top Center",
+      label: "Top Start",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "top-center",
+      position: "top-start",
       action: "click",
     },
     {
@@ -60,15 +60,15 @@ const DropDownPage = () => {
       action: "click",
     },
     {
-      label: "Bottom Start",
+      label: "Bottom",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "bottom-start",
+      position: "bottom",
       action: "click",
     },
     {
-      label: "Bottom Center",
+      label: "Bottom Start",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "bottom-center",
+      position: "bottom-start",
       action: "click",
     },
     {
@@ -78,15 +78,15 @@ const DropDownPage = () => {
       action: "click",
     },
     {
-      label: "Right Center",
+      label: "Right",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "right-center",
+      position: "right",
       action: "hover",
     },
     {
-      label: "Bottom Center",
+      label: "Bottom",
       children: ["Option One", "Option Two", "Option Three"],
-      position: "bottom-center",
+      position: "bottom",
       action: "hover",
     },
     {
@@ -104,8 +104,8 @@ const DropDownPage = () => {
         {dropDown.map(({ label, children, position, action }, index) => {
           return (
             <DropDown key={index}>
-              <DropDown.Toggle action={action}>
-                <button className="btn btn-secondary">{label}</button>
+              <DropDown.Toggle action={action} className="btn btn-secondary">
+                <span>{label}</span>
               </DropDown.Toggle>
               <DropDown.Menu position={position}>
                 {children.map((list, index) => {

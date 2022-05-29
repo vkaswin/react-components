@@ -24,17 +24,17 @@ const TooltipPage = () => {
       <div className="tooltip-wrapper">
         {tooltip.map(({ label, position }, index) => {
           return (
-            <Fragment key={index}>
-              <button id={`tooltip-${index}`} className="btn btn-secondary">
-                {label}
-              </button>
-              <Tooltip id={`tooltip-${index}`} position={position}>
+            <Tooltip key={index}>
+              <Tooltip.Toggle>
+                <button className="btn btn-secondary">{label}</button>
+              </Tooltip.Toggle>
+              <Tooltip.Menu position={position}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting
                 </span>
-              </Tooltip>
-            </Fragment>
+              </Tooltip.Menu>
+            </Tooltip>
           );
         })}
       </div>

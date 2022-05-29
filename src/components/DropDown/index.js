@@ -1,8 +1,15 @@
-import React, { createContext, useContext, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import PropTypes from "prop-types";
+import { Popper, Portal } from "components";
+import { classNames, clickOutside } from "utils";
 
 import "./DropDown.scss";
-import { clickOutside, positionElement } from "utils";
 
 const DropDownContext = createContext();
 
@@ -11,91 +18,98 @@ export const useDropDown = () => {
 };
 
 export const DropDown = ({ children }) => {
-  const dropdownRef = useRef();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const offset = 5;
+  const [show, setShow] = useState(false);
 
-  const toggle = ({ isOpen }) => {
-    if (isOpen) {
-      dropdownRef.current.classList.add("show");
-      clickOutside({
-        ref: dropdownRef.current,
-        onClose: () => toggle({ isOpen: false }),
-      });
-    } else {
-      dropdownRef.current.classList.remove("show");
+  const menuRef = useRef();
+
+  const targetRef = useRef();
+
+  const openDropDown = () => {
+    clickOutside({
+      ref: targetRef.current,
+      onClose: closeDropDown,
+    });
+    setIsOpen(true);
+    setShow(true);
+  };
+
+  const closeDropDown = () => {
+    setShow(false);
+  };
+
+  const onAnimationEnd = ({ animationName }) => {
+    if (animationName === "rc_fadeOut") {
+      setIsOpen(false);
     }
   };
 
-  const handleDropDown = ({ isOpen }) => {
-    toggle({ isOpen });
-
-    let parent = dropdownRef.current.querySelector(".rc-dropdown-toggle");
-
-    let child = dropdownRef.current.querySelector(".rc-dropdown-menu");
-
-    let {
-      attributes: {
-        "data-position": { value: position },
-      },
-    } = dropdownRef.current;
-
-    positionElement({ reference: parent, element: child, position, offset });
-  };
-
   return (
-    <DropDownContext.Provider value={{ toggle, handleDropDown, dropdownRef }}>
-      <div ref={dropdownRef} className="rc-dropdown">
-        {children}
-      </div>
+    <DropDownContext.Provider
+      value={{
+        isOpen,
+        show,
+        menuRef,
+        targetRef,
+        openDropDown,
+        closeDropDown,
+        onAnimationEnd,
+      }}
+    >
+      <div>{children}</div>
     </DropDownContext.Provider>
   );
 };
 
-const Toggle = ({ children, action }) => {
-  const { handleDropDown, dropdownRef, toggle } = useContext(DropDownContext);
-
-  useEffect(() => {
-    if (action === "click") return;
-    dropdownRef.current.onmouseenter = () =>
-      handleDropDown({
-        isOpen: !dropdownRef.current.classList.contains("show"),
-      });
-
-    dropdownRef.current.onmouseleave = () => toggle({ isOpen: false });
-  }, []);
+const Toggle = ({ children, action, className }) => {
+  const { openDropDown, closeDropDown, targetRef } = useDropDown();
 
   return (
-    <div
-      className="rc-dropdown-toggle"
-      data-action={action}
-      onClick={() =>
-        action === "click" &&
-        handleDropDown({
-          isOpen: !dropdownRef.current.classList.contains("show"),
-        })
-      }
+    <button
+      className={classNames(className)}
+      ref={targetRef}
+      onClick={() => action === "click" && openDropDown()}
+      onMouseEnter={() => action === "hover" && openDropDown()}
+      onMouseLeave={() => action === "hover" && closeDropDown()}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
-const Menu = ({ children, position }) => {
-  const { dropdownRef } = useContext(DropDownContext);
+const Menu = ({ children, position, offset }) => {
+  const { isOpen, show, targetRef, menuRef, onAnimationEnd } = useDropDown();
 
-  useEffect(() => {
-    dropdownRef.current.setAttribute("data-position", position);
-  }, []);
+  if (!isOpen) return;
 
-  return <div className="rc-dropdown-menu">{children}</div>;
+  return (
+    <Popper
+      target={targetRef}
+      position={position}
+      offset={offset}
+      render={({ styles, attributes }) => {
+        return (
+          <div
+            ref={menuRef}
+            className={classNames("rc-dropdown-menu", { show })}
+            onAnimationEnd={onAnimationEnd}
+            style={styles}
+            {...attributes}
+          >
+            {children}
+          </div>
+        );
+      }}
+    />
+  );
 };
 
 const Item = ({ children, onClick }) => {
-  const { toggle } = useContext(DropDownContext);
+  const { closeDropDown } = useDropDown();
 
   const handleClickItem = () => {
-    toggle({ isOpen: false });
+    closeDropDown();
     if (typeof onClick === "function") onClick();
   };
 
@@ -122,30 +136,38 @@ DropDown.propTypes = {
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.oneOf([
+    "left",
     "left-start",
-    "left-center",
     "left-end",
+    "right",
     "right-start",
-    "right-center",
     "right-end",
+    "top",
     "top-start",
-    "top-center",
     "top-end",
+    "bottom",
     "bottom-start",
-    "bottom-center",
     "bottom-end",
-  ]).isRequired,
+  ]),
+  offset: PropTypes.number,
+};
+
+Menu.defaultProps = {
+  position: "bottom",
+  offset: 10,
 };
 
 // Toggle PropTypes
 
 Toggle.propTypes = {
   children: PropTypes.node.isRequired,
-  action: PropTypes.oneOf(["click", "hover"]).isRequired,
+  action: PropTypes.oneOf(["click", "hover"]),
+  classNames: PropTypes.string,
 };
 
 Toggle.defaultProps = {
   action: "click",
+  classNames: "",
 };
 
 // Item PropTypes

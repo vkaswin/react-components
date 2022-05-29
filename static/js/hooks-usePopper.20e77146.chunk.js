@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[4071],{26931:function(e,t,s){s.r(t),s.d(t,{usePopper:function(){return u}});var n=s(70885),r=s(72791),u=function(e){e.reference,e.element,e.position,e.offset,e.isVisible;var t=(0,r.useState)({styles:{},attributes:{}}),s=(0,n.Z)(t,2),u=s[0];s[1];return{styles:u.styles,attributes:u.attributes}}}}]);
+//# sourceMappingURL=hooks-usePopper.20e77146.chunk.js.map

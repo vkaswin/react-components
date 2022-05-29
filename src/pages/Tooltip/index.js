@@ -4,10 +4,18 @@ import { Tooltip } from "components";
 import "./Tooltip.scss";
 
 const tooltip = [
-  { label: "Tooltip on left", position: "left" },
-  { label: "Tooltip on right", position: "right" },
-  { label: "Tooltip on top", position: "top" },
-  { label: "Tooltip on bottom", position: "bottom" },
+  { label: "Left", position: "left" },
+  { label: "Left Start", position: "left-start" },
+  { label: "Left End", position: "left-end" },
+  { label: "Right", position: "right" },
+  { label: "Right Start", position: "right-start" },
+  { label: "Right End", position: "right-end" },
+  { label: "Top", position: "top" },
+  { label: "Top Start", position: "top-start" },
+  { label: "Top End", position: "top-end" },
+  { label: "Bottom", position: "bottom" },
+  { label: "Bottom Start", position: "bottom-start" },
+  { label: "Bottom End", position: "bottom-end" },
 ];
 
 const TooltipPage = () => {

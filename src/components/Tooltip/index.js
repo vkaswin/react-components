@@ -1,44 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Portal } from "components/Portal";
 import PropTypes from "prop-types";
-import { classNames, positionElement } from "utils";
+import { classNames } from "utils";
+import { Popper } from "components";
 
 import "./Tooltip.scss";
+
+const offset = 10;
 
 export const Tooltip = ({ children, position, arrow, id }) => {
   const toolTipRef = useRef();
 
-  const referenceRef = useRef();
+  const targetRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    referenceRef.current = document.getElementById(id);
-    referenceRef.current.addEventListener("mouseenter", handleMouseEnter);
-    referenceRef.current.addEventListener("mouseleave", handleMouseLeave);
-    // window.addEventListener("resize", handlePosition);
+    targetRef.current = document.getElementById(id);
+    targetRef.current.addEventListener("mouseenter", handleMouseEnter);
+    targetRef.current.addEventListener("mouseleave", handleMouseLeave);
     return () => {
-      referenceRef.current.addEventListener("mouseenter", handleMouseEnter);
-      referenceRef.current.addEventListener("mouseleave", handleMouseLeave);
-      // window.addEventListener("resize", handlePosition);
+      targetRef.current.addEventListener("mouseenter", handleMouseEnter);
+      targetRef.current.addEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    handlePosition();
-  }, [isOpen]);
-
-  const handlePosition = () => {
-    positionElement({
-      reference: referenceRef.current,
-      element: toolTipRef.current,
-      position,
-      offset: 10,
-    });
-  };
 
   const handleMouseEnter = () => {
     setIsOpen(true);
@@ -59,15 +46,25 @@ export const Tooltip = ({ children, position, arrow, id }) => {
 
   return (
     <Portal>
-      <div
-        ref={toolTipRef}
-        className={classNames("rc-tooltip", { show })}
-        onAnimationEnd={handleAnimationEnd}
-        data-arrow={arrow}
-        data-position={`${position}-center`}
-      >
-        {children}
-      </div>
+      <Popper
+        target={targetRef}
+        position={position}
+        offset={offset}
+        render={({ styles, attributes }) => {
+          return (
+            <div
+              ref={toolTipRef}
+              className={classNames("rc-tooltip", { show })}
+              onAnimationEnd={handleAnimationEnd}
+              data-arrow={arrow}
+              style={styles}
+              {...attributes}
+            >
+              {children}
+            </div>
+          );
+        }}
+      />
     </Portal>
   );
 };
@@ -80,7 +77,20 @@ Tooltip.defaultProps = {
 
 Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf(["bottom", "top", "left", "right"]),
+  position: PropTypes.oneOf([
+    "left",
+    "left-start",
+    "left-end",
+    "right",
+    "right-start",
+    "right-end",
+    "top",
+    "top-start",
+    "top-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+  ]),
   text: PropTypes.string,
   offset: PropTypes.number,
   arrow: PropTypes.bool,

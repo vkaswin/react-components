@@ -1,9 +1,13 @@
 export const routes = [
   {
     name: "MainLayout",
-    path: "react-components",
+    path: "/",
     componentPath: "layout",
     children: [
+      {
+        path: "accordian",
+        componentPath: "pages/Accordian",
+      },
       {
         path: "stepper",
         componentPath: "pages/Stepper",
@@ -51,10 +55,6 @@ export const routes = [
       {
         path: "toast",
         componentPath: "pages/Toast",
-      },
-      {
-        path: "accordian",
-        componentPath: "pages/Accordian",
       },
       {
         path: "modal",

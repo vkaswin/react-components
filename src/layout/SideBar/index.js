@@ -26,8 +26,8 @@ export const SideBar = ({ isOpen, toggle, options }) => {
                   <NavLink
                     key={index}
                     to={to}
-                    className={({ isActive }) =>
-                      classNames("nav-item", { isActive })
+                    className={({ isActive: active }) =>
+                      classNames("nav-item", { active })
                     }
                     onClick={toggle}
                   >

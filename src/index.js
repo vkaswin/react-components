@@ -1,4 +1,4 @@
-import React, { StrictMode, Component } from "react";
+import React, { StrictMode, Fragment } from "react";
 import { createRoot } from "react-dom/client";
 import { Router } from "router";
 import { ToastContainer } from "components";
@@ -10,38 +10,12 @@ const rootElement = document.getElementById("root");
 
 const root = createRoot(rootElement);
 
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    console.log(error);
-    return { hasError: true };
-  }
-
-  render() {
-    const { hasError } = this.state;
-    const { children } = this.props;
-
-    if (hasError)
-      return (
-        <div>
-          <h1>Something went wrong.</h1>
-        </div>
-      );
-
-    return children;
-  }
-}
-
 const App = () => {
   return (
-    <ErrorBoundary>
+    <Fragment>
       <Router />
       <ToastContainer />
-    </ErrorBoundary>
+    </Fragment>
   );
 };
 

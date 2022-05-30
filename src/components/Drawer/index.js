@@ -34,7 +34,7 @@ export const Drawer = ({ position, isOpen, toggle, children, className }) => {
         >
           {children}
         </div>
-        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1024} portal={false} />
+        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} portal={false} />
       </div>
     </Portal>
   );

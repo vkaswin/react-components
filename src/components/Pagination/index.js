@@ -2,102 +2,57 @@ import React, { useEffect, useState } from "react";
 
 import "./Pagination.scss";
 
+const dot = <i className="fas fa-ellipsis-h"></i>;
+
 export const Pagination = ({ activePage, totalPages, onPageChange }) => {
-  const pages = [];
-
-  for (let index = 1; index <= totalPages; index++) {
-    pages.push(index);
-  }
-
   const [pageList, setPageList] = useState([]);
 
+  const pages = Array.from(Array(totalPages), (_, index) => {
+    return index + 1;
+  });
+
   useEffect(() => {
-    if (activePage < 5) {
-      setPageList([
-        ...pages.splice(0, activePage >= 3 ? activePage + 1 : 3),
-        "...",
-        ...pages.splice(pages.length - 3, pages.length),
-      ]);
-    } else if (activePage > pages.length - 4) {
-      setPageList([
-        ...pages.splice(0, 3),
-        "...",
-        ...pages.splice(pages.length - 5, pages.length),
-      ]);
-    } else {
-      setPageList([
-        ...pages.splice(0, 3),
-        "...",
-        activePage - 1,
-        activePage,
-        activePage + 1,
-        "...",
-        ...pages.splice(pages.length - 3, pages.length),
-      ]);
-    }
+    setPageList([...pages.slice(0, 3), dot, ...pages.slice(-3)]);
   }, [activePage, totalPages]);
 
   const handleNext = () => {
-    if (activePage < totalPages) {
-      onPageChange(activePage + 1);
-    }
+    if (activePage > totalPages) return;
+    onPageChange(activePage + 1);
   };
 
   const handlePrevious = () => {
-    if (activePage > 1) {
-      onPageChange(activePage - 1);
-    }
+    if (activePage <= 1) return;
+    onPageChange(activePage - 1);
   };
 
-  const handlePageChange = (page, index) => {
-    if (activePage !== page) {
-      if (typeof page === "number") {
-        onPageChange(page);
-      } else {
-        const dot = pageList.filter((list) => {
-          return list === "...";
-        });
-        if (dot.length === 1) {
-          if (pages.length - 3 <= activePage) {
-            onPageChange(activePage - 2);
-          } else {
-            onPageChange(activePage + 2);
-          }
-        } else {
-          if (index === 3) {
-            onPageChange(activePage - 2);
-          } else {
-            onPageChange(activePage + 2);
-          }
-        }
-      }
-    }
+  const handlePageChange = (page, index) => () => {
+    onPageChange(page);
   };
 
   return (
-    <div className="pagination-container">
+    <div className="rc-pagination">
       <button
         className="pagination-prev"
-        onClick={() => handlePrevious()}
+        onClick={handlePrevious}
         disabled={activePage === 1}
       >
         <i className="fas fa-chevron-left"></i>
         <label>Prev</label>
       </button>
-      {pageList.map((list, index) => {
+      {pageList.map((page, index) => {
         return (
           <button
             key={index}
-            className={activePage === list ? "page-btn active" : "page-btn"}
-            onClick={() => handlePageChange(list, index)}
+            className={activePage === page ? "page-btn active" : "page-btn"}
+            onClick={handlePageChange(page, index)}
           >
-            {list}
+            {page}
           </button>
         );
       })}
       <button
         className="pagination-next"
-        onClick={() => handleNext()}
+        onClick={handleNext}
         disabled={activePage === pages.length}
       >
         <label>Next</label>

@@ -13,8 +13,6 @@ export const Popper = ({ render, target, position, offset }) => {
 
   useEffect(() => {
     getElementPosition();
-    window.addEventListener("resize", getElementPosition);
-    return () => window.removeEventListener("resize", getElementPosition);
   }, []);
 
   const ref = (element) => {

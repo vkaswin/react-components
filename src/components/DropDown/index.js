@@ -59,16 +59,16 @@ export const DropDown = ({ children }) => {
   );
 };
 
-const Toggle = ({ children, action, className }) => {
+const Toggle = ({ children, trigger, className }) => {
   const { openDropDown, closeDropDown, targetRef } = useDropDown();
 
   return (
     <button
       className={classNames(className)}
       ref={targetRef}
-      onClick={() => action === "click" && openDropDown()}
-      onMouseEnter={() => action === "hover" && openDropDown()}
-      onMouseLeave={() => action === "hover" && closeDropDown()}
+      onClick={() => trigger === "click" && openDropDown()}
+      onMouseEnter={() => trigger === "hover" && openDropDown()}
+      onMouseLeave={() => trigger === "hover" && closeDropDown()}
     >
       {children}
     </button>
@@ -125,7 +125,7 @@ DropDown.Item = Item;
 
 DropDown.propTypes = {
   children: PropTypes.node.isRequired,
-  action: PropTypes.string,
+  trigger: PropTypes.string,
 };
 
 // Menu PropTypes
@@ -158,12 +158,12 @@ Menu.defaultProps = {
 
 Toggle.propTypes = {
   children: PropTypes.node.isRequired,
-  action: PropTypes.oneOf(["click", "hover"]),
+  trigger: PropTypes.oneOf(["click", "hover"]),
   classNames: PropTypes.string,
 };
 
 Toggle.defaultProps = {
-  action: "click",
+  trigger: "click",
   classNames: "",
 };
 

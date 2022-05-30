@@ -124,6 +124,10 @@ export const routes = [
         path: "tab",
         componentPath: "pages/Tab",
       },
+      {
+        path: "scroll-to",
+        componentPath: "pages/ScrollTo",
+      },
     ],
   },
 ];

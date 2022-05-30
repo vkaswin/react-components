@@ -97,7 +97,7 @@ export const Popper = ({ render, target, position, offset }) => {
   };
 
   const canPlaceOnRightStart = (ele, ref) => {
-    return ele.y > ref.height - ele.height;
+    return innerHeight - (ele.y + ele.height) > ref.height - ele.height;
   };
 
   const canPlaceOnRightEnd = (ele, ref) => {

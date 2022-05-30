@@ -31,3 +31,4 @@ export { Drawer } from "./Drawer";
 export { Portal } from "./Portal";
 export { Overlay } from "./Overlay";
 export { Popper } from "./Popper";
+export { ScrollTo } from "./ScrollTo";

@@ -9,91 +9,91 @@ const DropDownPage = () => {
       label: "Left",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "left",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Left Start",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "left-start",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Left End",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "left-end",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Right",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "right",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Right Start",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "right-start",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Right End",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "right-end",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Top",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "top",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Top Start",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "top-start",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Top End",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "top-end",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Bottom",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "bottom",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Bottom Start",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "bottom-start",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Bottom End",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "bottom-end",
-      action: "click",
+      trigger: "click",
     },
     {
       label: "Right",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "right",
-      action: "hover",
+      trigger: "hover",
     },
     {
       label: "Bottom",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "bottom",
-      action: "hover",
+      trigger: "hover",
     },
     {
       label: "Left Start",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
       position: "left-start",
-      action: "hover",
+      trigger: "hover",
     },
   ];
 
@@ -101,10 +101,10 @@ const DropDownPage = () => {
     <div>
       <h1>DropDown</h1>
       <div className="drop-down-btn">
-        {dropDown.map(({ label, children, position, action }, index) => {
+        {dropDown.map(({ label, children, position, trigger }, index) => {
           return (
             <DropDown key={index}>
-              <DropDown.Toggle action={action} className="btn btn-secondary">
+              <DropDown.Toggle trigger={trigger} className="btn btn-secondary">
                 <span>{label}</span>
               </DropDown.Toggle>
               <DropDown.Menu position={position}>

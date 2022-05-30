@@ -1,0 +1,17 @@
+.rc-scroll-to {
+  position: fixed;
+  bottom: 15px;
+  z-index: 1025;
+  animation: rc_fadeOut 0.3s linear forwards;
+  &:is(.show) {
+    animation: rc_fadeIn 0.3s linear forwards;
+  }
+}
+
+.rc-scroll-to[data-position="right"] {
+  right: 15px;
+}
+
+.rc-scroll-to[data-position="left"] {
+  left: 15px;
+}

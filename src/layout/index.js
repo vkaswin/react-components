@@ -126,6 +126,10 @@ const options = [
     label: "Tab",
     to: "tab",
   },
+  {
+    label: "ScrollTo",
+    to: "scroll-to",
+  },
 ];
 
 const Layout = () => {

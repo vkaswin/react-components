@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useWindowSize } from "hooks";
 
 export const Popper = ({ render, target, position, offset }) => {
+  const popperRef = useRef();
+
   const [state, setState] = useState({
     styles: { position: "absolute", inset: "0px auto auto 0px" },
-    attributes: {},
+    position,
   });
 
   const { innerWidth, innerHeight } = window;
@@ -16,149 +17,299 @@ export const Popper = ({ render, target, position, offset }) => {
     return () => window.removeEventListener("resize", getElementPosition);
   }, []);
 
+  const ref = (element) => {
+    popperRef.current = element;
+  };
+
   const getElementPosition = () => {
     const ele = target.current.getBoundingClientRect(); // target element
 
-    const ref = render(state).ref.current.getBoundingClientRect(); // element to show
+    const ref = popperRef.current.getBoundingClientRect(); // element to show
 
-    const [prefix, suffix = prefix] = position.split("-");
-
-    switch (prefix) {
+    switch (position) {
       case "left":
-        if (
-          !(
-            ele.x > ref.width &&
-            (innerHeight - (ele.y + ele.height) > ref.height - ele.height ||
-              ele.x > ref.height - ele.height ||
-              (ele.y > ref.height / 4 &&
-                innerHeight - (ele.y + ele.height) > ref.height / 4))
-          )
-        )
-          return;
-
-        switch (suffix) {
-          case "left":
-            updateValue({
-              x: ele.x - ref.width - offset,
-              y: ele.y - (ref.height / 2 - ele.height / 2),
-              position: "left",
-            });
-            return;
-          case "start":
-            updateValue({
-              x: ele.x - ref.width - offset,
-              y: ele.y,
-              position: "left-start",
-            });
-            return;
-          case "end":
-            updateValue({
-              x: ele.x - ref.width - offset,
-              y: ele.y - (ref.height - ele.height),
-              position: "left-end",
-            });
-            return;
-          default:
-            return;
-        }
+        if (!canPlaceOnLeft(ele, ref)) break;
+        showOnLeft(ele, ref);
+        return;
+      case "left-start":
+        if (!canPlaceOnLeftStart(ele, ref)) break;
+        showOnLeftStart(ele, ref);
+        return;
+      case "left-end":
+        if (!canPlaceOnLeftEnd(ele, ref)) break;
+        showOnLeftEnd(ele, ref);
+        return;
       case "right":
-        switch (suffix) {
-          case "right":
-            updateValue({
-              x: ele.x + ele.width + offset,
-              y: ele.y - (ref.height / 2 - ele.height / 2),
-              position: "right",
-            });
-            return;
-          case "start":
-            updateValue({
-              x: ele.x + ele.width + offset,
-              y: ele.y,
-              position: "right-start",
-            });
-            return;
-          case "end":
-            updateValue({
-              x: ele.x + ele.width + offset,
-              y: ele.y - ele.height,
-              position: "right-end",
-            });
-            return;
-          default:
-            return;
-        }
-
+        if (!canPlaceOnRight(ele, ref)) break;
+        showOnRight(ele, ref);
+        return;
+      case "right-start":
+        if (!canPlaceOnRightStart(ele, ref)) break;
+        showOnRightStart(ele, ref);
+        return;
+      case "right-end":
+        if (!canPlaceOnRightEnd(ele, ref)) break;
+        showOnRightEnd(ele, ref);
+        return;
       case "top":
-        switch (suffix) {
-          case "top":
-            updateValue({
-              x: ele.x + (ele.width / 2 - ref.width / 2),
-              y: ele.y - (ref.height + offset),
-              position: "top",
-            });
-            return;
-          case "start":
-            updateValue({
-              x: ele.x,
-              y: ele.y - (ref.height + offset),
-              position: "top-start",
-            });
-            return;
-          case "end":
-            updateValue({
-              x: ele.x - (ref.width - ele.width),
-              y: ele.y - (ref.height + offset),
-              position: "top-end",
-            });
-            return;
-          default:
-            return;
-        }
-
+        if (!canPlaceOnTop(ele, ref)) break;
+        showOnTop(ele, ref);
+        return;
+      case "top-start":
+        if (!canPlaceOnTopStart(ele, ref)) break;
+        showOnTopStart(ele, ref);
+        return;
+      case "top-end":
+        if (!canPlaceOnTopEnd(ele, ref)) break;
+        showOnTopEnd(ele, ref);
+        return;
       case "bottom":
-        switch (suffix) {
-          case "bottom":
-            updateValue({
-              x: ele.x + (ele.width / 2 - ref.width / 2),
-              y: ele.y + ele.height + offset,
-              position: "bottom",
-            });
-            return;
-          case "start":
-            updateValue({
-              x: ele.x,
-              y: ele.y + ele.height + offset,
-              position: "bottom-start",
-            });
-            return;
-          case "end":
-            updateValue({
-              x: ele.x - (ref.width - ele.width),
-              y: ele.y + ele.height + offset,
-              position: "bottom-end",
-            });
-            return;
-          default:
-            return;
-        }
-
+        if (!canPlaceOnBottom(ele, ref)) break;
+        showOnBottom(ele, ref);
+        return;
+      case "bottom-start":
+        if (!canPlaceOnBottomStart(ele, ref)) break;
+        showOnBottomStart(ele, ref);
+        return;
+      case "bottom-end":
+        if (!canPlaceOnBottomEnd(ele, ref)) break;
+        showOnBottomEnd(ele, ref);
+        return;
       default:
         return;
     }
+
+    autoPlacement(ele, ref, position);
   };
 
-  const updateValue = ({ x, y, position }) => {
+  const canPlaceOnLeft = (ele, ref) => {
+    return ele.x > ref.width;
+  };
+
+  const canPlaceOnLeftStart = (ele, ref) => {
+    return innerHeight - (ele.y + ele.height) > ref.height - ele.height;
+  };
+
+  const canPlaceOnLeftEnd = (ele, ref) => {
+    return ele.x > ref.height - ele.height;
+  };
+
+  const canPlaceOnRight = (ele, ref) => {
+    return innerWidth - (ele.x + ele.width) > ref.width;
+  };
+
+  const canPlaceOnRightStart = (ele, ref) => {
+    return ele.y > ref.height - ele.height;
+  };
+
+  const canPlaceOnRightEnd = (ele, ref) => {
+    return ele.y > ref.height - ele.height;
+  };
+
+  const canPlaceOnTop = (ele, ref) => {
+    return ele.y > ref.height;
+  };
+
+  const canPlaceOnTopStart = (ele, ref) => {
+    return innerWidth - (ele.x + ele.width) > ref.width - ele.width;
+  };
+
+  const canPlaceOnTopEnd = (ele, ref) => {
+    return ele.x > ref.width - ele.width;
+  };
+
+  const canPlaceOnBottom = (ele, ref) => {
+    return innerHeight - (ele.y + ele.height) > ref.height;
+  };
+
+  const canPlaceOnBottomStart = (ele, ref) => {
+    return innerWidth - (ele.x + ele.width) > ref.width - ele.width;
+  };
+
+  const canPlaceOnBottomEnd = (ele, ref) => {
+    return ele.x > ref.width - ele.width;
+  };
+
+  const showOnLeft = (ele, ref) => {
+    setElementPosition({
+      x: ele.x - ref.width - offset,
+      y: ele.y - (ref.height / 2 - ele.height / 2),
+      position: "left",
+    });
+  };
+
+  const showOnLeftStart = (ele, ref) => {
+    setElementPosition({
+      x: ele.x - ref.width - offset,
+      y: ele.y,
+      position: "left-start",
+    });
+  };
+
+  const showOnLeftEnd = (ele, ref) => {
+    setElementPosition({
+      x: ele.x - ref.width - offset,
+      y: ele.y - (ref.height - ele.height),
+      position: "left-end",
+    });
+  };
+
+  const showOnRight = (ele, ref) => {
+    setElementPosition({
+      x: ele.x + ele.width + offset,
+      y: ele.y - (ref.height / 2 - ele.height / 2),
+      position: "right",
+    });
+  };
+
+  const showOnRightStart = (ele, ref) => {
+    setElementPosition({
+      x: ele.x + ele.width + offset,
+      y: ele.y,
+      position: "right-start",
+    });
+  };
+
+  const showOnRightEnd = (ele, ref) => {
+    setElementPosition({
+      x: ele.x + ele.width + offset,
+      y: Math.abs(ele.y - (ref.height - ele.height)),
+      position: "right-end",
+    });
+  };
+
+  const showOnTop = (ele, ref) => {
+    setElementPosition({
+      x: ele.x + (ele.width / 2 - ref.width / 2),
+      y: ele.y - (ref.height + offset),
+      position: "top",
+    });
+  };
+
+  const showOnTopStart = (ele, ref) => {
+    setElementPosition({
+      x: ele.x,
+      y: ele.y - (ref.height + offset),
+      position: "top-start",
+    });
+  };
+
+  const showOnTopEnd = (ele, ref) => {
+    setElementPosition({
+      x: ele.x - (ref.width - ele.width),
+      y: ele.y - (ref.height + offset),
+      position: "top-end",
+    });
+  };
+
+  const showOnBottomStart = (ele, ref) => {
+    setElementPosition({
+      x: ele.x,
+      y: ele.y + ele.height + offset,
+      position: "bottom-start",
+    });
+  };
+
+  const showOnBottomEnd = (ele, ref) => {
+    setElementPosition({
+      x: ele.x - (ref.width - ele.width),
+      y: ele.y + ele.height + offset,
+      position: "bottom-end",
+    });
+  };
+
+  const showOnBottom = (ele, ref) => {
+    setElementPosition({
+      x: ele.x + (ele.width / 2 - ref.width / 2),
+      y: ele.y + ele.height + offset,
+      position: "bottom",
+    });
+  };
+
+  const autoPlacement = (ele, ref, position) => {
+    const [placement] = position.split("-");
+
+    if (placement === "left") {
+      if (canPlaceOnRight(ele, ref)) {
+        showOnRight(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnRightStart(ele, ref)) {
+        showOnRightStart(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnRightEnd(ele, ref)) {
+        showOnRightEnd(ele, ref);
+        return;
+      }
+    }
+
+    if (placement === "right") {
+      if (canPlaceOnLeft(ele, ref)) {
+        showOnLeft(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnLeftStart(ele, ref)) {
+        showOnLeftStart(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnLeftEnd(ele, ref)) {
+        showOnLeftEnd(ele, ref);
+        return;
+      }
+    }
+
+    if (placement === "top") {
+      if (canPlaceOnBottom(ele, ref)) {
+        showOnBottom(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnBottomStart(ele, ref)) {
+        showOnBottomStart(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnBottomEnd(ele, ref)) {
+        showOnBottomEnd(ele, ref);
+        return;
+      }
+    }
+
+    if (placement === "bottom") {
+      if (canPlaceOnTop(ele, ref)) {
+        showOnTop(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnTopStart(ele, ref)) {
+        showOnTopStart(ele, ref);
+        return;
+      }
+
+      if (canPlaceOnTopEnd(ele, ref)) {
+        showOnTopEnd(ele, ref);
+        return;
+      }
+    }
+  };
+
+  const setElementPosition = ({ x, y, position }) => {
     setState({
       ...state,
       styles: {
         ...state.styles,
         transform: `translate(${x}px,${y}px`,
       },
-      attributes: { "data-position": position },
+      position,
     });
   };
 
-  return render(state);
+  return render({ ...state, ref });
 };
 
 Popper.propTypes = {

@@ -19,8 +19,6 @@ const useToolTip = () => {
 };
 
 export const Tooltip = ({ children }) => {
-  const tooltipRef = useRef();
-
   const targetRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +43,6 @@ export const Tooltip = ({ children }) => {
   return (
     <ToolTipContext.Provider
       value={{
-        tooltipRef,
         targetRef,
         isOpen,
         show,
@@ -69,7 +66,7 @@ const Toggle = ({ children }) => {
 };
 
 const Menu = ({ children, position, arrow, offset }) => {
-  const { isOpen, show, tooltipRef, targetRef, onAnimationEnd } = useToolTip();
+  const { isOpen, show, targetRef, onAnimationEnd } = useToolTip();
 
   if (!isOpen) return;
 
@@ -79,15 +76,15 @@ const Menu = ({ children, position, arrow, offset }) => {
         target={targetRef}
         position={position}
         offset={offset}
-        render={({ styles, attributes }) => {
+        render={({ styles, position, ref }) => {
           return (
             <div
-              ref={tooltipRef}
+              ref={ref}
               className={classNames("rc-tooltip", { show })}
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
+              data-position={position}
               style={styles}
-              {...attributes}
             >
               {children}
             </div>

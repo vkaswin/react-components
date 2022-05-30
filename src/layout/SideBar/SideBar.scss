@@ -60,3 +60,11 @@
     }
   }
 }
+
+@media only screen and (max-width: 992px) {
+  .side-bar {
+    &:not(.show) {
+      left: -250px;
+    }
+  }
+}

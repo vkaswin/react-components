@@ -22,8 +22,6 @@ export const DropDown = ({ children }) => {
 
   const [show, setShow] = useState(false);
 
-  const menuRef = useRef();
-
   const targetRef = useRef();
 
   const openDropDown = () => {
@@ -50,7 +48,6 @@ export const DropDown = ({ children }) => {
       value={{
         isOpen,
         show,
-        menuRef,
         targetRef,
         openDropDown,
         closeDropDown,
@@ -79,7 +76,7 @@ const Toggle = ({ children, action, className }) => {
 };
 
 const Menu = ({ children, position, offset }) => {
-  const { isOpen, show, targetRef, menuRef, onAnimationEnd } = useDropDown();
+  const { isOpen, show, targetRef, onAnimationEnd } = useDropDown();
 
   if (!isOpen) return;
 
@@ -88,14 +85,14 @@ const Menu = ({ children, position, offset }) => {
       target={targetRef}
       position={position}
       offset={offset}
-      render={({ styles, attributes }) => {
+      render={({ styles, position, ref }) => {
         return (
           <div
-            ref={menuRef}
+            ref={ref}
             className={classNames("rc-dropdown-menu", { show })}
             onAnimationEnd={onAnimationEnd}
             style={styles}
-            {...attributes}
+            data-position={position}
           >
             {children}
           </div>

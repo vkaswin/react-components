@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[2967],{16596:function(n,e,t){t.r(e),t.d(e,{useOnClickOutSide:function(){return c}});var c=function(n,e){var t=function(){document.removeEventListener("click",c)},c=function(c){var r=c.target;null!==n&&void 0!==n&&n.current&&!n.current.contains(r)&&(t(),e())};return[function(){document.addEventListener("click",c)},t]}}}]);
+//# sourceMappingURL=hooks-useClickOnOutSide.ba6bdc22.chunk.js.map

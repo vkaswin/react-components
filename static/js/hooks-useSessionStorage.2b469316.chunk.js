@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5013],{12422:function(e,t,n){n.r(t),n.d(t,{useSessionStorage:function(){return s}});var s=function(){return{getItem:function(e){return JSON.parse(sessionStorage.getItem(e))},setItem:function(e){var t=e.key,n=void 0===t?"":t,s=e.value,o=void 0===s?"":s;sessionStorage.setItem(n,JSON.stringify(o))},removeItem:function(e){sessionStorage.removeItem(e)},reset:function(){sessionStorage.clear()}}}}}]);
+//# sourceMappingURL=hooks-useSessionStorage.2b469316.chunk.js.map

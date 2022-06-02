@@ -71,13 +71,13 @@ export const stringifyQuery = (query = {}) => {
 export const classNames = (...args) => {
   return String(
     args.reduce((initial, className) => {
-      if (typeof className !== "object" && Boolean(className)) {
+      if (typeof className === "string") {
         return `${initial} ${className}`;
       }
 
       const type = getDateType(className);
 
-      if (type == "object") {
+      if (type === "object") {
         return Object.entries(className)
           .filter(([_, value]) => value)
           .reduce((initial, [key, _]) => `${initial} ${key}`, initial);
@@ -112,58 +112,6 @@ export const clickOutside = ({ ref, onClose }) => {
   document.addEventListener("click", handleClickOutside);
 };
 
-export const positionElement = ({ reference, element, position, offset }) => {
-  // { bottom, height, left, right, top, width, x, y }
-  const ref = reference.getBoundingClientRect();
-  const ele = element.getBoundingClientRect();
-
-  console.log(ref, ele);
-
-  const showOnLeft = () => {
-    const left = ref.x - ele.width - offset;
-    const top = ref.y - (ele.height / 2 - ref.height / 2);
-
-    element.style.cssText = `transform: translate(${left}px,${top}px);`;
-  };
-
-  const showOnRight = () => {
-    const left = ref.x + ref.width + offset;
-    const top = ref.y - (ele.height / 2 - ref.height / 2);
-
-    element.style.cssText = `transform: translate(${left}px,${top}px);`;
-  };
-
-  const showOnBottom = () => {
-    const top = ref.y + (ref.height + offset);
-    const left = ref.x + (ref.width / 2 - ele.width / 2);
-
-    element.style.cssText = `transform: translate(${left}px,${top}px);`;
-  };
-
-  const showOnTop = () => {
-    const left = ref.x + (ref.width / 2 - ele.width / 2);
-    const top = ref.y - (ele.height + offset);
-
-    element.style.cssText = `transform: translate(${left}px,${top}px);`;
-  };
-
-  if (position === "left") {
-    showOnLeft();
-  }
-
-  if (position === "right") {
-    showOnRight();
-  }
-
-  if (position === "top") {
-    showOnTop();
-  }
-
-  if (position === "bottom") {
-    showOnBottom();
-  }
-};
-
 export const fileType = (fileName) => {
   return String(fileName).split(".")[String(fileName).split(".").length - 1];
 };
@@ -172,8 +120,15 @@ export const isLeapYear = (year) => {
   return new Date(year, 1, 29).getDate() === 29;
 };
 
+//? Select a random element in an array
+// const getRandomElement = (array) => {
+//   if (!Array.isArray(array)) return;
+
+//   return Math.floor(Math.random() * array.length);
+// };
+
 //? Sort by name
-// let sortData = dataSet.sort((curr, prev) => {
+// const sortData = dataSet.sort((curr, prev) => {
 //   return curr.label.localeCompare(prev.label);
 // });
 

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5707],{48460:function(e,c,n){n.r(c),c.default={}}}]);
+//# sourceMappingURL=assets-scss-_font-scss.a70168fe.chunk.js.map

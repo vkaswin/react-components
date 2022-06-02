@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5272,3632],{5637:function(c,e,l){l.r(e);var n=l(72791),s=(l(4311),l(80184));e.default=function(){return(0,s.jsx)(n.Fragment,{children:(0,s.jsx)("div",{className:"row",children:Array(12).fill("").map((function(c,e){return(0,s.jsx)("div",{className:"col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2",children:(0,s.jsx)("div",{className:"flex-item",children:e+1})},e)}))})})}},4311:function(c,e,l){l.r(e),e.default={}}}]);
+//# sourceMappingURL=pages-FlexBox.8ad063de.chunk.js.map

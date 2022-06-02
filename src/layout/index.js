@@ -130,6 +130,10 @@ const options = [
     label: "ScrollTo",
     to: "scroll-to",
   },
+  {
+    label: "Flex Box",
+    to: "flex-box",
+  },
 ];
 
 const Layout = () => {

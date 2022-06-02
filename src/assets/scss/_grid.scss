@@ -1,0 +1,74 @@
+@import "./mixins";
+
+$breakpoints: (
+  "xl": 1200px,
+  "lg": 992px,
+  "md": 768px,
+  "sm": 576,
+);
+
+$grid-columns: 12;
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0px -15px;
+}
+
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 calc(($i / $grid-columns) * 100%);
+    max-width: calc(($i / $grid-columns) * 100%);
+    padding: 0px 15px;
+  }
+}
+
+@include xl {
+  @for $i from 1 through $grid-columns {
+    .col-xl-#{$i} {
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
+      padding: 0px 15px;
+    }
+  }
+}
+
+@include lg {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
+      padding: 0px 15px;
+    }
+  }
+}
+
+@include md {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
+      padding: 0px 15px;
+    }
+  }
+}
+
+@include sm {
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
+      padding: 0px 15px;
+    }
+  }
+}
+
+@include xs {
+  @for $i from 1 through $grid-columns {
+    .col-xs-#{$i} {
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
+      padding: 0px 15px;
+    }
+  }
+}

@@ -128,6 +128,10 @@ export const routes = [
         path: "scroll-to",
         componentPath: "pages/ScrollTo",
       },
+      {
+        path: "flex-box",
+        componentPath: "pages/FlexBox",
+      },
     ],
   },
 ];

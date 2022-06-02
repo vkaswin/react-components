@@ -4,7 +4,7 @@ import { Router } from "router";
 import { ToastContainer } from "components";
 import reportWebVitals from "./reportWebVitals";
 
-import "assets/scss/common.scss";
+import "assets/scss/index.scss";
 
 const rootElement = document.getElementById("root");
 

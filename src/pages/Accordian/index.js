@@ -21,7 +21,7 @@ const AccordainPage = () => {
   ];
   return (
     <div className="row">
-      <div className="col-md-6">
+      <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
         {accordian.map(({ title, content }, index) => {
           return <Accordain key={index} title={title} content={content} />;
         })}

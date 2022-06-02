@@ -63,14 +63,14 @@
 .rc-tooltip[data-position="left-start"],
 .rc-tooltip[data-position="right-start"] {
   &::before {
-    top: 30%;
+    top: 15px;
   }
 }
 
 .rc-tooltip[data-position="left-end"],
 .rc-tooltip[data-position="right-end"] {
   &::before {
-    top: 70%;
+    bottom: 10px;
   }
 }
 
@@ -106,13 +106,13 @@
 .rc-tooltip[data-position="top-start"],
 .rc-tooltip[data-position="bottom-start"] {
   &::before {
-    left: 15%;
+    left: 15px;
   }
 }
 
 .rc-tooltip[data-position="top-end"],
 .rc-tooltip[data-position="bottom-end"] {
   &::before {
-    left: 85%;
+    right: 10px;
   }
 }

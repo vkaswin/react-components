@@ -31,7 +31,9 @@ const TooltipPage = () => {
               <Tooltip.Menu position={position}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
-                  typesetting
+                  typesetting Lorem Ipsum is simply dummy text of the printing
+                  and typesetting Lorem Ipsum is simply dummy text of the
+                  printing and typesetting
                 </span>
               </Tooltip.Menu>
             </Tooltip>

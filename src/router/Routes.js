@@ -132,6 +132,10 @@ export const routes = [
         path: "flex-box",
         componentPath: "pages/FlexBox",
       },
+      {
+        path: "grid",
+        componentPath: "pages/Grid",
+      },
     ],
   },
 ];

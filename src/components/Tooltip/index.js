@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 import { Portal } from "components/Portal";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
@@ -76,11 +70,11 @@ const Menu = ({ children, position, arrow, offset }) => {
         target={targetRef}
         position={position}
         offset={offset}
-        render={({ styles, position, ref }) => {
+        render={({ styles, position, isVisible, ref }) => {
           return (
             <div
               ref={ref}
-              className={classNames("rc-tooltip", { show })}
+              className={classNames("rc-tooltip", { show: show && isVisible })}
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               data-position={position}

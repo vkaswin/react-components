@@ -134,6 +134,10 @@ const options = [
     label: "Flex Box",
     to: "flex-box",
   },
+  {
+    label: "Grid",
+    to: "grid",
+  },
 ];
 
 const Layout = () => {

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 export const Popper = ({ render, target, position, offset }) => {
@@ -9,10 +9,13 @@ export const Popper = ({ render, target, position, offset }) => {
     position,
   });
 
-  const { innerWidth, innerHeight } = window;
-
   useLayoutEffect(() => {
     findPosition();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", findPosition);
+    return () => window.removeEventListener("resize", findPosition);
   }, []);
 
   const ref = (element) => {
@@ -23,6 +26,8 @@ export const Popper = ({ render, target, position, offset }) => {
     const ele = target.current.getBoundingClientRect(); //target element
 
     const ref = popper.current.getBoundingClientRect(); // element to show
+
+    const { innerWidth, innerHeight } = window;
 
     const canPlaceOnLeft = () => {
       return ele.x > ref.width;

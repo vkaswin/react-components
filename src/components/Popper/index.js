@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import PropTypes, { bool } from "prop-types";
+import { useLayoutEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 
 export const Popper = ({ render, target, position, offset }) => {
   const popper = useRef();
@@ -7,12 +7,11 @@ export const Popper = ({ render, target, position, offset }) => {
   const [state, setState] = useState({
     styles: { position: "absolute", inset: "0px auto auto 0px" },
     position,
-    isVisible: false,
   });
 
   const { innerWidth, innerHeight } = window;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     findPosition();
   }, []);
 
@@ -351,7 +350,6 @@ export const Popper = ({ render, target, position, offset }) => {
         transform: `translate(${x}px,${y}px`,
       },
       position,
-      isVisible: true,
     });
   };
 

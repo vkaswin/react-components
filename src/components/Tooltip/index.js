@@ -70,11 +70,11 @@ const Menu = ({ children, position, arrow, offset }) => {
         target={targetRef}
         position={position}
         offset={offset}
-        render={({ styles, position, isVisible, ref }) => {
+        render={({ styles, position, ref }) => {
           return (
             <div
               ref={ref}
-              className={classNames("rc-tooltip", { show: show && isVisible })}
+              className={classNames("rc-tooltip", { show: show })}
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               data-position={position}

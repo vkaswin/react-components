@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useRef, useState } from "react";
-import { Portal } from "components/Portal";
+import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
-import { Popper } from "components";
+import { PopperPlacements } from "utils/constants";
 
 import "./Tooltip.scss";
 
@@ -59,7 +59,7 @@ const Toggle = ({ children }) => {
   );
 };
 
-const Menu = ({ children, position, arrow, offset }) => {
+const Menu = ({ children, position, arrow, offset, className }) => {
   const { isOpen, show, targetRef, onAnimationEnd } = useToolTip();
 
   if (!isOpen) return;
@@ -74,7 +74,10 @@ const Menu = ({ children, position, arrow, offset }) => {
           return (
             <div
               ref={ref}
-              className={classNames("rc-tooltip", { show: show })}
+              className={classNames("rc-tooltip", {
+                show: show,
+                [className]: className,
+              })}
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               data-position={position}
@@ -104,27 +107,16 @@ Toggle.propTypes = {
 
 // Tooltip Menu
 Menu.defaultProps = {
-  position: "top",
+  position: "top-center",
   arrow: true,
   offset: 10,
+  className: null,
 };
 
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf([
-    "left",
-    "left-start",
-    "left-end",
-    "right",
-    "right-start",
-    "right-end",
-    "top",
-    "top-start",
-    "top-end",
-    "bottom",
-    "bottom-start",
-    "bottom-end",
-  ]),
+  position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
   arrow: PropTypes.bool,
+  className: PropTypes.string,
 };

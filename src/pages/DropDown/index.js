@@ -6,9 +6,9 @@ import "./DropDown.scss";
 const DropDownPage = () => {
   const dropDown = [
     {
-      label: "Left",
+      label: "Left Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "left",
+      position: "left-center",
       trigger: "click",
     },
     {
@@ -24,9 +24,9 @@ const DropDownPage = () => {
       trigger: "click",
     },
     {
-      label: "Right",
+      label: "Right Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "right",
+      position: "right-center",
       trigger: "click",
     },
     {
@@ -42,9 +42,9 @@ const DropDownPage = () => {
       trigger: "click",
     },
     {
-      label: "Top",
+      label: "Top Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "top",
+      position: "top-center",
       trigger: "click",
     },
     {
@@ -60,9 +60,9 @@ const DropDownPage = () => {
       trigger: "click",
     },
     {
-      label: "Bottom",
+      label: "Bottom Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "bottom",
+      position: "bottom-center",
       trigger: "click",
     },
     {
@@ -78,15 +78,15 @@ const DropDownPage = () => {
       trigger: "click",
     },
     {
-      label: "Right",
+      label: "Right Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "right",
+      position: "right-center",
       trigger: "hover",
     },
     {
-      label: "Bottom",
+      label: "Bottom Center",
       children: ["Option One", "Option Two", "Option Three", "Option Four"],
-      position: "bottom",
+      position: "bottom-center",
       trigger: "hover",
     },
     {

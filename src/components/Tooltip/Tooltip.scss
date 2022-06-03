@@ -53,8 +53,8 @@
   }
 }
 
-.rc-tooltip[data-position="left"],
-.rc-tooltip[data-position="right"] {
+.rc-tooltip[data-position="left-center"],
+.rc-tooltip[data-position="right-center"] {
   &::before {
     top: 50%;
   }
@@ -96,8 +96,8 @@
   }
 }
 
-.rc-tooltip[data-position="top"],
-.rc-tooltip[data-position="bottom"] {
+.rc-tooltip[data-position="top-center"],
+.rc-tooltip[data-position="bottom-center"] {
   &::before {
     left: 50%;
   }

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { PopperPlacements } from "utils/constants";
 
 export const Popper = ({ render, target, position, offset }) => {
   const popper = useRef();
@@ -28,6 +29,24 @@ export const Popper = ({ render, target, position, offset }) => {
     const ref = popper.current.getBoundingClientRect(); // element to show
 
     const { innerWidth, innerHeight } = window;
+
+    // const hasContainer = container?.current || false;
+
+    // const innerWidth = hasContainer ?
+    //    container.current.clientWidth
+    //   : window.innerWidth;
+
+    // const innerHeight = hasContainer ?
+    //    container.current.clientHeight
+    //   : window.innerHeight;
+
+    // const x = hasContainer ?
+    //    ele.x - container.current.getBoundingClientRect().x
+    //   : ele.x;
+
+    // const y = hasContainer ?
+    //    ele.y - container.current.getBoundingClientRect().y
+    //   : ele.y;
 
     const canPlaceOnLeft = () => {
       return ele.x > ref.width;
@@ -103,7 +122,7 @@ export const Popper = ({ render, target, position, offset }) => {
       setElementPosition({
         x: ele.x - ref.width - offset,
         y: ele.y - (ref.height / 2 - ele.height / 2),
-        position: "left",
+        position: "left-center",
       });
     };
 
@@ -127,7 +146,7 @@ export const Popper = ({ render, target, position, offset }) => {
       setElementPosition({
         x: ele.x + ele.width + offset,
         y: ele.y - (ref.height / 2 - ele.height / 2),
-        position: "right",
+        position: "right-center",
       });
     };
 
@@ -142,7 +161,7 @@ export const Popper = ({ render, target, position, offset }) => {
     const showOnRightEnd = () => {
       setElementPosition({
         x: ele.x + ele.width + offset,
-        y: Math.abs(ele.y - (ref.height - ele.height)),
+        y: ele.y - (ref.height - ele.height),
         position: "right-end",
       });
     };
@@ -151,7 +170,7 @@ export const Popper = ({ render, target, position, offset }) => {
       setElementPosition({
         x: ele.x + (ele.width / 2 - ref.width / 2),
         y: ele.y - (ref.height + offset),
-        position: "top",
+        position: "top-center",
       });
     };
 
@@ -191,7 +210,7 @@ export const Popper = ({ render, target, position, offset }) => {
       setElementPosition({
         x: ele.x + (ele.width / 2 - ref.width / 2),
         y: ele.y + ele.height + offset,
-        position: "bottom",
+        position: "bottom-center",
       });
     };
 
@@ -267,24 +286,28 @@ export const Popper = ({ render, target, position, offset }) => {
       const [placement] = position.split("-");
 
       if (placement === "left") {
+        if (canPlaceOnLeft() && showOnLeft()) return;
         if (canPlaceOnRight() && showOnRight()) return;
         if (canPlaceOnTop() && showOnTop()) return;
         if (canPlaceOnBottom() && showOnBottom()) return;
       }
 
       if (placement === "right") {
+        if (canPlaceOnRight() && showOnRight()) return;
         if (canPlaceOnLeft() && showOnLeft()) return;
         if (canPlaceOnTop() && showOnTop()) return;
         if (canPlaceOnBottom() && showOnBottom()) return;
       }
 
       if (placement === "top") {
+        if (canPlaceOnTop() && showOnTop()) return;
         if (canPlaceOnBottom() && showOnBottom()) return;
         if (canPlaceOnLeft() && showOnLeft()) return;
         if (canPlaceOnRight() && showOnRight()) return;
       }
 
       if (placement === "bottom") {
+        if (canPlaceOnBottom() && showOnBottom()) return;
         if (canPlaceOnTop() && showOnTop()) return;
         if (canPlaceOnLeft() && showOnLeft()) return;
         if (canPlaceOnRight() && showOnRight()) return;
@@ -292,7 +315,7 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     switch (position) {
-      case "left":
+      case "left-center":
         if (!(canPlaceOnLeft() && canPlaceOnLeftCenter())) break;
         showOnLeft();
         return;
@@ -304,7 +327,7 @@ export const Popper = ({ render, target, position, offset }) => {
         if (!(canPlaceOnLeft() && canPlaceOnLeftEnd())) break;
         showOnLeftEnd();
         return;
-      case "right":
+      case "right-center":
         if (!(canPlaceOnRight() && canPlaceOnRightCenter())) break;
         showOnRight();
         return;
@@ -316,7 +339,7 @@ export const Popper = ({ render, target, position, offset }) => {
         if (!(canPlaceOnRight() && canPlaceOnRightEnd())) break;
         showOnRightEnd();
         return;
-      case "top":
+      case "top-center":
         if (!(canPlaceOnTop() && canPlaceOnTopCenter())) break;
         showOnTop();
         return;
@@ -328,7 +351,7 @@ export const Popper = ({ render, target, position, offset }) => {
         if (!(canPlaceOnTop() && canPlaceOnTopEnd())) break;
         showOnTopEnd();
         return;
-      case "bottom":
+      case "bottom-center":
         if (!(canPlaceOnBottom() && canPlaceOnBottomCenter())) break;
         showOnBottom();
         return;
@@ -364,20 +387,7 @@ export const Popper = ({ render, target, position, offset }) => {
 Popper.propTypes = {
   render: PropTypes.func.isRequired,
   target: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  position: PropTypes.oneOf([
-    "left",
-    "left-start",
-    "left-end",
-    "right",
-    "right-start",
-    "right-end",
-    "top",
-    "top-start",
-    "top-end",
-    "bottom",
-    "bottom-start",
-    "bottom-end",
-  ]),
+  position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
 };
 

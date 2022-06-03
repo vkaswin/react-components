@@ -1,13 +1,8 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Popper, Portal } from "components";
 import { classNames, clickOutside } from "utils";
+import { PopperPlacements } from "utils/constants";
 
 import "./DropDown.scss";
 
@@ -75,7 +70,7 @@ const Toggle = ({ children, trigger, className }) => {
   );
 };
 
-const Menu = ({ children, position, offset }) => {
+const Menu = ({ children, position, offset, className }) => {
   const { isOpen, show, targetRef, onAnimationEnd } = useDropDown();
 
   if (!isOpen) return;
@@ -89,7 +84,10 @@ const Menu = ({ children, position, offset }) => {
         return (
           <div
             ref={ref}
-            className={classNames("rc-dropdown-menu", { show })}
+            className={classNames("rc-dropdown-menu", {
+              show,
+              [className]: className,
+            })}
             onAnimationEnd={onAnimationEnd}
             style={styles}
             data-position={position}
@@ -132,26 +130,14 @@ DropDown.propTypes = {
 
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf([
-    "left",
-    "left-start",
-    "left-end",
-    "right",
-    "right-start",
-    "right-end",
-    "top",
-    "top-start",
-    "top-end",
-    "bottom",
-    "bottom-start",
-    "bottom-end",
-  ]),
+  position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
 };
 
 Menu.defaultProps = {
-  position: "bottom",
+  position: "bottom-start",
   offset: 10,
+  className: null,
 };
 
 // Toggle PropTypes

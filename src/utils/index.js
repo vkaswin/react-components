@@ -79,7 +79,7 @@ export const classNames = (...args) => {
 
       if (type === "object") {
         return Object.entries(className)
-          .filter(([_, value]) => value)
+          .filter(([_, value]) => Boolean(value))
           .reduce((initial, [key, _]) => `${initial} ${key}`, initial);
       }
 

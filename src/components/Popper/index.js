@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { PopperPlacements } from "utils/constants";
 
 export const Popper = ({ render, target, position, offset }) => {
-  const popper = useRef();
+  const reference = useRef();
 
   const [state, setState] = useState({
     styles: { position: "absolute", inset: "0px auto auto 0px" },
@@ -20,364 +20,235 @@ export const Popper = ({ render, target, position, offset }) => {
   }, []);
 
   const ref = (element) => {
-    popper.current = element;
+    reference.current = element;
   };
 
   const findPosition = () => {
-    const ele = target.current.getBoundingClientRect(); //target element
+    const element = target.current.getBoundingClientRect();
 
-    const ref = popper.current.getBoundingClientRect(); // element to show
+    const popper = reference.current.getBoundingClientRect();
 
     const { innerWidth, innerHeight } = window;
 
-    // const hasContainer = container?.current || false;
-
-    // const innerWidth = hasContainer ?
-    //    container.current.clientWidth
-    //   : window.innerWidth;
-
-    // const innerHeight = hasContainer ?
-    //    container.current.clientHeight
-    //   : window.innerHeight;
-
-    // const x = hasContainer ?
-    //    ele.x - container.current.getBoundingClientRect().x
-    //   : ele.x;
-
-    // const y = hasContainer ?
-    //    ele.y - container.current.getBoundingClientRect().y
-    //   : ele.y;
-
     const canPlaceOnLeft = () => {
-      return ele.x > ref.width;
+      return element.x > popper.width;
     };
 
     const canPlaceOnLeftCenter = () => {
-      return ele.x > ref.width;
+      let height = (popper.height - element.height) / 2;
+      let bottom = innerHeight - (element.y + element.height);
+      return element.y > height && bottom > height;
     };
 
     const canPlaceOnLeftStart = () => {
-      return innerHeight - (ele.y + ele.height) > ref.height - ele.height;
+      return (
+        innerHeight - (element.y + element.height) >
+        popper.height - element.height
+      );
     };
 
     const canPlaceOnLeftEnd = () => {
-      return ele.y - ele.height > ref.height - ele.height;
+      return element.y - element.height > popper.height - element.height;
     };
 
     const canPlaceOnRight = () => {
-      return innerWidth - (ele.x + ele.width) > ref.width;
+      return innerWidth - (element.x + element.width) > popper.width;
     };
 
     const canPlaceOnRightCenter = () => {
-      let height = (ref.height - ele.height) / 2;
-      let bottom = innerHeight - (ele.y + ele.height);
-      return ele.y > height && bottom > height;
+      let height = (popper.height - element.height) / 2;
+      let bottom = innerHeight - (element.y + element.height);
+      return element.y > height && bottom > height;
     };
 
     const canPlaceOnRightStart = () => {
-      return innerHeight - (ele.y + ele.height) > ref.height - ele.height;
+      return (
+        innerHeight - (element.y + element.height) >
+        popper.height - element.height
+      );
     };
 
     const canPlaceOnRightEnd = () => {
-      return ele.y > ref.height - ele.height;
+      return element.y > popper.height - element.height;
     };
 
     const canPlaceOnTop = () => {
-      return ele.y > ref.height;
+      return element.y > popper.height;
     };
 
     const canPlaceOnTopCenter = () => {
-      let width = (ref.width - ele.width) / 2;
-      let right = innerWidth - (ele.x + ele.width);
-      return ele.x > width && right > width;
+      let width = (popper.width - element.width) / 2;
+      let right = innerWidth - (element.x + element.width);
+      return element.x > width && right > width;
     };
 
     const canPlaceOnTopStart = () => {
-      return innerWidth - (ele.x + ele.width) > ref.width - ele.width;
+      return (
+        innerWidth - (element.x + element.width) > popper.width - element.width
+      );
     };
 
     const canPlaceOnTopEnd = () => {
-      return ele.x > ref.width - ele.width;
+      return element.x > popper.width - element.width;
     };
 
     const canPlaceOnBottom = () => {
-      return innerHeight - (ele.y + ele.height) > ref.height;
+      return innerHeight - (element.y + element.height) > popper.height;
     };
 
     const canPlaceOnBottomCenter = () => {
-      let width = (ref.width - ele.width) / 2;
-      let right = innerWidth - (ele.x + ele.width);
-      return ele.x > width && right > width;
+      let width = (popper.width - element.width) / 2;
+      let right = innerWidth - (element.x + element.width);
+      return element.x > width && right > width;
     };
 
     const canPlaceOnBottomStart = () => {
-      return innerWidth - (ele.x + ele.width) > ref.width - ele.width;
+      return (
+        innerWidth - (element.x + element.width) > popper.width - element.width
+      );
     };
 
     const canPlaceOnBottomEnd = () => {
-      return ele.x > ref.width - ele.width;
-    };
-
-    const showOnLeftCenter = () => {
-      setElementPosition({
-        x: ele.x - ref.width - offset,
-        y: ele.y - (ref.height / 2 - ele.height / 2),
-        position: "left-center",
-      });
-    };
-
-    const showOnLeftStart = () => {
-      setElementPosition({
-        x: ele.x - ref.width - offset,
-        y: ele.y,
-        position: "left-start",
-      });
-    };
-
-    const showOnLeftEnd = () => {
-      setElementPosition({
-        x: ele.x - ref.width - offset,
-        y: ele.y - (ref.height - ele.height),
-        position: "left-end",
-      });
-    };
-
-    const showOnRightCenter = () => {
-      setElementPosition({
-        x: ele.x + ele.width + offset,
-        y: ele.y - (ref.height / 2 - ele.height / 2),
-        position: "right-center",
-      });
-    };
-
-    const showOnRightStart = () => {
-      setElementPosition({
-        x: ele.x + ele.width + offset,
-        y: ele.y,
-        position: "right-start",
-      });
-    };
-
-    const showOnRightEnd = () => {
-      setElementPosition({
-        x: ele.x + ele.width + offset,
-        y: ele.y - (ref.height - ele.height),
-        position: "right-end",
-      });
-    };
-
-    const showOnTopCenter = () => {
-      setElementPosition({
-        x: ele.x + (ele.width / 2 - ref.width / 2),
-        y: ele.y - (ref.height + offset),
-        position: "top-center",
-      });
-    };
-
-    const showOnTopStart = () => {
-      setElementPosition({
-        x: ele.x,
-        y: ele.y - (ref.height + offset),
-        position: "top-start",
-      });
-    };
-
-    const showOnTopEnd = () => {
-      setElementPosition({
-        x: ele.x - (ref.width - ele.width),
-        y: ele.y - (ref.height + offset),
-        position: "top-end",
-      });
-    };
-
-    const showOnBottomStart = () => {
-      setElementPosition({
-        x: ele.x,
-        y: ele.y + ele.height + offset,
-        position: "bottom-start",
-      });
-    };
-
-    const showOnBottomEnd = () => {
-      setElementPosition({
-        x: ele.x - (ref.width - ele.width),
-        y: ele.y + ele.height + offset,
-        position: "bottom-end",
-      });
-    };
-
-    const showOnBottomCenter = () => {
-      setElementPosition({
-        x: ele.x + (ele.width / 2 - ref.width / 2),
-        y: ele.y + ele.height + offset,
-        position: "bottom-center",
-      });
-    };
-
-    const showOnLeft = () => {
-      if (canPlaceOnLeft() && canPlaceOnLeftCenter()) {
-        showOnLeftCenter();
-        return true;
-      }
-
-      if (canPlaceOnLeft() && canPlaceOnLeftStart()) {
-        showOnLeftStart();
-        return true;
-      }
-
-      if (canPlaceOnLeft() && canPlaceOnLeftEnd()) {
-        showOnLeftEnd();
-        return true;
-      }
-    };
-
-    const showOnRight = () => {
-      if (canPlaceOnRight() && canPlaceOnRightCenter()) {
-        showOnRightCenter();
-        return true;
-      }
-
-      if (canPlaceOnRight() && canPlaceOnRightStart()) {
-        showOnRightStart();
-        return true;
-      }
-
-      if (canPlaceOnRight() && canPlaceOnRightEnd()) {
-        showOnRightEnd();
-        return true;
-      }
-    };
-
-    const showOnTop = () => {
-      if (canPlaceOnTop() && canPlaceOnTopCenter()) {
-        showOnTopCenter();
-        return true;
-      }
-
-      if (canPlaceOnTop() && canPlaceOnTopStart()) {
-        showOnTopStart();
-        return true;
-      }
-
-      if (canPlaceOnTop() && canPlaceOnTopEnd()) {
-        showOnTopEnd();
-        return true;
-      }
-    };
-
-    const showOnBottom = () => {
-      if (canPlaceOnBottom() && canPlaceOnBottomCenter()) {
-        showOnBottomCenter();
-        return true;
-      }
-
-      if (canPlaceOnBottom() && canPlaceOnBottomStart()) {
-        showOnBottomStart();
-        return true;
-      }
-
-      if (canPlaceOnBottom() && canPlaceOnBottomEnd()) {
-        showOnBottomEnd();
-        return true;
-      }
+      return element.x > popper.width - element.width;
     };
 
     const autoPlacement = () => {
-      const [placement] = position.split("-");
+      const posiblePositions = [
+        canPlaceOnLeft() && "left",
+        canPlaceOnRight() && "right",
+        canPlaceOnTop() && "top",
+        canPlaceOnBottom() && "bottom",
+      ].filter(Boolean);
 
-      if (placement === "left") {
-        if (canPlaceOnLeft() && showOnLeft()) return;
-        if (canPlaceOnRight() && showOnRight()) return;
-        if (canPlaceOnTop() && showOnTop()) return;
-        if (canPlaceOnBottom() && showOnBottom()) return;
-      }
+      let coordinates = null;
 
-      if (placement === "right") {
-        if (canPlaceOnRight() && showOnRight()) return;
-        if (canPlaceOnLeft() && showOnLeft()) return;
-        if (canPlaceOnTop() && showOnTop()) return;
-        if (canPlaceOnBottom() && showOnBottom()) return;
-      }
+      posiblePositions
+        .reduce((initial, placement) => {
+          return [
+            ...initial,
+            ...Object.entries(getCoordinateByPosition).filter(
+              ([key]) => key !== position && placement === key.split("-")[0]
+            ),
+          ];
+        }, [])
+        .some(([key, func]) => {
+          let coord = func();
+          if (coord) {
+            coordinates = { ...coord, placement: key };
+            return true;
+          }
+          return false;
+        });
 
-      if (placement === "top") {
-        if (canPlaceOnTop() && showOnTop()) return;
-        if (canPlaceOnBottom() && showOnBottom()) return;
-        if (canPlaceOnLeft() && showOnLeft()) return;
-        if (canPlaceOnRight() && showOnRight()) return;
-      }
-
-      if (placement === "bottom") {
-        if (canPlaceOnBottom() && showOnBottom()) return;
-        if (canPlaceOnTop() && showOnTop()) return;
-        if (canPlaceOnLeft() && showOnLeft()) return;
-        if (canPlaceOnRight() && showOnRight()) return;
+      if (coordinates) {
+        setCoordinate(coordinates);
       }
     };
 
-    switch (position) {
-      case "left-center":
-        if (!(canPlaceOnLeft() && canPlaceOnLeftCenter())) break;
-        showOnLeft();
-        return;
-      case "left-start":
-        if (!(canPlaceOnLeft() && canPlaceOnLeftStart())) break;
-        showOnLeftStart();
-        return;
-      case "left-end":
-        if (!(canPlaceOnLeft() && canPlaceOnLeftEnd())) break;
-        showOnLeftEnd();
-        return;
-      case "right-center":
-        if (!(canPlaceOnRight() && canPlaceOnRightCenter())) break;
-        showOnRight();
-        return;
-      case "right-start":
-        if (!(canPlaceOnRight() && canPlaceOnRightStart())) break;
-        showOnRightStart();
-        return;
-      case "right-end":
-        if (!(canPlaceOnRight() && canPlaceOnRightEnd())) break;
-        showOnRightEnd();
-        return;
-      case "top-center":
-        if (!(canPlaceOnTop() && canPlaceOnTopCenter())) break;
-        showOnTop();
-        return;
-      case "top-start":
-        if (!(canPlaceOnTop() && canPlaceOnTopStart())) break;
-        showOnTopStart();
-        return;
-      case "top-end":
-        if (!(canPlaceOnTop() && canPlaceOnTopEnd())) break;
-        showOnTopEnd();
-        return;
-      case "bottom-center":
-        if (!(canPlaceOnBottom() && canPlaceOnBottomCenter())) break;
-        showOnBottom();
-        return;
-      case "bottom-start":
-        if (!(canPlaceOnBottom() && canPlaceOnBottomStart())) break;
-        showOnBottomStart();
-        return;
-      case "bottom-end":
-        if (!(canPlaceOnBottom() && canPlaceOnBottomEnd())) break;
-        showOnBottomEnd();
-        return;
-      default:
-        return;
-    }
+    const getCoordinateByPosition = {
+      "left-center": () => {
+        if (!(canPlaceOnLeft() && canPlaceOnLeftCenter())) return false;
+        return {
+          x: element.x - popper.width - offset,
+          y: element.y - (popper.height / 2 - element.height / 2),
+        };
+      },
+      "left-start": () => {
+        if (!(canPlaceOnLeft() && canPlaceOnLeftStart())) return false;
+        return {
+          x: element.x - popper.width - offset,
+          y: element.y,
+        };
+      },
+      "left-end": () => {
+        if (!(canPlaceOnLeft() && canPlaceOnLeftEnd())) return false;
+        return {
+          x: element.x - popper.width - offset,
+          y: element.y - (popper.height - element.height),
+        };
+      },
+      "right-center": () => {
+        if (!(canPlaceOnRight() && canPlaceOnRightCenter())) return false;
+        return {
+          x: element.x + element.width + offset,
+          y: element.y - (popper.height / 2 - element.height / 2),
+        };
+      },
+      "right-start": () => {
+        if (!(canPlaceOnRight() && canPlaceOnRightStart())) return false;
+        return {
+          x: element.x + element.width + offset,
+          y: element.y,
+        };
+      },
+      "right-end": () => {
+        if (!(canPlaceOnRight() && canPlaceOnRightEnd())) return false;
+        return {
+          x: element.x + element.width + offset,
+          y: element.y - (popper.height - element.height),
+        };
+      },
+      "top-center": () => {
+        if (!(canPlaceOnTop() && canPlaceOnTopCenter())) return false;
+        return {
+          x: element.x + (element.width / 2 - popper.width / 2),
+          y: element.y - (popper.height + offset),
+        };
+      },
+      "top-start": () => {
+        if (!(canPlaceOnTop() && canPlaceOnTopStart())) return false;
+        return {
+          x: element.x,
+          y: element.y - (popper.height + offset),
+        };
+      },
+      "top-end": () => {
+        if (!(canPlaceOnTop() && canPlaceOnTopEnd())) return false;
+        return {
+          x: element.x - (popper.width - element.width),
+          y: element.y - (popper.height + offset),
+        };
+      },
+      "bottom-center": () => {
+        if (!(canPlaceOnBottom() && canPlaceOnBottomCenter())) return false;
+        return {
+          x: element.x + (element.width / 2 - popper.width / 2),
+          y: element.y + element.height + offset,
+        };
+      },
+      "bottom-start": () => {
+        if (!(canPlaceOnBottom() && canPlaceOnBottomStart())) return false;
+        return {
+          x: element.x,
+          y: element.y + element.height + offset,
+        };
+      },
+      "bottom-end": () => {
+        if (!(canPlaceOnBottom() && canPlaceOnBottomEnd())) return false;
+        return {
+          x: element.x - (popper.width - element.width),
+          y: element.y + element.height + offset,
+        };
+      },
+    };
 
-    autoPlacement();
+    const coordinates = getCoordinateByPosition[position]();
+
+    if (coordinates) {
+      setCoordinate(coordinates);
+    } else {
+      autoPlacement();
+    }
   };
 
-  const setElementPosition = ({ x, y, position }) => {
+  const setCoordinate = ({ x, y, placement }) => {
     setState({
       ...state,
       styles: {
         ...state.styles,
         transform: `translate(${x}px,${y}px`,
       },
-      position,
+      position: placement ?? position,
     });
   };
 

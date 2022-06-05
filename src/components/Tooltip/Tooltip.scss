@@ -20,6 +20,7 @@
     content: "";
     position: absolute;
     border: 6px solid;
+    border-color: transparent transparent #000 transparent;
     transform: var(--tooltip-translate) var(--tooltip-rotate);
     z-index: -1;
   }
@@ -35,7 +36,6 @@
 .rc-tooltip[data-position^="right"] {
   &::before {
     --tooltip-translate: translateY(-50%);
-    border-color: transparent transparent #000 transparent;
   }
 }
 
@@ -78,7 +78,6 @@
 .rc-tooltip[data-position^="bottom"] {
   &::before {
     --tooltip-translate: translateX(-50%);
-    border-color: transparent transparent #000 transparent;
   }
 }
 

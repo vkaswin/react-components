@@ -136,6 +136,10 @@ export const routes = [
         path: "grid",
         componentPath: "pages/Grid",
       },
+      {
+        path: "popover",
+        componentPath: "pages/Popover",
+      },
     ],
   },
 ];

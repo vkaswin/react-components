@@ -1,0 +1,119 @@
+.rc-popover {
+  padding: 7px;
+  max-width: 500px;
+  min-width: 150px;
+  width: calc(100% - 30px);
+  margin: 0px auto;
+  color: #000;
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
+    0 9px 28px 8px #0000000d;
+  border-radius: 4px;
+  font-size: 14px;
+  animation: rc_fadeOut 0.2s linear forwards;
+  z-index: 1050;
+  &:is(.show) {
+    animation: rc_fadeIn 0.2s linear forwards;
+  }
+}
+
+.rc-popover[data-position] {
+  &::before {
+    content: "";
+    position: absolute;
+    border: 8px solid;
+    border-color: transparent transparent #ffffff transparent;
+    transform: var(--popover-translate) var(--popover-rotate);
+  }
+}
+
+.rc-popover[data-arrow="false"] {
+  &::before {
+    display: none;
+  }
+}
+
+.rc-popover[data-position^="left"],
+.rc-popover[data-position^="right"] {
+  &::before {
+    --popover-translate: translateY(-50%);
+  }
+}
+
+.rc-popover[data-position^="left"] {
+  &::before {
+    right: -15px;
+    --popover-rotate: rotate(90deg);
+  }
+}
+
+.rc-popover[data-position^="right"] {
+  &::before {
+    left: -15px;
+    --popover-rotate: rotate(-90deg);
+  }
+}
+
+.rc-popover[data-position="left-center"],
+.rc-popover[data-position="right-center"] {
+  &::before {
+    top: 50%;
+  }
+}
+
+.rc-popover[data-position="left-start"],
+.rc-popover[data-position="right-start"] {
+  &::before {
+    top: 15px;
+  }
+}
+
+.rc-popover[data-position="left-end"],
+.rc-popover[data-position="right-end"] {
+  &::before {
+    bottom: 10px;
+  }
+}
+
+.rc-popover[data-position^="top"],
+.rc-popover[data-position^="bottom"] {
+  &::before {
+    --popover-translate: translateX(-50%);
+  }
+}
+
+.rc-popover[data-position^="top"] {
+  &::before {
+    bottom: -15px;
+    --popover-rotate: rotate(180deg);
+  }
+}
+
+.rc-popover[data-position^="bottom"] {
+  &::before {
+    top: -15px;
+    --popover-rotate: rotate(0deg);
+  }
+}
+
+.rc-popover[data-position="top-center"],
+.rc-popover[data-position="bottom-center"] {
+  &::before {
+    left: 50%;
+  }
+}
+
+.rc-popover[data-position="top-start"],
+.rc-popover[data-position="bottom-start"] {
+  &::before {
+    left: 15px;
+  }
+}
+
+.rc-popover[data-position="top-end"],
+.rc-popover[data-position="bottom-end"] {
+  &::before {
+    right: 10px;
+  }
+}

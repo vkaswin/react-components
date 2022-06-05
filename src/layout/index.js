@@ -138,6 +138,10 @@ const options = [
     label: "Grid",
     to: "grid",
   },
+  {
+    label: "Popover",
+    to: "popover",
+  },
 ];
 
 const Layout = () => {

@@ -11,22 +11,24 @@ export const Popper = ({ render, target, position, offset }) => {
   });
 
   useLayoutEffect(() => {
-    findPosition();
+    getCoordinates();
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", findPosition);
-    return () => window.removeEventListener("resize", findPosition);
+    window.addEventListener("resize", getCoordinates);
+    return () => window.removeEventListener("resize", getCoordinates);
   }, []);
 
   const ref = (element) => {
     reference.current = element;
   };
 
-  const findPosition = () => {
+  const getCoordinates = () => {
     const element = target.current.getBoundingClientRect();
 
     const popper = reference.current.getBoundingClientRect();
+
+    const [placement] = position.split("-");
 
     const { innerWidth, innerHeight } = window;
 
@@ -112,40 +114,52 @@ export const Popper = ({ render, target, position, offset }) => {
       return element.x > popper.width - element.width;
     };
 
-    const autoPlacement = () => {
-      const posiblePositions = [
-        canPlaceOnLeft() && "left",
-        canPlaceOnRight() && "right",
-        canPlaceOnTop() && "top",
-        canPlaceOnBottom() && "bottom",
-      ].filter(Boolean);
-
-      let coordinates = null;
-
-      posiblePositions
-        .reduce((initial, placement) => {
-          return [
-            ...initial,
-            ...Object.entries(getCoordinateByPosition).filter(
-              ([key]) => key !== position && placement === key.split("-")[0]
-            ),
-          ];
-        }, [])
-        .some(([key, func]) => {
-          let coord = func();
-          if (coord) {
-            coordinates = { ...coord, placement: key };
-            return true;
-          }
-          return false;
-        });
-
-      if (coordinates) {
-        setCoordinate(coordinates);
+    const getPosition = () => {
+      switch (placement) {
+        case "left":
+          return canPlaceOnLeft() ? ["left"] : [];
+        case "right":
+          return canPlaceOnRight() ? ["right"] : [];
+        case "top":
+          return canPlaceOnTop() ? ["top"] : [];
+        case "bottom":
+          return canPlaceOnBottom() ? ["bottom"] : [];
+        default:
+          return [];
       }
     };
 
-    const getCoordinateByPosition = {
+    const getOppositePosition = () => {
+      switch (placement) {
+        case "left":
+          return canPlaceOnRight() ? ["right"] : [];
+        case "right":
+          return canPlaceOnLeft() ? ["left"] : [];
+        case "top":
+          return canPlaceOnBottom() ? ["bottom"] : [];
+        case "bottom":
+          return canPlaceOnTop() ? ["top"] : [];
+        default:
+          return [];
+      }
+    };
+
+    const getAdjacentSides = () => {
+      if (placement === "left" || placement === "right") {
+        return [
+          ...(canPlaceOnTop() ? ["top"] : []),
+          ...(canPlaceOnBottom() ? ["bottom"] : []),
+        ];
+      }
+      if (placement === "top" || placement === "bottom") {
+        return [
+          ...(canPlaceOnLeft() ? ["left"] : []),
+          ...(canPlaceOnRight() ? ["right"] : []),
+        ];
+      }
+    };
+
+    const findCoordianteByPosition = {
       "left-center": () => {
         if (!(canPlaceOnLeft() && canPlaceOnLeftCenter())) return false;
         return {
@@ -232,7 +246,50 @@ export const Popper = ({ render, target, position, offset }) => {
       },
     };
 
-    const coordinates = getCoordinateByPosition[position]();
+    const autoPlacement = () => {
+      const posiblePositions = [
+        ...getPosition(),
+        ...getOppositePosition(),
+        ...getAdjacentSides(),
+      ];
+
+      let coordinates = null;
+
+      posiblePositions
+        .reduce((initial, placement) => {
+          return [
+            ...initial,
+            ...Object.entries(findCoordianteByPosition).filter(
+              ([key]) => key !== position && placement === key.split("-")[0]
+            ),
+          ];
+        }, [])
+        .some(([key, func]) => {
+          let coord = func();
+          if (coord) {
+            coordinates = { ...coord, placement: key };
+            return true;
+          }
+          return false;
+        });
+
+      if (coordinates) {
+        setCoordinate(coordinates);
+      } else {
+        defaultPlacement();
+      }
+    };
+
+    const defaultPlacement = () => {
+      setCoordinate({
+        x: "-50",
+        y: element.y + element.height + offset,
+        left: "50",
+        placement: "bottom-center",
+      });
+    };
+
+    const coordinates = findCoordianteByPosition[position]();
 
     if (coordinates) {
       setCoordinate(coordinates);
@@ -241,12 +298,13 @@ export const Popper = ({ render, target, position, offset }) => {
     }
   };
 
-  const setCoordinate = ({ x, y, placement }) => {
+  const setCoordinate = ({ x, y, left, placement }) => {
     setState({
       ...state,
       styles: {
         ...state.styles,
-        transform: `translate(${x}px,${y}px`,
+        ...(left && { inset: `0px auto auto ${left}%` }),
+        transform: left ? `translate(${x}%,${y}px` : `translate(${x}px,${y}px`,
       },
       position: placement ?? position,
     });

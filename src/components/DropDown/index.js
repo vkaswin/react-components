@@ -13,17 +13,15 @@ export const useDropDown = () => {
 };
 
 export const DropDown = ({ children }) => {
+  const targetRef = useRef();
+
+  const dropDownRef = useRef();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [show, setShow] = useState(false);
 
-  const targetRef = useRef();
-
   const openDropDown = () => {
-    clickOutside({
-      ref: targetRef.current,
-      onClose: closeDropDown,
-    });
     setIsOpen(true);
     setShow(true);
   };
@@ -33,6 +31,15 @@ export const DropDown = ({ children }) => {
   };
 
   const onAnimationEnd = ({ animationName }) => {
+    if (animationName === "rc_fadeIn") {
+      clickOutside({
+        ref: dropDownRef.current,
+        onClose: closeDropDown,
+        doNotClose: (event) => {
+          return targetRef.current.contains(event);
+        },
+      });
+    }
     if (animationName === "rc_fadeOut") {
       setIsOpen(false);
     }
@@ -44,6 +51,7 @@ export const DropDown = ({ children }) => {
         isOpen,
         show,
         targetRef,
+        dropDownRef,
         openDropDown,
         closeDropDown,
         onAnimationEnd,
@@ -71,7 +79,8 @@ const Toggle = ({ children, trigger, className }) => {
 };
 
 const Menu = ({ children, position, offset, className }) => {
-  const { isOpen, show, targetRef, onAnimationEnd } = useDropDown();
+  const { isOpen, show, targetRef, dropDownRef, onAnimationEnd } =
+    useDropDown();
 
   if (!isOpen) return;
 
@@ -81,9 +90,13 @@ const Menu = ({ children, position, offset, className }) => {
       position={position}
       offset={offset}
       render={({ styles, position, ref }) => {
+        const setDropDownRef = (element) => {
+          ref(element);
+          dropDownRef.current = element;
+        };
         return (
           <div
-            ref={ref}
+            ref={setDropDownRef}
             className={classNames("rc-dropdown-menu", {
               show,
               [className]: className,

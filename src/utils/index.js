@@ -100,11 +100,11 @@ export const getDateType = (data) => {
     .replace(/^\[object (\S+)\]$/, "$1");
 };
 
-export const clickOutside = ({ ref, onClose }) => {
+export const clickOutside = ({ ref, onClose, doNotClose = () => false }) => {
   if (!ref) return;
 
   const handleClickOutside = ({ target }) => {
-    if (ref.contains(target)) return;
+    if (ref.contains(target) || doNotClose(target)) return;
     onClose();
     document.removeEventListener("click", handleClickOutside);
   };

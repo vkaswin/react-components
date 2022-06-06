@@ -102,11 +102,21 @@ const Menu = ({ children, position, arrow, offset, className }) => {
                 [className]: className,
               })}
               onAnimationEnd={onAnimationEnd}
-              data-arrow={arrow}
-              data-position={position}
               style={styles}
             >
-              {children}
+              <div
+                className={classNames("rc-popover-content", {
+                  [className]: className,
+                })}
+              >
+                {children}
+                {arrow && (
+                  <div
+                    className="rc-popover-arrow"
+                    data-position={position}
+                  ></div>
+                )}
+              </div>
             </div>
           );
         }}

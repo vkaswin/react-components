@@ -140,6 +140,10 @@ export const routes = [
         path: "popover",
         componentPath: "pages/Popover",
       },
+      {
+        path: "intro",
+        componentPath: "pages/Intro",
+      },
     ],
   },
 ];

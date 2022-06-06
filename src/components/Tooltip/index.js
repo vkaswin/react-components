@@ -76,14 +76,25 @@ const Menu = ({ children, position, arrow, offset, className }) => {
               ref={ref}
               className={classNames("rc-tooltip", {
                 show: show,
-                [className]: className,
               })}
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               data-position={position}
               style={styles}
             >
-              {children}
+              <div
+                className={classNames("rc-tooltip-content", {
+                  [className]: className,
+                })}
+              >
+                {children}
+                {arrow && (
+                  <div
+                    className="rc-tooltip-arrow"
+                    data-position={position}
+                  ></div>
+                )}
+              </div>
             </div>
           );
         }}

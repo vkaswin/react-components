@@ -33,3 +33,4 @@ export { Overlay } from "./Overlay";
 export { Popper } from "./Popper";
 export { ScrollTo } from "./ScrollTo";
 export { Popover } from "./Popover";
+export { Intro } from "./Intro";

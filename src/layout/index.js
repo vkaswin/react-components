@@ -142,6 +142,10 @@ const options = [
     label: "Popover",
     to: "popover",
   },
+  {
+    label: "Intro",
+    to: "intro",
+  },
 ];
 
 const Layout = () => {

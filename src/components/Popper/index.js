@@ -33,7 +33,7 @@ export const Popper = ({ render, target, position, offset }) => {
     const { innerWidth, innerHeight } = window;
 
     const canPlaceOnLeft = () => {
-      return element.x > popper.width;
+      return element.x + offset > popper.width;
     };
 
     const canPlaceOnLeftCenter = () => {
@@ -54,7 +54,7 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     const canPlaceOnRight = () => {
-      return innerWidth - (element.x + element.width) > popper.width;
+      return innerWidth - (element.x + element.width + offset) > popper.width;
     };
 
     const canPlaceOnRightCenter = () => {
@@ -75,7 +75,7 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     const canPlaceOnTop = () => {
-      return element.y > popper.height;
+      return element.y + offset > popper.height;
     };
 
     const canPlaceOnTopCenter = () => {
@@ -95,7 +95,9 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     const canPlaceOnBottom = () => {
-      return innerHeight - (element.y + element.height) > popper.height;
+      return (
+        innerHeight - (element.y + element.height + offset) > popper.height
+      );
     };
 
     const canPlaceOnBottomCenter = () => {
@@ -281,12 +283,11 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     const defaultPlacement = () => {
-      setCoordinate({
-        x: "-50",
-        y: element.y + element.height + offset,
-        left: "50",
-        placement: "bottom-center",
-      });
+      // setCoordinate({
+      //   x: 0,
+      //   y: element.y + element.height + offset,
+      //   placement: "bottom-center",
+      // });
     };
 
     const coordinates = findCoordianteByPosition[position]();
@@ -298,13 +299,12 @@ export const Popper = ({ render, target, position, offset }) => {
     }
   };
 
-  const setCoordinate = ({ x, y, left, placement }) => {
+  const setCoordinate = ({ x, y, placement }) => {
     setState({
       ...state,
       styles: {
         ...state.styles,
-        ...(left && { inset: `0px auto auto ${left}%` }),
-        transform: left ? `translate(${x}%,${y}px` : `translate(${x}px,${y}px`,
+        transform: `translate(${x}px,${y}px`,
       },
       position: placement ?? position,
     });

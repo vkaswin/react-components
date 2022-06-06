@@ -283,11 +283,12 @@ export const Popper = ({ render, target, position, offset }) => {
     };
 
     const defaultPlacement = () => {
-      // setCoordinate({
-      //   x: 0,
-      //   y: element.y + element.height + offset,
-      //   placement: "bottom-center",
-      // });
+      setCoordinate({
+        x: element.x,
+        y: element.y + element.height + offset,
+        placement: "bottom-start",
+        width: innerWidth - element.x - 15,
+      });
     };
 
     const coordinates = findCoordianteByPosition[position]();
@@ -299,12 +300,13 @@ export const Popper = ({ render, target, position, offset }) => {
     }
   };
 
-  const setCoordinate = ({ x, y, placement }) => {
+  const setCoordinate = ({ x, y, placement, width }) => {
     setState({
       ...state,
       styles: {
         ...state.styles,
         transform: `translate(${x}px,${y}px`,
+        ...(width && { width: `${width}px` }),
       },
       position: placement ?? position,
     });

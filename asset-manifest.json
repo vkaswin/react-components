@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-components/static/css/main.ab19654c.css",
-    "main.js": "/react-components/static/js/main.a1de81fe.js",
+    "main.css": "/react-components/static/css/main.3ad1e82c.css",
+    "main.js": "/react-components/static/js/main.72a3a1ed.js",
     "pages-404.js": "/react-components/static/js/pages-404.ce09721b.chunk.js",
     "assets-fonts-Poppins-OFL-txt.js": "/react-components/static/js/assets-fonts-Poppins-OFL-txt.eeb8f21b.chunk.js",
     "assets-fonts-Poppins-Poppins-Bold-ttf.js": "/react-components/static/js/assets-fonts-Poppins-Poppins-Bold-ttf.b4f98f28.chunk.js",
@@ -106,7 +106,10 @@
     "pages-Grid-Grid-scss.js": "/react-components/static/js/pages-Grid-Grid-scss.01d4541c.chunk.js",
     "pages-InfiniteScroll.js": "/react-components/static/js/pages-InfiniteScroll.1caf97ec.chunk.js",
     "pages-Input.js": "/react-components/static/js/pages-Input.7e449fcd.chunk.js",
-    "pages-Intro.js": "/react-components/static/js/pages-Intro.1eb8dd43.chunk.js",
+    "pages-Intro.css": "/react-components/static/css/pages-Intro.f9399085.chunk.css",
+    "pages-Intro.js": "/react-components/static/js/pages-Intro.b55aefc8.chunk.js",
+    "pages-Intro-Intro-scss.css": "/react-components/static/css/pages-Intro-Intro-scss.f9399085.chunk.css",
+    "pages-Intro-Intro-scss.js": "/react-components/static/js/pages-Intro-Intro-scss.5e79f291.chunk.js",
     "pages-LazyLoad.css": "/react-components/static/css/pages-LazyLoad.bc6bb5e3.chunk.css",
     "pages-LazyLoad.js": "/react-components/static/js/pages-LazyLoad.ab166f11.chunk.js",
     "pages-LazyLoad-LazyLoad-scss.css": "/react-components/static/css/pages-LazyLoad-LazyLoad-scss.bc6bb5e3.chunk.css",
@@ -120,7 +123,7 @@
     "pages-Pagination.js": "/react-components/static/js/pages-Pagination.9d25ccee.chunk.js",
     "pages-Pagination-Pagination-scss.js": "/react-components/static/js/pages-Pagination-Pagination-scss.f5a56f0d.chunk.js",
     "pages-Popover.css": "/react-components/static/css/pages-Popover.317251ed.chunk.css",
-    "pages-Popover.js": "/react-components/static/js/pages-Popover.80bea53a.chunk.js",
+    "pages-Popover.js": "/react-components/static/js/pages-Popover.8ad5ebbe.chunk.js",
     "pages-Popover-Popover-scss.css": "/react-components/static/css/pages-Popover-Popover-scss.317251ed.chunk.css",
     "pages-Popover-Popover-scss.js": "/react-components/static/js/pages-Popover-Popover-scss.48a097e3.chunk.js",
     "pages-Radio.css": "/react-components/static/css/pages-Radio.2e34d704.chunk.css",
@@ -178,8 +181,8 @@
     "static/media/carousel-1.jpg": "/react-components/static/media/carousel-1.7b925f2134ef57a9e55d.jpg",
     "static/media/OFL.txt": "/react-components/static/media/OFL.a41dfc83c78dc22edf7a.txt",
     "index.html": "/react-components/index.html",
-    "main.ab19654c.css.map": "/react-components/static/css/main.ab19654c.css.map",
-    "main.a1de81fe.js.map": "/react-components/static/js/main.a1de81fe.js.map",
+    "main.3ad1e82c.css.map": "/react-components/static/css/main.3ad1e82c.css.map",
+    "main.72a3a1ed.js.map": "/react-components/static/js/main.72a3a1ed.js.map",
     "pages-404.ce09721b.chunk.js.map": "/react-components/static/js/pages-404.ce09721b.chunk.js.map",
     "assets-scss-_abstracts-scss.166dcf79.chunk.css.map": "/react-components/static/css/assets-scss-_abstracts-scss.166dcf79.chunk.css.map",
     "assets-scss-_abstracts-scss.6084a7ab.chunk.js.map": "/react-components/static/js/assets-scss-_abstracts-scss.6084a7ab.chunk.js.map",
@@ -274,7 +277,10 @@
     "pages-Grid-Grid-scss.01d4541c.chunk.js.map": "/react-components/static/js/pages-Grid-Grid-scss.01d4541c.chunk.js.map",
     "pages-InfiniteScroll.1caf97ec.chunk.js.map": "/react-components/static/js/pages-InfiniteScroll.1caf97ec.chunk.js.map",
     "pages-Input.7e449fcd.chunk.js.map": "/react-components/static/js/pages-Input.7e449fcd.chunk.js.map",
-    "pages-Intro.1eb8dd43.chunk.js.map": "/react-components/static/js/pages-Intro.1eb8dd43.chunk.js.map",
+    "pages-Intro.f9399085.chunk.css.map": "/react-components/static/css/pages-Intro.f9399085.chunk.css.map",
+    "pages-Intro.b55aefc8.chunk.js.map": "/react-components/static/js/pages-Intro.b55aefc8.chunk.js.map",
+    "pages-Intro-Intro-scss.f9399085.chunk.css.map": "/react-components/static/css/pages-Intro-Intro-scss.f9399085.chunk.css.map",
+    "pages-Intro-Intro-scss.5e79f291.chunk.js.map": "/react-components/static/js/pages-Intro-Intro-scss.5e79f291.chunk.js.map",
     "pages-LazyLoad.bc6bb5e3.chunk.css.map": "/react-components/static/css/pages-LazyLoad.bc6bb5e3.chunk.css.map",
     "pages-LazyLoad.ab166f11.chunk.js.map": "/react-components/static/js/pages-LazyLoad.ab166f11.chunk.js.map",
     "pages-LazyLoad-LazyLoad-scss.bc6bb5e3.chunk.css.map": "/react-components/static/css/pages-LazyLoad-LazyLoad-scss.bc6bb5e3.chunk.css.map",
@@ -287,7 +293,7 @@
     "pages-Pagination.9d25ccee.chunk.js.map": "/react-components/static/js/pages-Pagination.9d25ccee.chunk.js.map",
     "pages-Pagination-Pagination-scss.f5a56f0d.chunk.js.map": "/react-components/static/js/pages-Pagination-Pagination-scss.f5a56f0d.chunk.js.map",
     "pages-Popover.317251ed.chunk.css.map": "/react-components/static/css/pages-Popover.317251ed.chunk.css.map",
-    "pages-Popover.80bea53a.chunk.js.map": "/react-components/static/js/pages-Popover.80bea53a.chunk.js.map",
+    "pages-Popover.8ad5ebbe.chunk.js.map": "/react-components/static/js/pages-Popover.8ad5ebbe.chunk.js.map",
     "pages-Popover-Popover-scss.317251ed.chunk.css.map": "/react-components/static/css/pages-Popover-Popover-scss.317251ed.chunk.css.map",
     "pages-Popover-Popover-scss.48a097e3.chunk.js.map": "/react-components/static/js/pages-Popover-Popover-scss.48a097e3.chunk.js.map",
     "pages-Radio.2e34d704.chunk.css.map": "/react-components/static/css/pages-Radio.2e34d704.chunk.css.map",
@@ -330,7 +336,7 @@
     "4089.8cd8e638.chunk.js.map": "/react-components/static/js/4089.8cd8e638.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ab19654c.css",
-    "static/js/main.a1de81fe.js"
+    "static/css/main.3ad1e82c.css",
+    "static/js/main.72a3a1ed.js"
   ]
 }

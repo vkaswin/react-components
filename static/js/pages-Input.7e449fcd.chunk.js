@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5350],{33166:function(e,n,c){c.r(n);c(72791);var s=c(59930),t=c(80184);n.default=function(){return(0,t.jsx)("div",{className:"row",children:(0,t.jsx)("div",{className:"col-md-4",children:(0,t.jsx)(s.Input,{label:"Input Field"})})})}}}]);
-//# sourceMappingURL=pages-Input.7e449fcd.chunk.js.map

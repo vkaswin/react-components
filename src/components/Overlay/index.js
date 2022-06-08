@@ -9,7 +9,9 @@ export const Overlay = ({ isOpen, toggle, zIndex }) => {
     <div
       style={{ "--overlay-zindex": zIndex }}
       className={classNames("rc-overlay", { show: isOpen })}
-      onClick={toggle}
+      onClick={() => {
+        isOpen && toggle();
+      }}
     ></div>
   );
 };

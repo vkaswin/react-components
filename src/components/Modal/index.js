@@ -42,7 +42,7 @@ export const Modal = ({ isOpen, toggle, children }) => {
             </div>
           </div>
         </div>
-        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} portal={false} />
+        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} />
       </div>
     </Portal>
   );

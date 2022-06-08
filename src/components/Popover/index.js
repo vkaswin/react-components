@@ -86,7 +86,7 @@ const Menu = ({ children, position, arrow, offset, className }) => {
   return (
     <Portal>
       <Popper
-        target={targetRef}
+        referenceElement={targetRef}
         position={position}
         offset={offset}
         render={({ styles, position, ref }) => {

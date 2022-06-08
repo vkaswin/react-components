@@ -64,7 +64,7 @@ const IntroPage = () => {
         Houses For Sale
       </h1>
       <div className="intro-card-grid">
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
@@ -80,7 +80,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>
@@ -96,7 +96,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image" data-intro-three>
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
@@ -112,7 +112,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>
@@ -128,7 +128,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
@@ -144,7 +144,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>
@@ -160,8 +160,8 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
-          <div className="intro-card-header intro-card-image" data-intro-six>
+        <div className="intro-card">
+          <div className="intro-card-header" data-intro-six>
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
           <div className="intro-card-body">
@@ -176,7 +176,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow" data-intro-two>
+        <div className="intro-card" data-intro-two>
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>
@@ -192,7 +192,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
@@ -208,7 +208,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>
@@ -224,7 +224,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/178j8tJrNlc" />
           </div>
@@ -240,7 +240,7 @@ const IntroPage = () => {
             </button>
           </div>
         </div>
-        <div className="intro-card intro-card-shadow">
+        <div className="intro-card">
           <div className="intro-card-header intro-card-image">
             <img src="https://source.unsplash.com/eWqOgJ-lfiI" />
           </div>

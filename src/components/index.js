@@ -1,5 +1,3 @@
-export { Input } from "./Input";
-export { PasswordInput } from "./PasswordInput";
 export { Button } from "./Button";
 export { CheckBox } from "./CheckBox";
 export { Radio } from "./Radio";

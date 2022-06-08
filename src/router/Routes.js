@@ -41,10 +41,6 @@ export const routes = [
         componentPath: "pages/InfiniteScroll",
       },
       {
-        path: "input",
-        componentPath: "pages/Input",
-      },
-      {
         path: "buttons",
         componentPath: "pages/Buttons",
       },

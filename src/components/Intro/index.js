@@ -100,7 +100,7 @@ export const Intro = ({ steps, initialStep, enabled, onComplete }) => {
                   <div className="rc-intro-main">
                     {steps[activeIndex].children}
                     <ul className="rc-intro-steps">
-                      {[...Array(steps.length - 1).keys()].map((id) => {
+                      {[...Array(steps.length).keys()].map((id) => {
                         return (
                           <li
                             key={id}

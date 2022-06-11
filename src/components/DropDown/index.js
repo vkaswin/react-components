@@ -102,7 +102,7 @@ const Menu = ({ children, position, offset, className }) => {
               [className]: className,
             })}
             onAnimationEnd={onAnimationEnd}
-            style={styles}
+            style={styles.popper}
             data-position={position}
           >
             {children}

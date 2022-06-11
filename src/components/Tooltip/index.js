@@ -80,7 +80,7 @@ const Menu = ({ children, position, arrow, offset, className }) => {
               onAnimationEnd={onAnimationEnd}
               data-arrow={arrow}
               data-position={position}
-              style={styles}
+              style={styles.popper}
             >
               <div
                 className={classNames("rc-tooltip-content", {
@@ -89,10 +89,7 @@ const Menu = ({ children, position, arrow, offset, className }) => {
               >
                 {children}
                 {arrow && (
-                  <div
-                    className="rc-tooltip-arrow"
-                    data-position={position}
-                  ></div>
+                  <div className="rc-tooltip-arrow" style={styles.arrow}></div>
                 )}
               </div>
             </div>

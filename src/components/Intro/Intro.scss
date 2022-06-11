@@ -1,6 +1,6 @@
 .rc-intro {
-  transform-origin: top;
   animation: rc_fadeOut 0.2s linear forwards;
+  transition: left 0.3s, top 0.3s;
   z-index: 2001;
   &:is(.show) {
     animation: rc_fadeIn 0.2s linear forwards;

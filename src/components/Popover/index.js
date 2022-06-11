@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
 import { classNames, clickOutside } from "utils";
@@ -58,7 +52,6 @@ export const Popover = ({ children }) => {
         show,
         targetRef,
         popoverRef,
-        popoverRef,
         openPopover,
         onAnimationEnd,
       }}
@@ -89,11 +82,13 @@ const Menu = ({ children, position, arrow, offset, className }) => {
         referenceElement={targetRef}
         position={position}
         offset={offset}
+        arrow={arrow}
         render={({ styles, position, ref }) => {
           const setPopoverRef = (element) => {
             ref(element);
             popoverRef.current = element;
           };
+          console.log(styles);
           return (
             <div
               ref={setPopoverRef}
@@ -102,7 +97,8 @@ const Menu = ({ children, position, arrow, offset, className }) => {
                 [className]: className,
               })}
               onAnimationEnd={onAnimationEnd}
-              style={styles}
+              style={styles.popper}
+              data-position={position}
             >
               <div
                 className={classNames("rc-popover-content", {
@@ -111,10 +107,7 @@ const Menu = ({ children, position, arrow, offset, className }) => {
               >
                 {children}
                 {arrow && (
-                  <div
-                    className="rc-popover-arrow"
-                    data-position={position}
-                  ></div>
+                  <div className="rc-popover-arrow" style={styles.arrow}></div>
                 )}
               </div>
             </div>

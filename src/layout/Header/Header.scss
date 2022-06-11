@@ -1,4 +1,5 @@
 .header {
+  display: none;
   position: fixed;
   top: 15px;
   left: 265px;
@@ -90,6 +91,7 @@
 
 @media only screen and (max-width: 992px) {
   .header {
+    display: block;
     left: 15px;
     header {
       .header-left {

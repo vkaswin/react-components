@@ -25,19 +25,19 @@ export const Popper = ({
   });
 
   useLayoutEffect(() => {
-    getCoordinates();
+    handlePopper();
   }, [referenceElement.current]);
 
   useEffect(() => {
-    window.addEventListener("resize", getCoordinates);
-    return () => window.removeEventListener("resize", getCoordinates);
+    window.addEventListener("resize", handlePopper);
+    return () => window.removeEventListener("resize", handlePopper);
   }, []);
 
   const ref = (element) => {
     popperElement.current = element;
   };
 
-  const getCoordinates = () => {
+  const handlePopper = () => {
     const reference = referenceElement.current.getBoundingClientRect();
 
     const popper = popperElement.current.getBoundingClientRect();
@@ -51,7 +51,7 @@ export const Popper = ({
       innerHeight,
     };
 
-    const coordinates = findCoordianteByPosition[position]?.(args);
+    const coordinates = popperPositions[position]?.(args);
 
     if (coordinates) {
       setCoordinate(coordinates);
@@ -60,7 +60,7 @@ export const Popper = ({
     }
   };
 
-  const findCoordianteByPosition = {
+  const popperPositions = {
     "left-center": (args) => placeOnLeftCenter(args),
     "left-start": (args) => placeOnLeftStart(args),
     "left-end": (args) => placeOnLeftEnd(args),
@@ -389,10 +389,10 @@ export const Popper = ({
 
     if (posiblePositions.length !== 0) {
       let placement = `${posiblePositions[0]}-center`;
-      const coordinates = findCoordianteByPosition[placement]?.(args);
+      const coordinates = popperPositions[placement]?.(args);
       setCoordinate({ ...coordinates, placement });
     } else {
-      findCoordianteByPosition["bottom-start"]({ ...args, isDefault: true });
+      popperPositions["bottom-start"]({ ...args, isDefault: true });
     }
   };
 

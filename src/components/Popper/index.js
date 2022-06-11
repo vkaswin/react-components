@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import PropTypes, { element } from "prop-types";
+import PropTypes from "prop-types";
 import { PopperPlacements } from "utils/constants";
 
 export const Popper = ({
@@ -37,10 +37,25 @@ export const Popper = ({
     popperElement.current = element;
   };
 
-  const handlePopper = () => {
-    const reference = referenceElement.current.getBoundingClientRect();
+  const getBoundingClientRect = (element) => {
+    let rect = element.getBoundingClientRect();
+    const { scrollX, scrollY } = window;
+    return {
+      bottom: rect.bottom,
+      height: rect.height,
+      left: rect.left,
+      right: rect.right,
+      top: rect.top,
+      width: rect.width,
+      x: rect.x + scrollX,
+      y: rect.y + scrollY,
+    };
+  };
 
-    const popper = popperElement.current.getBoundingClientRect();
+  const handlePopper = () => {
+    const reference = getBoundingClientRect(referenceElement.current);
+
+    const popper = getBoundingClientRect(popperElement.current);
 
     const { innerWidth, innerHeight } = window;
 
@@ -51,10 +66,10 @@ export const Popper = ({
       innerHeight,
     };
 
-    const coordinates = popperPositions[position]?.(args);
+    const popperRect = popperPositions[position]?.(args);
 
-    if (coordinates) {
-      setCoordinate(coordinates);
+    if (popperRect) {
+      setPopperPosition(popperRect);
     } else {
       autoPlacement(args);
     }
@@ -84,7 +99,8 @@ export const Popper = ({
   };
 
   const canPlaceOnTop = ({ reference, popper }) => {
-    return reference.y + offset > popper.height;
+    console.log(reference.y + offset, popper.height);
+    return reference.y > popper.height;
   };
 
   const canPlaceOnBottom = ({ reference, popper, innerHeight }) => {
@@ -246,7 +262,7 @@ export const Popper = ({
     let right = innerWidth - reference.x;
     let left =
       right < popper.width
-        ? Math.max(reference.x - (popper.width - right + 10), 10)
+        ? Math.max(reference.x - (popper.width - right + offset), 10)
         : Math.max(reference.x + (reference.width / 2 - popper.width / 2), 10);
     let top = reference.y - (popper.height + offset);
     return {
@@ -288,7 +304,7 @@ export const Popper = ({
     let right = innerWidth - reference.x;
     let left =
       right < popper.width
-        ? Math.max(reference.x - (popper.width - right + 10), 10)
+        ? Math.max(reference.x - (popper.width - right + offset), 10)
         : reference.x;
     let top = reference.y + reference.height + offset;
     return {
@@ -308,7 +324,7 @@ export const Popper = ({
     let right = innerWidth - reference.x;
     let left =
       right < popper.width
-        ? Math.max(reference.x - (popper.width - right + 10), 10)
+        ? Math.max(reference.x - (popper.width - right + offset), 10)
         : Math.max(reference.x + (reference.width / 2 - popper.width / 2), 10);
     let top = reference.y + reference.height + offset;
     return {
@@ -389,31 +405,30 @@ export const Popper = ({
 
     if (posiblePositions.length !== 0) {
       let placement = `${posiblePositions[0]}-center`;
-      const coordinates = popperPositions[placement]?.(args);
-      setCoordinate({ ...coordinates, placement });
+      const popperRect = popperPositions[placement]?.(args);
+      setPopperPosition({ ...popperRect, placement });
     } else {
       popperPositions["bottom-start"]({ ...args, isDefault: true });
     }
   };
 
-  const setCoordinate = ({
+  const setPopperPosition = ({
     popper: { x: X, y: Y } = {},
     arrow: { x, y } = {},
     placement,
   }) => {
-    const { scrollX, scrollY } = window;
     setState({
       ...state,
       styles: {
         popper: {
           ...state.styles.popper,
-          transform: `translate(${X + scrollX}px,${Y + scrollY}px)`,
+          transform: `translate(${X}px,${Y}px)`,
         },
         ...(arrow && {
           arrow: {
             ...state.styles.arrow,
-            left: `${x + scrollX}px`,
-            top: `${y + scrollY}px`,
+            left: `${x}px`,
+            top: `${y}px`,
           },
         }),
       },

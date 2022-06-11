@@ -250,7 +250,6 @@ export const VideoPlayer = ({ url, posterUrl }) => {
       .querySelector(".rc-video-progress")
       .getBoundingClientRect();
     const percent = ((x - progressBar.x) / progressBar.width) * 100;
-    console.log(percent);
     const newCurrentTime = (video.current.duration * percent) / 100;
     video.current.currentTime = newCurrentTime;
     setIsPreview(false);

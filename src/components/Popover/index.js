@@ -88,7 +88,6 @@ const Menu = ({ children, position, arrow, offset, className }) => {
             ref(element);
             popoverRef.current = element;
           };
-          console.log(styles);
           return (
             <div
               ref={setPopoverRef}

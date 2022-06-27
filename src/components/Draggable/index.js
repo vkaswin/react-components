@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
+import { Portal } from "components";
 import PropTypes from "prop-types";
+import { classNames } from "utils";
 
 import "./Draggable.scss";
-import { classNames } from "utils";
 
 export const Draggable = ({ children, center, zIndex, className }) => {
   let dragRef = useRef();
@@ -55,14 +56,16 @@ export const Draggable = ({ children, center, zIndex, className }) => {
   };
 
   return (
-    <div
-      ref={dragRef}
-      className={classNames("rc-draggable", { center, className })}
-      onPointerDown={handlePointerDown}
-      style={{ zIndex }}
-    >
-      {children}
-    </div>
+    <Portal>
+      <div
+        ref={dragRef}
+        className={classNames("rc-draggable", { center, className })}
+        onPointerDown={handlePointerDown}
+        style={{ zIndex }}
+      >
+        {children}
+      </div>
+    </Portal>
   );
 };
 

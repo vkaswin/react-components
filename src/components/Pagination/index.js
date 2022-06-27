@@ -12,7 +12,24 @@ export const Pagination = ({ activePage, totalPages, onPageChange }) => {
   });
 
   useEffect(() => {
-    setPageList([...pages.slice(0, 3), dot, ...pages.slice(-3)]);
+    if (activePage + 2 == 3) {
+      setPageList([
+        ...pages.slice(0, 3),
+        ...pages.slice(3, 5),
+        null,
+        ...pages.slice(-3),
+      ]);
+    } else if (activePage > 6 && activePage < pages - 3) {
+      setPageList([
+        ...pages.slice(0, 3),
+        null,
+        ...pages.slice(activePage - 2, activePage + 1),
+        null,
+        ...pages.slice(-3),
+      ]);
+    } else {
+      setPageList([...pages.slice(0, 3), null, ...pages.slice(-3)]);
+    }
   }, [activePage, totalPages]);
 
   const handleNext = () => {
@@ -25,8 +42,12 @@ export const Pagination = ({ activePage, totalPages, onPageChange }) => {
     onPageChange(activePage - 1);
   };
 
-  const handlePageChange = (page, index) => () => {
-    onPageChange(page);
+  const handlePageChange = (page) => () => {
+    if (page) {
+      onPageChange(page);
+      return;
+    }
+    onPageChange(activePage + 2);
   };
 
   return (
@@ -44,9 +65,9 @@ export const Pagination = ({ activePage, totalPages, onPageChange }) => {
           <button
             key={index}
             className={activePage === page ? "page-btn active" : "page-btn"}
-            onClick={handlePageChange(page, index)}
+            onClick={handlePageChange(page)}
           >
-            {page}
+            {page ? page : dot}
           </button>
         );
       })}

@@ -1,5 +1,11 @@
 .rc-draggable {
   position: fixed;
   cursor: move;
-  z-index: 1000;
+  z-index: var(--dragable-zindex);
+  touch-action: none;
+  &:is(.center) {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

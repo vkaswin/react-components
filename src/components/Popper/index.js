@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { getBoundingClientRect } from "utils";
 import { PopperPlacements } from "utils/constants";
 
 export const Popper = ({
@@ -37,25 +38,18 @@ export const Popper = ({
     popperElement.current = element;
   };
 
-  const getBoundingClientRect = (element) => {
-    let rect = element.getBoundingClientRect();
-    const { scrollX, scrollY } = window;
-    return {
-      bottom: rect.bottom,
-      height: rect.height,
-      left: rect.left,
-      right: rect.right,
-      top: rect.top,
-      width: rect.width,
-      x: rect.x + scrollX,
-      y: rect.y + scrollY,
-    };
-  };
-
   const handlePopper = () => {
     const reference = getBoundingClientRect(referenceElement.current);
 
     const popper = getBoundingClientRect(popperElement.current);
+
+    const { scrollX, scrollY } = window;
+
+    reference.x += scrollX;
+    reference.y += scrollY;
+
+    popper.x += scrollX;
+    reference.y += scrollY;
 
     const { innerWidth, innerHeight } = window;
 

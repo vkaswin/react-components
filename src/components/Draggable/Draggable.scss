@@ -1,7 +1,6 @@
 .rc-draggable {
   position: fixed;
   cursor: move;
-  z-index: var(--dragable-zindex);
   touch-action: none;
   &:is(.center) {
     left: 50%;

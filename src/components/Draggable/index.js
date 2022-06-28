@@ -6,7 +6,7 @@ import { classNames } from "utils";
 import "./Draggable.scss";
 
 export const Draggable = ({ children, center, zIndex, className }) => {
-  let dragRef = useRef();
+  const dragRef = useRef();
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -14,15 +14,10 @@ export const Draggable = ({ children, center, zIndex, className }) => {
   }, []);
 
   const handleResize = () => {
-    dragRef.current.style.cssText += `left: 50%; top: 50%; transform: translate(-50%,-50%)`;
-  };
-
-  const handlePointerUp = (e) => {
-    const { pointerId } = e;
-    dragRef.current.releasePointerCapture(pointerId);
-    dragRef.current.removeEventListener("pointermove", handlePointerMove);
-    dragRef.current.removeEventListener("pointerup", handlePointerUp);
-    delete dragRef.current.offset;
+    dragRef.current.setAttribute(
+      "style",
+      `left: 50%; top: 50%; transform: translate(-50%,-50%); z-index: ${zIndex}`
+    );
   };
 
   const handlePointerMove = (e) => {
@@ -34,14 +29,19 @@ export const Draggable = ({ children, center, zIndex, className }) => {
     const { innerWidth, innerHeight } = window;
     const offsetX = dragRef.current.offset.left;
     const offsetY = dragRef.current.offset.top;
-
-    dragRef.current.style.cssText += `left: ${Math.max(
+    const left = Math.max(
       0,
       Math.min(innerWidth - clientWidth, clientX - offsetX)
-    )}px; top: ${Math.max(
+    );
+    const top = Math.max(
       0,
       Math.min(innerHeight - clientHeight, clientY - offsetY)
-    )}px; transform: translate(0px,0px)`;
+    );
+
+    dragRef.current.setAttribute(
+      "style",
+      `left:${left}px; top: ${top}px; transform: translate(0px,0px); z-index: ${zIndex}`
+    );
   };
 
   const handlePointerDown = (e) => {
@@ -52,7 +52,18 @@ export const Draggable = ({ children, center, zIndex, className }) => {
     dragRef.current.offset = { left, top };
     dragRef.current.setPointerCapture(pointerId);
     dragRef.current.addEventListener("pointermove", handlePointerMove);
-    dragRef.current.addEventListener("pointerup", handlePointerUp);
+    dragRef.current.addEventListener(
+      "pointerup",
+      (e) => {
+        delete dragRef.current.offset;
+        const { pointerId } = e;
+        dragRef.current.releasePointerCapture(pointerId);
+        dragRef.current.removeEventListener("pointermove", handlePointerMove);
+      },
+      {
+        once: true,
+      }
+    );
   };
 
   return (

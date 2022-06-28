@@ -32,3 +32,4 @@ export { Popper } from "./Popper";
 export { ScrollTo } from "./ScrollTo";
 export { Popover } from "./Popover";
 export { Intro } from "./Intro";
+export { Swiper } from "./Swiper";

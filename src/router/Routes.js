@@ -140,6 +140,10 @@ export const routes = [
         path: "intro",
         componentPath: "pages/Intro",
       },
+      {
+        path: "swiper",
+        componentPath: "pages/Swiper",
+      },
     ],
   },
 ];

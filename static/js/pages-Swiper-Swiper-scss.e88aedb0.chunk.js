@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5230],{56477:function(e,c,n){n.r(c),c.default={}}}]);
+//# sourceMappingURL=pages-Swiper-Swiper-scss.e88aedb0.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[1304],{37938:function(t,o,s){s.r(o),s.d(o,{endpoints:function(){return e}});var e={FILE_UPLOAD:"http://doodlebluelive.com:2319/api/v1/upload/uploadFile",GET_ALL_PRODUCTS:"https://dummyjson.com/products",GET_ALL_POSTS:"https://dummyjson.com/posts",PRODUCT_LIST:"https://fakestoreapi.com/products"}}}]);
+//# sourceMappingURL=service-endpoints.09ce0fe5.chunk.js.map

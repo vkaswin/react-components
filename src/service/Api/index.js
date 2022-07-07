@@ -24,3 +24,10 @@ export const getAllPosts = ({ params }) => {
     params,
   });
 };
+
+export const getProductList = () => {
+  return axiosIntance({
+    method: "get",
+    url: endpoints.PRODUCT_LIST,
+  });
+};

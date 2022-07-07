@@ -93,7 +93,6 @@ export const Popper = ({
   };
 
   const canPlaceOnTop = ({ reference, popper }) => {
-    console.log(reference.y + offset, popper.height);
     return reference.y > popper.height;
   };
 
@@ -147,6 +146,7 @@ export const Popper = ({
       }),
     };
   };
+
   const placeOnLeftEnd = (args) => {
     if (!canPlaceOnLeft(args)) return false;
     const { reference, popper } = args;

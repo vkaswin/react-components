@@ -144,6 +144,10 @@ export const routes = [
         path: "swiper",
         componentPath: "pages/Swiper",
       },
+      {
+        path: "transition",
+        componentPath: "pages/Transition",
+      },
     ],
   },
 ];

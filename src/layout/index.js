@@ -150,6 +150,10 @@ const options = [
     label: "Swiper",
     to: "swiper",
   },
+  {
+    label: "Transition",
+    to: "transition",
+  },
 ];
 
 const Layout = () => {

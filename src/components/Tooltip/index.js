@@ -31,7 +31,7 @@ export const Tooltip = ({ children }) => {
   };
 
   const closeToolTip = () => {
-    // setShow(false);
+    setShow(false);
   };
 
   const onAnimationEnd = ({ animationName }) => {

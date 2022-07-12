@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useRef, useState } from "react";
+import React, {
+  createContext,
+  Fragment,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
@@ -25,7 +31,7 @@ export const Tooltip = ({ children }) => {
   };
 
   const closeToolTip = () => {
-    setShow(false);
+    // setShow(false);
   };
 
   const onAnimationEnd = ({ animationName }) => {
@@ -70,28 +76,36 @@ const Menu = ({ children, position, arrow, offset, className }) => {
         referenceElement={targetRef}
         position={position}
         offset={offset}
+        arrowRect={16}
+        arrow={arrow}
         render={({ styles, position, ref }) => {
           return (
-            <div
-              ref={ref}
-              className={classNames("rc-tooltip", {
-                show: show,
-              })}
-              onAnimationEnd={onAnimationEnd}
-              data-arrow={arrow}
-              data-position={position}
-              style={styles.popper}
-            >
+            <div>
               <div
-                className={classNames("rc-tooltip-content", {
-                  [className]: className,
+                ref={ref}
+                className={classNames("rc-tooltip", {
+                  show: show,
                 })}
+                onAnimationEnd={onAnimationEnd}
+                data-arrow={arrow}
+                data-position={position}
+                style={styles.popper}
               >
-                {children}
-                {arrow && (
-                  <div className="rc-tooltip-arrow" style={styles.arrow}></div>
-                )}
+                <div
+                  className={classNames("rc-tooltip-content", {
+                    [className]: className,
+                  })}
+                >
+                  {children}
+                </div>
               </div>
+              {arrow && (
+                <div
+                  className="rc-tooltip-arrow"
+                  style={styles.arrow}
+                  data-position={position}
+                ></div>
+              )}
             </div>
           );
         }}

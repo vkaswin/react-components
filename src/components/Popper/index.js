@@ -9,6 +9,7 @@ export const Popper = ({
   position,
   offset,
   arrow,
+  arrowRect,
 }) => {
   const popperElement = useRef();
 
@@ -24,6 +25,8 @@ export const Popper = ({
     },
     position,
   });
+
+  const gap = 5;
 
   useLayoutEffect(() => {
     handlePopper();
@@ -118,8 +121,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: popper.width,
-          y: reference.y - top + reference.height / 2,
+          x: reference.x,
+          y: reference.y + gap,
         },
       }),
     };
@@ -140,8 +143,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: popper.width,
-          y: reference.y - top + reference.height / 2,
+          x: reference.x,
+          y: reference.y + (reference.height / 2 - arrowRect / 2),
         },
       }),
     };
@@ -158,7 +161,10 @@ export const Popper = ({
         y: top,
       },
       ...(arrow && {
-        arrow: { x: popper.width, y: reference.y - top + reference.height / 2 },
+        arrow: {
+          x: reference.x,
+          y: reference.y + reference.height - arrowRect - gap,
+        },
       }),
     };
   };
@@ -179,8 +185,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: 0,
-          y: reference.y - top + reference.height / 2,
+          x: reference.x + reference.width,
+          y: reference.y + gap,
         },
       }),
     };
@@ -201,8 +207,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: 0,
-          y: reference.y - top + reference.height / 2,
+          x: reference.x + reference.width,
+          y: reference.y + (reference.height / 2 - arrowRect / 2),
         },
       }),
     };
@@ -220,8 +226,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: 0,
-          y: reference.y - top + reference.height / 2,
+          x: reference.x + reference.width,
+          y: reference.y + reference.height - arrowRect - gap,
         },
       }),
     };
@@ -243,8 +249,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: reference.x - left + reference.width / 2,
-          y: popper.height,
+          x: reference.x + gap,
+          y: reference.y,
         },
       }),
     };
@@ -266,8 +272,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: reference.x - left + reference.width / 2,
-          y: popper.height,
+          x: reference.x + (reference.width / 2 - arrowRect / 2),
+          y: reference.y,
         },
       }),
     };
@@ -285,8 +291,8 @@ export const Popper = ({
       },
       ...(arrow && {
         arrow: {
-          x: reference.x - left + reference.width / 2,
-          y: popper.height,
+          x: reference.x + reference.width - arrowRect - gap,
+          y: reference.y,
         },
       }),
     };
@@ -307,7 +313,7 @@ export const Popper = ({
         y: top,
       },
       ...(arrow && {
-        arrow: { x: reference.x - left + reference.width / 2, y: 0 },
+        arrow: { x: reference.x + gap, y: reference.y + reference.height },
       }),
     };
   };
@@ -327,7 +333,10 @@ export const Popper = ({
         y: top,
       },
       ...(arrow && {
-        arrow: { x: reference.x - left + reference.width / 2, y: 0 },
+        arrow: {
+          x: reference.x + (reference.width / 2 - arrowRect / 2),
+          y: reference.y + reference.height,
+        },
       }),
     };
   };
@@ -343,7 +352,10 @@ export const Popper = ({
         y: top,
       },
       ...(arrow && {
-        arrow: { x: reference.x - left + reference.width / 2, y: 0 },
+        arrow: {
+          x: reference.x + reference.width - arrowRect - gap,
+          y: reference.y + reference.height,
+        },
       }),
     };
   };
@@ -412,7 +424,6 @@ export const Popper = ({
     placement,
   }) => {
     setState({
-      ...state,
       styles: {
         popper: {
           ...state.styles.popper,
@@ -439,9 +450,11 @@ Popper.propTypes = {
   position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
   arrow: PropTypes.bool,
+  arrowRect: PropTypes.number,
 };
 
 Popper.defaultProps = {
   offset: 5,
   arrow: false,
+  arrowRect: 16,
 };

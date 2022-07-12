@@ -13,41 +13,32 @@
     max-width: 200px;
     color: white;
     text-align: center;
-    .rc-tooltip-arrow {
-      position: absolute;
-      border-width: 8px;
-      border-style: solid;
-      border-color: #000 transparent transparent transparent;
-    }
   }
 }
 
-.rc-tooltip[data-position^="left"] {
-  .rc-tooltip-arrow {
-    transform: rotate(-90deg);
-    margin-top: -6px;
-    margin-left: -1px;
-  }
+.rc-tooltip-arrow {
+  position: absolute;
+  border-width: 8px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
 }
 
-.rc-tooltip[data-position^="right"] {
-  .rc-tooltip-arrow {
-    transform: rotate(90deg);
-    margin-left: -15px;
-    margin-top: -6px;
-  }
+.rc-tooltip-arrow[data-position^="left"] {
+  transform: rotate(-90deg);
+  margin-left: -11px;
 }
 
-.rc-tooltip[data-position^="top"] {
-  .rc-tooltip-arrow {
-    transform: rotate(0deg);
-    margin-top: -1px;
-  }
+.rc-tooltip-arrow[data-position^="right"] {
+  transform: rotate(90deg);
+  margin-left: -4px;
 }
 
-.rc-tooltip[data-position^="bottom"] {
-  .rc-tooltip-arrow {
-    transform: rotate(180deg);
-    margin-top: -15px;
-  }
+.rc-tooltip-arrow[data-position^="top"] {
+  transform: rotate(0deg);
+  margin-top: -12px;
+}
+
+.rc-tooltip-arrow[data-position^="bottom"] {
+  transform: rotate(180deg);
+  margin-top: -4px;
 }

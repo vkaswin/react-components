@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useRef, useState } from "react";
 import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
-import { classNames, clickOutside } from "utils";
+import { clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
+import { CSSTransition } from "react-transition-group";
 
 import "./Popover.scss";
 
@@ -15,45 +16,23 @@ const usePopover = () => {
 export const Popover = ({ children }) => {
   const targetRef = useRef();
 
-  const popoverRef = useRef();
-
   const [isOpen, setIsOpen] = useState(false);
-
-  const [show, setShow] = useState(false);
 
   const openPopover = () => {
     setIsOpen(true);
-    setShow(true);
   };
 
   const closePopover = () => {
-    setShow(false);
-  };
-
-  const onAnimationEnd = ({ animationName }) => {
-    if (animationName === "rc_fadeIn") {
-      clickOutside({
-        ref: popoverRef.current,
-        onClose: closePopover,
-        doNotClose: (event) => {
-          return targetRef.current.contains(event);
-        },
-      });
-    }
-    if (animationName === "rc_fadeOut") {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   return (
     <PopoverContext.Provider
       value={{
         isOpen,
-        show,
         targetRef,
-        popoverRef,
         openPopover,
-        onAnimationEnd,
+        closePopover,
       }}
     >
       {children}
@@ -71,48 +50,57 @@ const Toggle = ({ children }) => {
   );
 };
 
-const Menu = ({ children, position, arrow, offset, className }) => {
-  const { isOpen, show, targetRef, popoverRef, onAnimationEnd } = usePopover();
+const Menu = ({ children, position, arrow, offset }) => {
+  const { isOpen, targetRef, closePopover } = usePopover();
 
-  if (!isOpen) return;
+  const onEntered = (ele) => {
+    clickOutside({
+      ref: ele,
+      onClose: closePopover,
+      doNotClose: (event) => {
+        return targetRef.current.contains(event);
+      },
+    });
+  };
 
   return (
     <Portal>
-      <Popper
-        referenceElement={targetRef}
-        position={position}
-        offset={offset}
-        arrow={arrow}
-        render={({ styles, position, ref }) => {
-          const setPopoverRef = (element) => {
-            ref(element);
-            popoverRef.current = element;
-          };
-          return (
-            <div
-              ref={setPopoverRef}
-              className={classNames("rc-popover", {
-                show: show,
-                [className]: className,
-              })}
-              onAnimationEnd={onAnimationEnd}
-              style={styles.popper}
-              data-position={position}
-            >
-              <div
-                className={classNames("rc-popover-content", {
-                  [className]: className,
-                })}
-              >
-                {children}
+      <CSSTransition
+        in={isOpen}
+        timeout={300}
+        unmountOnExit
+        classNames="fade"
+        onEntered={onEntered}
+      >
+        <Popper
+          referenceElement={targetRef}
+          position={position}
+          offset={offset}
+          arrow={arrow}
+          arrowRect={16}
+          render={({ styles, position, ref }) => {
+            return (
+              <div className="rc-popover">
+                <div
+                  ref={ref}
+                  className="rc-popover-menu"
+                  style={styles.popper}
+                  data-position={position}
+                >
+                  {children}
+                </div>
                 {arrow && (
-                  <div className="rc-popover-arrow" style={styles.arrow}></div>
+                  <div
+                    className="rc-popover-arrow"
+                    style={styles.arrow}
+                    data-position={position}
+                  ></div>
                 )}
               </div>
-            </div>
-          );
-        }}
-      />
+            );
+          }}
+        />
+      </CSSTransition>
     </Portal>
   );
 };

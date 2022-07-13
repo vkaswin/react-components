@@ -1,3 +1,11 @@
+.fade-enter-active {
+  animation: rc_fadeIn 0.3s forwards;
+}
+
+.fade-exit-active {
+  animation: rc_fadeIn 0.3s forwards reverse;
+}
+
 @keyframes rc_fadeIn {
   from {
     opacity: 0;

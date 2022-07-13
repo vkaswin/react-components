@@ -1,44 +1,38 @@
 .rc-tooltip {
-  animation: rc_fadeOut 0.2s linear forwards;
+  position: absolute;
+  inset: 0px auto auto 0px;
+  width: 100%;
+  max-width: 250px;
   z-index: 1050;
-  &:is(.show) {
-    animation: rc_fadeIn 0.2s linear forwards;
-  }
-  .rc-tooltip-content {
-    position: relative;
+  &-menu {
     background-color: #000;
     border-radius: 4px;
     font-size: 14px;
     padding: 7px;
-    max-width: 200px;
     color: white;
     text-align: center;
   }
-}
-
-.rc-tooltip-arrow {
-  position: absolute;
-  border-width: 8px;
-  border-style: solid;
-  border-color: #000 transparent transparent transparent;
-}
-
-.rc-tooltip-arrow[data-position^="left"] {
-  transform: rotate(-90deg);
-  margin-left: -11px;
-}
-
-.rc-tooltip-arrow[data-position^="right"] {
-  transform: rotate(90deg);
-  margin-left: -4px;
-}
-
-.rc-tooltip-arrow[data-position^="top"] {
-  transform: rotate(0deg);
-  margin-top: -12px;
-}
-
-.rc-tooltip-arrow[data-position^="bottom"] {
-  transform: rotate(180deg);
-  margin-top: -4px;
+  &-arrow {
+    position: absolute;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+    z-index: -1;
+  }
+  &-arrow[data-position^="left"] {
+    transform: rotate(-90deg);
+    margin-left: -12px;
+  }
+  &-arrow[data-position^="right"] {
+    transform: rotate(90deg);
+    margin-left: -4px;
+  }
+  &-arrow[data-position^="top"] {
+    transform: rotate(0deg);
+    margin-top: -12px;
+  }
+  &-arrow[data-position^="bottom"] {
+    transform: rotate(180deg);
+    margin-top: -4px;
+  }
 }

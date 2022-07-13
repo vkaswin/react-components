@@ -2,49 +2,34 @@ import React, { useEffect, useState } from "react";
 import { Portal, Overlay } from "components";
 import { classNames } from "utils";
 import PropTypes from "prop-types";
+import { CSSTransition } from "react-transition-group";
 
 import "./Modal.scss";
 
 export const Modal = ({ isOpen, toggle, children }) => {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    setShow(isOpen);
-  }, [isOpen]);
-
-  const handleAnimationEnd = ({ animationName }) => {
-    if (animationName == "hide_modal" || animationName == "rc_slideOutBottom") {
-      setShow(false);
-    }
-  };
-
-  if (!show) return null;
-
   return (
-    <Portal>
-      <div>
-        <div
-          className={classNames("rc-modal", { show: isOpen })}
-          onClick={() => {
-            isOpen && toggle();
-          }}
-        >
+    <CSSTransition in={isOpen} unmountOnExit timeout={300} classNames="modal">
+      <Portal>
+        <div>
           <div
-            className={classNames("rc-modal-dialog")}
-            onAnimationEnd={handleAnimationEnd}
+            className="rc-modal"
+            onClick={() => {
+              isOpen && toggle();
+            }}
           >
-            <div
-              className="rc-modal-content"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {children}
+            <div className="rc-modal-dialog">
+              <div
+                className="rc-modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {children}
+              </div>
             </div>
           </div>
+          <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} />
         </div>
-        <Overlay isOpen={isOpen} toggle={toggle} zIndex={1049} />
-      </div>
-    </Portal>
+      </Portal>
+    </CSSTransition>
   );
 };
 

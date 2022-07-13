@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Popper, Portal } from "components";
+import { Popper } from "components";
 import { classNames, clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
+import { CSSTransition } from "react-transition-group";
 
 import "./DropDown.scss";
 
@@ -15,46 +16,23 @@ export const useDropDown = () => {
 export const DropDown = ({ children }) => {
   const targetRef = useRef();
 
-  const dropDownRef = useRef();
-
   const [isOpen, setIsOpen] = useState(false);
-
-  const [show, setShow] = useState(false);
 
   const openDropDown = () => {
     setIsOpen(true);
-    setShow(true);
   };
 
   const closeDropDown = () => {
-    setShow(false);
-  };
-
-  const onAnimationEnd = ({ animationName }) => {
-    if (animationName === "rc_fadeIn") {
-      clickOutside({
-        ref: dropDownRef.current,
-        onClose: closeDropDown,
-        doNotClose: (event) => {
-          return targetRef.current.contains(event);
-        },
-      });
-    }
-    if (animationName === "rc_fadeOut") {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   return (
     <DropDownContext.Provider
       value={{
         isOpen,
-        show,
         targetRef,
-        dropDownRef,
         openDropDown,
         closeDropDown,
-        onAnimationEnd,
       }}
     >
       <div>{children}</div>
@@ -79,37 +57,44 @@ const Toggle = ({ children, trigger, className }) => {
 };
 
 const Menu = ({ children, position, offset, className }) => {
-  const { isOpen, show, targetRef, dropDownRef, onAnimationEnd } =
-    useDropDown();
+  const { isOpen, targetRef, closeDropDown } = useDropDown();
 
-  if (!isOpen) return;
+  const onEntered = (ele) => {
+    clickOutside({
+      ref: ele,
+      onClose: closeDropDown,
+      doNotClose: (event) => {
+        return targetRef.current.contains(event);
+      },
+    });
+  };
 
   return (
-    <Popper
-      referenceElement={targetRef}
-      position={position}
-      offset={offset}
-      render={({ styles, position, ref }) => {
-        const setDropDownRef = (element) => {
-          ref(element);
-          dropDownRef.current = element;
-        };
-        return (
-          <div
-            ref={setDropDownRef}
-            className={classNames("rc-dropdown-menu", {
-              show,
-              [className]: className,
-            })}
-            onAnimationEnd={onAnimationEnd}
-            style={styles.popper}
-            data-position={position}
-          >
-            {children}
-          </div>
-        );
-      }}
-    />
+    <CSSTransition
+      in={isOpen}
+      timeout={300}
+      unmountOnExit
+      classNames="fade"
+      onEntered={onEntered}
+    >
+      <Popper
+        referenceElement={targetRef}
+        position={position}
+        offset={offset}
+        render={({ styles, position, ref }) => {
+          return (
+            <div
+              ref={ref}
+              className="rc-dropdown-menu"
+              style={styles.popper}
+              data-position={position}
+            >
+              {children}
+            </div>
+          );
+        }}
+      />
+    </CSSTransition>
   );
 };
 

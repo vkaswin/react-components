@@ -9,6 +9,7 @@ import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
 import { classNames } from "utils";
 import { PopperPlacements } from "utils/constants";
+import { CSSTransition } from "react-transition-group";
 
 import "./Tooltip.scss";
 
@@ -23,21 +24,12 @@ export const Tooltip = ({ children }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [show, setShow] = useState(false);
-
   const openToolTip = () => {
     setIsOpen(true);
-    setShow(true);
   };
 
   const closeToolTip = () => {
-    setShow(false);
-  };
-
-  const onAnimationEnd = ({ animationName }) => {
-    if (animationName === "rc_fadeOut") {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   return (
@@ -45,10 +37,8 @@ export const Tooltip = ({ children }) => {
       value={{
         targetRef,
         isOpen,
-        show,
         openToolTip,
         closeToolTip,
-        onAnimationEnd,
       }}
     >
       {children}
@@ -66,50 +56,40 @@ const Toggle = ({ children }) => {
 };
 
 const Menu = ({ children, position, arrow, offset, className }) => {
-  const { isOpen, show, targetRef, onAnimationEnd } = useToolTip();
-
-  if (!isOpen) return;
+  const { isOpen, targetRef } = useToolTip();
 
   return (
     <Portal>
-      <Popper
-        referenceElement={targetRef}
-        position={position}
-        offset={offset}
-        arrowRect={16}
-        arrow={arrow}
-        render={({ styles, position, ref }) => {
-          return (
-            <div>
-              <div
-                ref={ref}
-                className={classNames("rc-tooltip", {
-                  show: show,
-                })}
-                onAnimationEnd={onAnimationEnd}
-                data-arrow={arrow}
-                data-position={position}
-                style={styles.popper}
-              >
+      <CSSTransition in={isOpen} timeout={300} classNames="fade" unmountOnExit>
+        <Popper
+          referenceElement={targetRef}
+          position={position}
+          offset={offset}
+          arrowRect={16}
+          arrow={arrow}
+          render={({ styles, position, ref }) => {
+            return (
+              <div className="rc-tooltip">
                 <div
-                  className={classNames("rc-tooltip-content", {
-                    [className]: className,
-                  })}
+                  ref={ref}
+                  className="rc-tooltip-menu"
+                  data-position={position}
+                  style={styles.popper}
                 >
                   {children}
                 </div>
+                {arrow && (
+                  <div
+                    className="rc-tooltip-arrow"
+                    style={styles.arrow}
+                    data-position={position}
+                  ></div>
+                )}
               </div>
-              {arrow && (
-                <div
-                  className="rc-tooltip-arrow"
-                  style={styles.arrow}
-                  data-position={position}
-                ></div>
-              )}
-            </div>
-          );
-        }}
-      />
+            );
+          }}
+        />
+      </CSSTransition>
     </Portal>
   );
 };

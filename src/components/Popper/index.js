@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { getBoundingClientRect } from "utils";
 import { PopperPlacements } from "utils/constants";
 
 export const Popper = ({
@@ -40,17 +39,9 @@ export const Popper = ({
   };
 
   const handlePopper = () => {
-    const reference = getBoundingClientRect(referenceElement.current);
+    const reference = referenceElement.current?.getBoundingClientRect();
 
-    const popper = getBoundingClientRect(popperElement.current);
-
-    const { scrollX, scrollY } = window;
-
-    reference.x += scrollX;
-    reference.y += scrollY;
-
-    popper.x += scrollX;
-    reference.y += scrollY;
+    const popper = popperElement.current?.getBoundingClientRect();
 
     const { innerWidth, innerHeight } = window;
 
@@ -98,9 +89,8 @@ export const Popper = ({
   };
 
   const canPlaceOnBottom = ({ reference, popper, innerHeight }) => {
-    return (
-      innerHeight - (reference.y + reference.height + offset) > popper.height
-    );
+    let bottom = innerHeight - (reference.y + reference.height + offset);
+    return bottom > popper.height;
   };
 
   const placeOnLeftStart = (args) => {
@@ -421,16 +411,17 @@ export const Popper = ({
     arrow: { x, y } = {},
     placement,
   }) => {
+    const { scrollX, scrollY } = window;
     setState({
       popper: {
         ...state.popper,
-        transform: `translate(${X}px,${Y}px)`,
+        transform: `translate(${X + scrollX}px,${Y + scrollY}px)`,
       },
       ...(arrow && {
         arrow: {
           ...state.arrow,
-          left: `${x}px`,
-          top: `${y}px`,
+          left: `${x + scrollX}px`,
+          top: `${y + scrollY}px`,
         },
       }),
       position: placement ?? position,

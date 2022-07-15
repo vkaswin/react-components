@@ -22,21 +22,6 @@ export const debounce = (fn, delay) => {
   };
 };
 
-//? BoundingClientRect
-export const getBoundingClientRect = (element) => {
-  let rect = element.getBoundingClientRect();
-  return {
-    bottom: rect.bottom,
-    height: rect.height,
-    left: rect.left,
-    right: rect.right,
-    top: rect.top,
-    width: rect.width,
-    x: rect.x,
-    y: rect.y,
-  };
-};
-
 //? Cookies
 export const setCookie = ({ name, value, days }) => {
   let expireDate = new Date();

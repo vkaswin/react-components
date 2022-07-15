@@ -1,11 +1,11 @@
 .dropdown_enter {
-  .dropdown_menu {
+  .menu {
     animation: dropdown-anime 250ms ease-in-out forwards;
   }
 }
 
 .dropdown_exit {
-  .dropdown_menu {
+  .menu {
     animation: dropdown-anime 250ms ease-in-out forwards reverse;
   }
 }

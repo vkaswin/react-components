@@ -1,68 +1,61 @@
-import React, { createContext, useContext, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import PropTypes from "prop-types";
-import { Popper } from "components";
-import { classNames, clickOutside } from "utils";
+import { Popper, Portal } from "components";
+import { clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
 
-import "./DropDown.scss";
+import styles from "./DropDown.module.scss";
 
 const DropDownContext = createContext();
 
-export const useDropDown = () => {
-  return useContext(DropDownContext);
-};
-
-export const DropDown = ({ children }) => {
+export const DropDown = ({
+  children,
+  selector,
+  position,
+  offset,
+  trigger,
+  className,
+}) => {
   const targetRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const openDropDown = () => {
+  const show = () => {
     setIsOpen(true);
   };
 
-  const closeDropDown = () => {
+  const hide = () => {
     setIsOpen(false);
   };
 
-  return (
-    <DropDownContext.Provider
-      value={{
-        isOpen,
-        targetRef,
-        openDropDown,
-        closeDropDown,
-      }}
-    >
-      <div>{children}</div>
-    </DropDownContext.Provider>
-  );
-};
+  useEffect(() => {
+    if (selector.length === 0) return;
 
-const Toggle = ({ children, trigger, className }) => {
-  const { openDropDown, closeDropDown, targetRef } = useDropDown();
+    const element = document.querySelector(selector);
 
-  return (
-    <button
-      className={classNames(className)}
-      ref={targetRef}
-      onClick={() => trigger === "click" && openDropDown()}
-      onMouseEnter={() => trigger === "hover" && openDropDown()}
-      onMouseLeave={() => trigger === "hover" && closeDropDown()}
-    >
-      {children}
-    </button>
-  );
-};
+    if (!element) return;
 
-const Menu = ({ children, position, offset, className }) => {
-  const { isOpen, targetRef, closeDropDown } = useDropDown();
+    targetRef.current = element;
+
+    if (trigger === "hover") {
+      element.onmouseenter = show;
+      element.onmouseleave = hide;
+    } else {
+      element.onclick = show;
+    }
+  }, []);
 
   const onEntered = (ele) => {
     clickOutside({
       ref: ele,
-      onClose: closeDropDown,
+      onClose: hide,
       doNotClose: (event) => {
         return targetRef.current.contains(event);
       },
@@ -70,90 +63,75 @@ const Menu = ({ children, position, offset, className }) => {
   };
 
   return (
-    <CSSTransition
-      in={isOpen}
-      timeout={300}
-      unmountOnExit
-      classNames="fade"
-      onEntered={onEntered}
-    >
-      <Popper
-        referenceElement={targetRef}
-        position={position}
-        offset={offset}
-        render={({ styles, position, ref }) => {
-          return (
-            <div
-              ref={ref}
-              className="rc-dropdown-menu"
-              style={styles.popper}
-              data-position={position}
-            >
-              {children}
-            </div>
-          );
+    <Portal>
+      <CSSTransition
+        in={isOpen}
+        timeout={200}
+        unmountOnExit
+        classNames={{
+          enterActive: styles.dropdown_enter,
+          exitActive: styles.dropdown_exit,
         }}
-      />
-    </CSSTransition>
+        onEntered={onEntered}
+      >
+        <Popper
+          referenceElement={targetRef}
+          position={position}
+          offset={offset}
+          render={({ popper, arrow, position, ref }) => {
+            return (
+              <DropDownContext.Provider value={{ hide }}>
+                <div
+                  ref={ref}
+                  className={styles.dropdown}
+                  style={popper}
+                  data-position={position}
+                >
+                  <div className={styles.menu}>{children}</div>
+                </div>
+              </DropDownContext.Provider>
+            );
+          }}
+        />
+      </CSSTransition>
+    </Portal>
   );
 };
 
-const Item = ({ children, onClick }) => {
-  const { closeDropDown } = useDropDown();
+DropDown.propTypes = {
+  children: PropTypes.node.isRequired,
+  position: PropTypes.oneOf(PopperPlacements),
+  offset: PropTypes.number,
+  trigger: PropTypes.oneOf(["click", "hover"]),
+  className: PropTypes.string,
+  selector: PropTypes.string.isRequired,
+};
 
-  const handleClickItem = () => {
-    closeDropDown();
+DropDown.defaultProps = {
+  position: "bottom-start",
+  offset: 10,
+  trigger: "click",
+  className: null,
+};
+
+const Item = ({ children, onClick }) => {
+  const { hide } = useContext(DropDownContext);
+
+  const handleClick = () => {
+    hide();
     if (typeof onClick === "function") onClick();
   };
 
   return (
-    <button className="rc-dropdown-item" onClick={handleClickItem}>
+    <button className={styles.dropdown_item} onClick={handleClick}>
       {children}
     </button>
   );
 };
 
-DropDown.Toggle = Toggle;
-DropDown.Menu = Menu;
-DropDown.Item = Item;
-
-// DropDown PropTypes
-
-DropDown.propTypes = {
-  children: PropTypes.node.isRequired,
-  trigger: PropTypes.string,
-};
-
-// Menu PropTypes
-
-Menu.propTypes = {
-  children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf(PopperPlacements),
-  offset: PropTypes.number,
-};
-
-Menu.defaultProps = {
-  position: "bottom-start",
-  offset: 10,
-  className: null,
-};
-
-// Toggle PropTypes
-
-Toggle.propTypes = {
-  children: PropTypes.node.isRequired,
-  trigger: PropTypes.oneOf(["click", "hover"]),
-  classNames: PropTypes.string,
-};
-
-Toggle.defaultProps = {
-  trigger: "click",
-  classNames: "",
-};
-
-// Item PropTypes
-
 Item.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
+
+DropDown.Item = Item;

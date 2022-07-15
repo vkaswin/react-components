@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { DropDown } from "components";
 
 import "./DropDown.scss";
@@ -103,11 +103,15 @@ const DropDownPage = () => {
       <div className="drop-down-btn">
         {dropDown.map(({ label, children, position, trigger }, index) => {
           return (
-            <DropDown key={index}>
-              <DropDown.Toggle trigger={trigger} className="btn btn-secondary">
-                <span>{label}</span>
-              </DropDown.Toggle>
-              <DropDown.Menu position={position}>
+            <Fragment key={index}>
+              <button className="btn btn-secondary" id={`dropdown-${index}`}>
+                {label}
+              </button>
+              <DropDown
+                id={`#dropdown-${index}`}
+                position={position}
+                trigger={trigger}
+              >
                 {children.map((list, index) => {
                   return (
                     <DropDown.Item key={index}>
@@ -115,8 +119,8 @@ const DropDownPage = () => {
                     </DropDown.Item>
                   );
                 })}
-              </DropDown.Menu>
-            </DropDown>
+              </DropDown>
+            </Fragment>
           );
         })}
       </div>

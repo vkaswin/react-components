@@ -24,11 +24,11 @@ const PopoverPage = () => {
       <div className="popover-wrapper">
         {popover.map(({ label, position }, index) => {
           return (
-            <Popover key={index}>
-              <Popover.Toggle>
-                <button className="btn btn-secondary">{label}</button>
-              </Popover.Toggle>
-              <Popover.Menu position={position}>
+            <Fragment key={index}>
+              <button id={`popover-${index}`} className="btn btn-secondary">
+                {label}
+              </button>
+              <Popover position={position} selector={`#popover-${index}`}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
@@ -36,8 +36,8 @@ const PopoverPage = () => {
                   printer took a galley of type and scrambled it to make a type
                   specimen book.
                 </span>
-              </Popover.Menu>
-            </Popover>
+              </Popover>
+            </Fragment>
           );
         })}
       </div>

@@ -1,90 +1,78 @@
-import React, {
-  createContext,
-  Fragment,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
-import { classNames } from "utils";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
 
-import "./Tooltip.scss";
+import styles from "./Tooltip.module.scss";
 
-const ToolTipContext = createContext();
-
-const useToolTip = () => {
-  return useContext(ToolTipContext);
-};
-
-export const Tooltip = ({ children }) => {
+export const Tooltip = ({
+  children,
+  position,
+  arrow,
+  offset,
+  className,
+  selector,
+}) => {
   const targetRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const openToolTip = () => {
+  const show = () => {
     setIsOpen(true);
   };
 
-  const closeToolTip = () => {
+  const hide = () => {
     setIsOpen(false);
   };
 
-  return (
-    <ToolTipContext.Provider
-      value={{
-        targetRef,
-        isOpen,
-        openToolTip,
-        closeToolTip,
-      }}
-    >
-      {children}
-    </ToolTipContext.Provider>
-  );
-};
+  useEffect(() => {
+    if (selector.length === 0) return;
 
-const Toggle = ({ children }) => {
-  const { openToolTip, closeToolTip, targetRef } = useToolTip();
-  return (
-    <div ref={targetRef} onMouseEnter={openToolTip} onMouseLeave={closeToolTip}>
-      {children}
-    </div>
-  );
-};
+    const ele = document.querySelector(selector);
 
-const Menu = ({ children, position, arrow, offset, className }) => {
-  const { isOpen, targetRef } = useToolTip();
+    if (!ele) return;
+
+    targetRef.current = ele;
+    ele.onmouseenter = show;
+    ele.onmouseleave = hide;
+  }, []);
 
   return (
     <Portal>
-      <CSSTransition in={isOpen} timeout={300} classNames="fade" unmountOnExit>
+      <CSSTransition
+        in={isOpen}
+        timeout={300}
+        classNames={{
+          enterActive: styles.tooltip_enter,
+          exitActive: styles.tooltip_exit,
+        }}
+        unmountOnExit
+      >
         <Popper
           referenceElement={targetRef}
           position={position}
           offset={offset}
           arrowRect={16}
           arrow={arrow}
-          render={({ styles, position, ref }) => {
+          render={({ popper, arrow, position, ref }) => {
             return (
-              <div className="rc-tooltip">
-                <div
-                  ref={ref}
-                  className="rc-tooltip-menu"
-                  data-position={position}
-                  style={styles.popper}
-                >
+              <div
+                ref={ref}
+                className={styles.tooltip}
+                data-position={position}
+                style={popper}
+              >
+                <div className={styles.menu}>
                   {children}
+                  {/* {arrow && (
+                    <div
+                      className={styles.arrow}
+                      style={arrow}
+                      data-position={position}
+                    ></div>
+                  )} */}
                 </div>
-                {arrow && (
-                  <div
-                    className="rc-tooltip-arrow"
-                    style={styles.arrow}
-                    data-position={position}
-                  ></div>
-                )}
               </div>
             );
           }}
@@ -94,31 +82,18 @@ const Menu = ({ children, position, arrow, offset, className }) => {
   );
 };
 
-Tooltip.Toggle = Toggle;
-Tooltip.Menu = Menu;
-
-// Tooltip
 Tooltip.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// Tooltip Toggle
-Toggle.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// Tooltip Menu
-Menu.defaultProps = {
-  position: "top-center",
-  arrow: true,
-  offset: 10,
-  className: null,
-};
-
-Menu.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
   arrow: PropTypes.bool,
   className: PropTypes.string,
+  selector: PropTypes.string.isRequired,
+};
+
+Tooltip.defaultProps = {
+  position: "top-center",
+  arrow: true,
+  offset: 10,
+  className: null,
 };

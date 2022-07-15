@@ -1,62 +1,40 @@
-import React, { createContext, useContext, useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Popper, Portal } from "components";
 import PropTypes from "prop-types";
 import { clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
 
-import "./Popover.scss";
+import styles from "./Popover.module.scss";
 
-const PopoverContext = createContext();
-
-const usePopover = () => {
-  return useContext(PopoverContext);
-};
-
-export const Popover = ({ children }) => {
+export const Popover = ({ children, position, arrow, offset, selector }) => {
   const targetRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const openPopover = () => {
+  const show = () => {
     setIsOpen(true);
   };
 
-  const closePopover = () => {
+  const hide = () => {
     setIsOpen(false);
   };
 
-  return (
-    <PopoverContext.Provider
-      value={{
-        isOpen,
-        targetRef,
-        openPopover,
-        closePopover,
-      }}
-    >
-      {children}
-    </PopoverContext.Provider>
-  );
-};
+  useEffect(() => {
+    if (selector.length === 0) return;
 
-const Toggle = ({ children }) => {
-  const { openPopover, targetRef } = usePopover();
+    const ele = document.querySelector(selector);
 
-  return (
-    <div ref={targetRef} onClick={openPopover}>
-      {children}
-    </div>
-  );
-};
+    if (!ele) return;
 
-const Menu = ({ children, position, arrow, offset }) => {
-  const { isOpen, targetRef, closePopover } = usePopover();
+    targetRef.current = ele;
+    ele.onclick = show;
+  }, []);
 
   const onEntered = (ele) => {
     clickOutside({
       ref: ele,
-      onClose: closePopover,
+      onClose: hide,
       doNotClose: (event) => {
         return targetRef.current.contains(event);
       },
@@ -67,35 +45,38 @@ const Menu = ({ children, position, arrow, offset }) => {
     <Portal>
       <CSSTransition
         in={isOpen}
-        timeout={300}
+        timeout={250}
+        classNames={{
+          enterActive: styles.popover_enter,
+          exitActive: styles.popover_exit,
+        }}
         unmountOnExit
-        classNames="fade"
         onEntered={onEntered}
       >
         <Popper
           referenceElement={targetRef}
           position={position}
           offset={offset}
-          arrow={arrow}
           arrowRect={16}
-          render={({ styles, position, ref }) => {
+          arrow={arrow}
+          render={({ popper, arrow, position, ref }) => {
             return (
-              <div className="rc-popover">
-                <div
-                  ref={ref}
-                  className="rc-popover-menu"
-                  style={styles.popper}
-                  data-position={position}
-                >
+              <div
+                ref={ref}
+                className={styles.popover}
+                data-position={position}
+                style={popper}
+              >
+                <div className={styles.menu}>
                   {children}
-                </div>
-                {arrow && (
+                  {/* {arrow && (
                   <div
-                    className="rc-popover-arrow"
-                    style={styles.arrow}
+                    className={styles.arrow}
+                    style={arrow}
                     data-position={position}
                   ></div>
-                )}
+                )} */}
+                </div>
               </div>
             );
           }}
@@ -105,31 +86,18 @@ const Menu = ({ children, position, arrow, offset }) => {
   );
 };
 
-Popover.Toggle = Toggle;
-Popover.Menu = Menu;
-
-// Popover
 Popover.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// Popover Toggle
-Toggle.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// Popover Menu
-Menu.defaultProps = {
-  position: "top-center",
-  arrow: true,
-  offset: 15,
-  className: null,
-};
-
-Menu.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
   arrow: PropTypes.bool,
   className: PropTypes.string,
+  selector: PropTypes.string.isRequired,
+};
+
+Popover.defaultProps = {
+  position: "top-center",
+  arrow: true,
+  offset: 15,
+  className: null,
 };

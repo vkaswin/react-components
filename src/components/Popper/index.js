@@ -14,14 +14,12 @@ export const Popper = ({
   const popperElement = useRef();
 
   const [state, setState] = useState({
-    styles: {
-      popper: {
-        position: "absolute",
-        inset: "0px auto auto 0px",
-      },
-      arrow: {
-        position: "absolute",
-      },
+    popper: {
+      position: "absolute",
+      inset: "0px auto auto 0px",
+    },
+    arrow: {
+      position: "absolute",
     },
     position,
   });
@@ -424,19 +422,17 @@ export const Popper = ({
     placement,
   }) => {
     setState({
-      styles: {
-        popper: {
-          ...state.styles.popper,
-          transform: `translate(${X}px,${Y}px)`,
-        },
-        ...(arrow && {
-          arrow: {
-            ...state.styles.arrow,
-            left: `${x}px`,
-            top: `${y}px`,
-          },
-        }),
+      popper: {
+        ...state.popper,
+        transform: `translate(${X}px,${Y}px)`,
       },
+      ...(arrow && {
+        arrow: {
+          ...state.arrow,
+          left: `${x}px`,
+          top: `${y}px`,
+        },
+      }),
       position: placement ?? position,
     });
   };

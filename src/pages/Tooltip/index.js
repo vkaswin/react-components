@@ -24,11 +24,11 @@ const TooltipPage = () => {
       <div className="tooltip-wrapper">
         {tooltip.map(({ label, position }, index) => {
           return (
-            <Tooltip key={index}>
-              <Tooltip.Toggle>
-                <button className="btn btn-secondary">{label}</button>
-              </Tooltip.Toggle>
-              <Tooltip.Menu position={position}>
+            <Fragment key={index}>
+              <button id={`tooltip-${index}`} className="btn btn-secondary">
+                {label}
+              </button>
+              <Tooltip selector={`#tooltip-${index}`} position={position}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
@@ -36,8 +36,8 @@ const TooltipPage = () => {
                   printer took a galley of type and scrambled it to make a type
                   specimen book.
                 </span>
-              </Tooltip.Menu>
-            </Tooltip>
+              </Tooltip>
+            </Fragment>
           );
         })}
       </div>

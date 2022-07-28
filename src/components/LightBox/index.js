@@ -28,11 +28,13 @@ export const LightBox = ({ isOpen, toggle, images }) => {
     handleFocus();
   }, [activeIndex]);
 
-  const handleNext = () => {
+  const handleNext = (event) => {
+    if (event) event.stopPropagation();
     setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = (event) => {
+    if (event) event.stopPropagation();
     setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
@@ -60,17 +62,11 @@ export const LightBox = ({ isOpen, toggle, images }) => {
     <Portal>
       <CSSTransition
         in={isOpen}
-        timeout={250}
+        timeout={500}
         classNames={{ enterActive: styles.enter, exitActive: styles.exit }}
         unmountOnExit
       >
         <div className={styles.container}>
-          <div className={styles.next_arrow} onClick={handleNext}>
-            <i className="fas fa-arrow-right"></i>
-          </div>
-          <div className={styles.prev_arrow} onClick={handlePrevious}>
-            <i className="fas fa-arrow-left"></i>
-          </div>
           <div className={styles.wrapper} onClick={toggle}>
             <div ref={imageRef} className={styles.image_wrapper}>
               {images.map((list, index) => {
@@ -95,6 +91,12 @@ export const LightBox = ({ isOpen, toggle, images }) => {
                   </div>
                 );
               })}
+              <div className={styles.next_arrow} onClick={handleNext}>
+                <i className="fas fa-arrow-right"></i>
+              </div>
+              <div className={styles.prev_arrow} onClick={handlePrevious}>
+                <i className="fas fa-arrow-left"></i>
+              </div>
             </div>
           </div>
           <div className={styles.overlay}></div>

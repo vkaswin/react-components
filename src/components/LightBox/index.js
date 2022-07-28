@@ -1,6 +1,8 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Portal } from "components/Portal";
+import { CSSTransition } from "react-transition-group";
+import { classNames } from "utils";
 
 import imageOne from "assets/images/light-box/image-1.jpg";
 import imageTwo from "assets/images/light-box/image-2.jpg";
@@ -8,13 +10,10 @@ import imageThree from "assets/images/light-box/image-3.jpg";
 import imageFour from "assets/images/light-box/image-4.jpg";
 import imageFive from "assets/images/light-box/image-5.jpg";
 
-import "./LightBox.scss";
-import { classNames } from "utils";
+import styles from "./LightBox.module.scss";
 
 export const LightBox = ({ isOpen, toggle, images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const [show, setShow] = useState(false);
 
   const imageRef = useRef();
 
@@ -26,112 +25,81 @@ export const LightBox = ({ isOpen, toggle, images }) => {
   }, []);
 
   useEffect(() => {
-    if (!isOpen) return;
-    setShow(isOpen);
-  }, [isOpen]);
-
-  useEffect(() => {
     handleFocus();
   }, [activeIndex]);
 
   const handleNext = () => {
-    let index = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(index);
+    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const handlePrevious = () => {
-    let index = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
-    setActiveIndex(index);
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleFocus = () => {
     imageRef.current?.children[activeIndex].scrollIntoView({
+      block: "start",
       behavior: "smooth",
-      block: "nearest",
-      inline: "center",
     });
-  };
-
-  const handleClose = (event) => {
-    event.stopPropagation();
-    toggle();
   };
 
   const handleKeyPress = ({ keyCode }) => {
     if (keyCode === 39) {
       handleNext();
-      return;
-    }
-    if (keyCode === 37) {
+    } else if (keyCode === 37) {
       handlePrevious();
-      return;
     }
   };
 
-  const handleAnimationEnd = ({ animationName }) => {
-    if (animationName == "rc_fadeOut") {
-      setShow(false);
-    }
+  const handleSelect = (e, index) => {
+    e.stopPropagation();
+    setActiveIndex(index);
   };
-
-  if (!show) return;
 
   return (
     <Portal>
-      <div
-        className={classNames("light-box-container", { show: isOpen })}
-        onClick={toggle}
-        onAnimationEnd={handleAnimationEnd}
+      <CSSTransition
+        in={isOpen}
+        timeout={250}
+        classNames={{ enterActive: styles.enter, exitActive: styles.exit }}
+        unmountOnExit
       >
-        <div
-          className="light-box-next-arrow"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleNext();
-          }}
-        >
-          <i className="fas fa-arrow-right"></i>
-        </div>
-        <div
-          className="light-box-prev-arrow"
-          onClick={(e) => {
-            e.stopPropagation();
-            handlePrevious();
-          }}
-        >
-          <i className="fas fa-arrow-left"></i>
-        </div>
-        <div className="light-box-wrapper">
-          <div className="light-box-icon">
-            <div className="light-box-icon-card" onClick={handleClose}>
-              <i className="fas fa-times"></i>
+        <div className={styles.container}>
+          <div className={styles.next_arrow} onClick={handleNext}>
+            <i className="fas fa-arrow-right"></i>
+          </div>
+          <div className={styles.prev_arrow} onClick={handlePrevious}>
+            <i className="fas fa-arrow-left"></i>
+          </div>
+          <div className={styles.wrapper} onClick={toggle}>
+            <div ref={imageRef} className={styles.image_wrapper}>
+              {images.map((list, index) => {
+                return (
+                  <div key={index} className={styles.image_card}>
+                    <img src={list} />
+                  </div>
+                );
+              })}
+            </div>
+            <div className={styles.thumbnail_wrapper}>
+              {images.map((list, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={classNames(styles.thumbnail_card, {
+                      [styles.active]: activeIndex !== index,
+                    })}
+                    onClick={(e) => handleSelect(e, index)}
+                  >
+                    <img src={list} />
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div ref={imageRef} className="light-box-image">
-            {images.map((list, index) => {
-              return (
-                <div key={index} className="light-box-image-card">
-                  <img src={list} />
-                </div>
-              );
-            })}
-          </div>
-          <div className="light-box-thumbnail">
-            {images.map((list, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`light-box-thumbnail-card ${
-                    activeIndex !== index ? "active" : ""
-                  }`}
-                >
-                  <img src={list} />
-                </div>
-              );
-            })}
-          </div>
+          <div className={styles.overlay}></div>
         </div>
-      </div>
+      </CSSTransition>
     </Portal>
   );
 };

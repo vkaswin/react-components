@@ -1,17 +1,17 @@
-.light-box-container {
+.enter {
+  animation: fadeIn 250ms ease-in-out forwards;
+}
+
+.exit {
+  animation: fadeIn 250ms ease-in-out forwards reverse;
+}
+
+.container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1025;
-  animation: rc_fadeOut 0.5s linear forwards;
-  &:is(.show) {
-    animation: rc_fadeIn 0.5s linear forwards;
-  }
-  .light-box-next-arrow,
-  .light-box-prev-arrow {
+  inset: 0px;
+  z-index: 1050;
+  .next_arrow,
+  .prev_arrow {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
@@ -23,58 +23,37 @@
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 4px;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1052;
     i {
       color: white;
       font-size: 20px;
       font-weight: normal;
     }
   }
-  .light-box-next-arrow {
+  .next_arrow {
     right: 10px;
   }
-  .light-box-prev-arrow {
+  .prev_arrow {
     left: 10px;
   }
-  .light-box-wrapper {
+  .wrapper {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 40px 1fr 75px;
-    width: 100%;
+    grid-template-rows: 1fr 75px;
     height: 100%;
     gap: 10px;
-    .light-box-icon {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-      padding-right: 15px;
-      .light-box-icon-card {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        width: 30px;
-        height: 30px;
-        border-radius: 4px;
-        cursor: pointer;
-        i {
-          color: white;
-          font-size: 20px;
-          font-weight: normal;
-        }
-      }
-    }
-    .light-box-image {
+    padding: 15px 0px;
+    z-index: 1051;
+    .image_wrapper {
       display: flex;
       flex-wrap: nowrap;
       overflow: hidden;
-      .light-box-image-card {
+      .image_card {
         display: flex;
         justify-content: center;
         align-items: center;
         min-width: 100%;
-        height: calc(100vh - 135px);
         img {
           max-width: 100%;
           height: auto;
@@ -82,14 +61,15 @@
         }
       }
     }
-    .light-box-thumbnail {
+    .thumbnail_wrapper {
       display: flex;
       flex-wrap: nowrap;
       gap: 10px;
       margin: 0px auto;
       overflow: hidden;
-      .light-box-thumbnail-card {
+      .thumbnail_card {
         position: relative;
+        cursor: pointer;
         img {
           max-width: 100px;
           height: 80px;
@@ -110,5 +90,21 @@
         }
       }
     }
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1049;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

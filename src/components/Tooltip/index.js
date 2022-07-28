@@ -1,22 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Popper, Portal } from "components";
+import { Portal } from "components";
 import PropTypes from "prop-types";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
+import { usePopper } from "hooks";
 
 import styles from "./Tooltip.module.scss";
 
-export const Tooltip = ({
-  children,
-  position,
-  arrow,
-  offset,
-  className,
-  selector,
-}) => {
-  const targetRef = useRef();
+export const Tooltip = ({ children, placement, className, selector }) => {
+  const referenceRef = useRef();
+
+  const [popperRef, setPopperRef] = useState();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const { popper, placement: position } = usePopper({
+    reference: referenceRef.current,
+    popper: popperRef,
+    placement,
+  });
 
   const show = () => {
     setIsOpen(true);
@@ -33,7 +35,7 @@ export const Tooltip = ({
 
     if (!ele) return;
 
-    targetRef.current = ele;
+    referenceRef.current = ele;
     ele.onmouseenter = show;
     ele.onmouseleave = hide;
   }, []);
@@ -44,39 +46,19 @@ export const Tooltip = ({
         in={isOpen}
         timeout={300}
         classNames={{
-          enterActive: styles.tooltip_enter,
-          exitActive: styles.tooltip_exit,
+          enterActive: styles.enter,
+          exitActive: styles.exit,
         }}
         unmountOnExit
       >
-        <Popper
-          referenceElement={targetRef}
-          position={position}
-          offset={offset}
-          arrowRect={16}
-          arrow={arrow}
-          render={({ popper, arrow, position, ref }) => {
-            return (
-              <div
-                ref={ref}
-                className={styles.tooltip}
-                data-position={position}
-                style={popper}
-              >
-                <div className={styles.menu}>
-                  {children}
-                  {/* {arrow && (
-                    <div
-                      className={styles.arrow}
-                      style={arrow}
-                      data-position={position}
-                    ></div>
-                  )} */}
-                </div>
-              </div>
-            );
-          }}
-        />
+        <div
+          ref={setPopperRef}
+          className={styles.container}
+          data-placement={position}
+          style={popper}
+        >
+          <div className={styles.menu}>{children}</div>
+        </div>
       </CSSTransition>
     </Portal>
   );
@@ -84,7 +66,7 @@ export const Tooltip = ({
 
 Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf(PopperPlacements),
+  placement: PropTypes.oneOf(PopperPlacements),
   offset: PropTypes.number,
   arrow: PropTypes.bool,
   className: PropTypes.string,
@@ -92,8 +74,9 @@ Tooltip.propTypes = {
 };
 
 Tooltip.defaultProps = {
-  position: "top-center",
+  placement: "top-center",
   arrow: true,
   offset: 10,
   className: null,
+  selector: "",
 };

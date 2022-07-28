@@ -1,447 +1,299 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import { PopperPlacements } from "utils/constants";
-
-export const Popper = ({
-  render,
-  referenceElement,
-  position,
-  offset,
-  arrow,
-  arrowRect,
-}) => {
-  const popperElement = useRef();
-
-  const [state, setState] = useState({
-    popper: {
-      position: "absolute",
-      inset: "0px auto auto 0px",
-    },
-    arrow: {
-      position: "absolute",
-    },
-    position,
-  });
-
-  const gap = 5;
-
-  useLayoutEffect(() => {
-    handlePopper();
-  }, [referenceElement.current]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handlePopper);
-    return () => window.removeEventListener("resize", handlePopper);
-  }, []);
-
-  const ref = (element) => {
-    popperElement.current = element;
-  };
-
-  const handlePopper = () => {
-    const reference = referenceElement.current?.getBoundingClientRect();
-
-    const popper = popperElement.current?.getBoundingClientRect();
-
-    const { innerWidth, innerHeight } = window;
-
-    const args = {
-      reference,
-      popper,
-      innerWidth,
-      innerHeight,
+export class Popper {
+  constructor({ reference, popper, placement, onchange }) {
+    this.reference = reference;
+    this.popper = popper;
+    this.referenceRect = reference.getBoundingClientRect();
+    this.popperRect = popper.getBoundingClientRect();
+    this.placement = placement;
+    this.innerWidth = undefined;
+    this.innerHeight = undefined;
+    this.onchange = onchange;
+    this.popperStyle = { position: "absolute", inset: "0px auto auto 0px" };
+    this.arrowStyle = { position: "absolute", inset: "0px auto auto 0px" };
+    this.popperAttributes = { placement };
+    this.popperPositions = {
+      "left-center": this.placeOnLeftCenter.bind(this),
+      "left-start": this.placeOnLeftStart.bind(this),
+      "left-end": this.placeOnLeftEnd.bind(this),
+      "right-start": this.placeOnRightStart.bind(this),
+      "right-center": this.placeOnRightCenter.bind(this),
+      "right-end": this.placeOnRightEnd.bind(this),
+      "top-start": this.placeOnTopStart.bind(this),
+      "top-center": this.placeOnTopCenter.bind(this),
+      "top-end": this.placeOnTopEnd.bind(this),
+      "bottom-start": this.placeOnBottomStart.bind(this),
+      "bottom-center": this.placeOnBottomCenter.bind(this),
+      "bottom-end": this.placeOnBottomEnd.bind(this),
     };
 
-    const popperRect = popperPositions[position]?.(args);
+    this.init();
+  }
 
-    if (popperRect) {
-      setPopperPosition(popperRect);
-    } else {
-      autoPlacement(args);
-    }
-  };
+  init() {
+    this.handlePopper();
+    window.addEventListener("resize", this.handlePopper.bind(this));
+  }
 
-  const popperPositions = {
-    "left-center": (args) => placeOnLeftCenter(args),
-    "left-start": (args) => placeOnLeftStart(args),
-    "left-end": (args) => placeOnLeftEnd(args),
-    "right-start": (args) => placeOnRightStart(args),
-    "right-center": (args) => placeOnRightCenter(args),
-    "right-end": (args) => placeOnRightEnd(args),
-    "top-start": (args) => placeOnTopStart(args),
-    "top-center": (args) => placeOnTopCenter(args),
-    "top-end": (args) => placeOnTopEnd(args),
-    "bottom-start": (args) => placeOnBottomStart(args),
-    "bottom-center": (args) => placeOnBottomCenter(args),
-    "bottom-end": (args) => placeOnBottomEnd(args),
-  };
+  destroy() {
+    window.removeEventListener("resize", this.handlePopper.bind(this));
+  }
 
-  const canPlaceOnLeft = ({ reference, popper }) => {
-    return reference.x - offset > popper.width;
-  };
+  canPlaceOnLeft() {
+    return this.referenceRect.x > this.popperRect.width;
+  }
 
-  const canPlaceOnRight = ({ reference, popper, innerWidth }) => {
-    return innerWidth - (reference.x + reference.width + offset) > popper.width;
-  };
+  canPlaceOnRight() {
+    return (
+      this.innerWidth - (this.referenceRect.x + this.referenceRect.width) >
+      this.popperRect.width
+    );
+  }
 
-  const canPlaceOnTop = ({ reference, popper }) => {
-    return reference.y > popper.height;
-  };
+  canPlaceOnTop() {
+    return this.referenceRect.y > this.popperRect.height;
+  }
 
-  const canPlaceOnBottom = ({ reference, popper, innerHeight }) => {
-    let bottom = innerHeight - (reference.y + reference.height + offset);
-    return bottom > popper.height;
-  };
+  canPlaceOnBottom() {
+    let bottom =
+      this.innerHeight - (this.referenceRect.y + this.referenceRect.height);
+    return bottom > this.popperRect.height;
+  }
 
-  const placeOnLeftStart = (args) => {
-    if (!canPlaceOnLeft(args)) return false;
-    const { reference, popper, innerHeight } = args;
-    let bottom = innerHeight - reference.y;
-    let left = reference.x - popper.width - offset;
+  placeOnLeftStart() {
+    if (!this.canPlaceOnLeft()) return false;
+    let left = this.referenceRect.x - this.popperRect.width;
+    let top = this.referenceRect.y;
+    return {
+      popper: {
+        left,
+        top,
+      },
+    };
+  }
+
+  placeOnLeftCenter = () => {
+    if (!this.canPlaceOnLeft()) return false;
+    let left = this.referenceRect.x - this.popperRect.width;
     let top =
-      popper.height > bottom
-        ? Math.max(reference.y - (popper.height - bottom + 10), 10)
-        : reference.y;
+      this.referenceRect.y -
+      (this.popperRect.height / 2 - this.referenceRect.height / 2);
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x,
-          y: reference.y + gap,
-        },
-      }),
     };
   };
 
-  const placeOnLeftCenter = (args) => {
-    if (!canPlaceOnLeft(args)) return false;
-    const { reference, popper } = args;
-    let left = reference.x - popper.width - offset;
-    let top = Math.max(
-      reference.y - (popper.height / 2 - reference.height / 2),
-      10
-    );
+  placeOnLeftEnd() {
+    if (!this.canPlaceOnLeft()) return false;
+    let left = this.referenceRect.x - this.popperRect.width;
+    let top =
+      this.referenceRect.y -
+      (this.popperRect.height - this.referenceRect.height);
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x,
-          y: reference.y + (reference.height / 2 - arrowRect / 2),
-        },
-      }),
+    };
+  }
+
+  placeOnRightStart() {
+    if (!this.canPlaceOnRight()) return false;
+    let left = this.referenceRect.x + this.referenceRect.width;
+    let top = this.referenceRect.y;
+    return {
+      popper: {
+        left,
+        top,
+      },
+    };
+  }
+
+  placeOnRightCenter = () => {
+    if (!this.canPlaceOnRight()) return false;
+    let left = this.referenceRect.x + this.referenceRect.width;
+    let top =
+      this.referenceRect.y -
+      (this.popperRect.height / 2 - this.referenceRect.height / 2);
+    return {
+      popper: {
+        left,
+        top,
+      },
     };
   };
 
-  const placeOnLeftEnd = (args) => {
-    if (!canPlaceOnLeft(args)) return false;
-    const { reference, popper } = args;
-    let left = reference.x - popper.width - offset;
-    let top = Math.max(reference.y - (popper.height - reference.height), 10);
+  placeOnRightEnd = () => {
+    if (!this.canPlaceOnRight()) return false;
+    let left = this.referenceRect.x + this.referenceRect.width;
+    let top =
+      this.referenceRect.y -
+      (this.popperRect.height - this.referenceRect.height);
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x,
-          y: reference.y + reference.height - arrowRect - gap,
-        },
-      }),
     };
   };
 
-  const placeOnRightStart = (args) => {
-    if (!canPlaceOnRight(args)) return false;
-    const { reference, popper, innerHeight } = args;
-    let bottom = innerHeight - (reference.y + reference.height);
-    let left = reference.x + reference.width + offset;
-    let top = Math.max(
-      popper.height > bottom ? bottom - popper.height : reference.y,
-      10
-    );
+  placeOnTopStart = () => {
+    if (!this.canPlaceOnTop()) return false;
+    let left = this.referenceRect.x;
+    let top = this.referenceRect.y - this.popperRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + reference.width,
-          y: reference.y + gap,
-        },
-      }),
     };
   };
 
-  const placeOnRightCenter = (args) => {
-    if (!canPlaceOnRight(args)) return false;
-    const { reference, popper } = args;
-    let left = reference.x + reference.width + offset;
-    let top = Math.max(
-      reference.y - (popper.height / 2 - reference.height / 2),
-      10
-    );
-    return {
-      popper: {
-        x: left,
-        y: top,
-      },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + reference.width,
-          y: reference.y + (reference.height / 2 - arrowRect / 2),
-        },
-      }),
-    };
-  };
-
-  const placeOnRightEnd = (args) => {
-    if (!canPlaceOnRight(args)) return false;
-    const { reference, popper } = args;
-    let left = reference.x + reference.width + offset;
-    let top = Math.max(reference.y - (popper.height - reference.height), 10);
-    return {
-      popper: {
-        x: left,
-        y: top,
-      },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + reference.width,
-          y: reference.y + reference.height - arrowRect - gap,
-        },
-      }),
-    };
-  };
-
-  const placeOnTopStart = (args) => {
-    if (!canPlaceOnTop(args)) return false;
-    const { reference, popper, innerWidth } = args;
-    let right = innerWidth - reference.x;
+  placeOnTopCenter = () => {
+    if (!this.canPlaceOnTop()) return false;
     let left =
-      right < popper.width
-        ? Math.max(reference.x - (popper.width - right + 10), 10)
-        : reference.x;
-    let top = reference.y - (popper.height + offset);
+      this.referenceRect.x +
+      (this.referenceRect.width / 2 - this.popperRect.width / 2);
+    let top = this.referenceRect.y - this.popperRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + gap,
-          y: reference.y,
-        },
-      }),
     };
   };
 
-  const placeOnTopCenter = (args) => {
-    if (!canPlaceOnTop(args)) return false;
-    const { reference, popper, innerWidth } = args;
-    let right = innerWidth - reference.x;
+  placeOnTopEnd() {
+    if (!this.canPlaceOnTop()) return false;
     let left =
-      right < popper.width
-        ? Math.max(reference.x - (popper.width - right + offset), 10)
-        : Math.max(reference.x + (reference.width / 2 - popper.width / 2), 10);
-    let top = reference.y - (popper.height + offset);
+      this.referenceRect.x - (this.popperRect.width - this.referenceRect.width);
+    let top = this.referenceRect.y - this.popperRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + (reference.width / 2 - arrowRect / 2),
-          y: reference.y,
-        },
-      }),
     };
-  };
+  }
 
-  const placeOnTopEnd = (args) => {
-    if (!canPlaceOnTop(args)) return false;
-    const { reference, popper } = args;
-    let left = Math.max(reference.x - (popper.width - reference.width), 10);
-    let top = reference.y - (popper.height + offset);
+  placeOnBottomStart(isDefault = false) {
+    if (isDefault || !this.canPlaceOnBottom()) return false;
+    let left = this.referenceRect.x;
+    let top = this.referenceRect.y + this.referenceRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + reference.width - arrowRect - gap,
-          y: reference.y,
-        },
-      }),
     };
-  };
+  }
 
-  const placeOnBottomStart = (args) => {
-    const { reference, popper, innerWidth, isDefault = false } = args;
-    if (isDefault || !canPlaceOnBottom(args)) return false;
-    let right = innerWidth - reference.x;
+  placeOnBottomCenter() {
+    if (!this.canPlaceOnBottom()) return false;
     let left =
-      right < popper.width
-        ? Math.max(reference.x - (popper.width - right + offset), 10)
-        : reference.x;
-    let top = reference.y + reference.height + offset;
+      this.referenceRect.x +
+      (this.referenceRect.width / 2 - this.popperRect.width / 2);
+    let top = this.referenceRect.y + this.referenceRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: { x: reference.x + gap, y: reference.y + reference.height },
-      }),
     };
-  };
+  }
 
-  const placeOnBottomCenter = (args) => {
-    if (!canPlaceOnBottom(args)) return false;
-    const { reference, popper, innerWidth } = args;
-    let right = innerWidth - reference.x;
+  placeOnBottomEnd() {
+    if (!this.canPlaceOnBottom()) return false;
     let left =
-      right < popper.width
-        ? Math.max(reference.x - (popper.width - right + offset), 10)
-        : Math.max(reference.x + (reference.width / 2 - popper.width / 2), 10);
-    let top = reference.y + reference.height + offset;
+      this.referenceRect.x - (this.popperRect.width - this.referenceRect.width);
+    let top = this.referenceRect.y + this.referenceRect.height;
     return {
       popper: {
-        x: left,
-        y: top,
+        left,
+        top,
       },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + (reference.width / 2 - arrowRect / 2),
-          y: reference.y + reference.height,
-        },
-      }),
     };
-  };
+  }
 
-  const placeOnBottomEnd = (args) => {
-    if (!canPlaceOnBottom(args)) return false;
-    const { reference, popper } = args;
-    let left = Math.max(reference.x - (popper.width - reference.width), 10);
-    let top = reference.y + reference.height + offset;
-    return {
-      popper: {
-        x: left,
-        y: top,
-      },
-      ...(arrow && {
-        arrow: {
-          x: reference.x + reference.width - arrowRect - gap,
-          y: reference.y + reference.height,
-        },
-      }),
-    };
-  };
-
-  const getPosition = (args) => {
-    const [placement] = position.split("-");
-    switch (placement) {
+  getPosition = () => {
+    const [position] = this.placement.split("-");
+    switch (position) {
       case "left":
-        return canPlaceOnLeft(args) && "left-center";
+        return this.canPlaceOnLeft() && "left-center";
       case "right":
-        return canPlaceOnRight(args) && "right";
+        return this.canPlaceOnRight() && "right";
       case "top":
-        return canPlaceOnTop(args) && "top";
+        return this.canPlaceOnTop() && "top";
       case "bottom":
-        return canPlaceOnBottom(args) && "bottom";
+        return this.canPlaceOnBottom() && "bottom";
       default:
         return false;
     }
   };
 
-  const getOppositePosition = (args) => {
-    const [placement] = position.split("-");
-    switch (placement) {
+  getOppositePosition = () => {
+    const [position] = this.placement.split("-");
+    switch (position) {
       case "left":
-        return canPlaceOnRight(args) && "right";
+        return this.canPlaceOnRight() && "right";
       case "right":
-        return canPlaceOnLeft(args) && "left";
+        return this.canPlaceOnLeft() && "left";
       case "top":
-        return canPlaceOnBottom(args) && "bottom";
+        return this.canPlaceOnBottom() && "bottom";
       case "bottom":
-        return canPlaceOnTop(args) && "top";
+        return this.canPlaceOnTop() && "top";
       default:
         return false;
     }
   };
 
-  const getAdjacentSides = (args) => {
-    const [placement] = position.split("-");
-    if (placement === "left" || placement === "right") {
-      return [canPlaceOnTop(args) && "top", canPlaceOnBottom(args) && "bottom"];
+  getAdjacentSides = () => {
+    const [position] = this.placement.split("-");
+    if (position === "left" || position === "right") {
+      return [
+        this.canPlaceOnTop() && "top",
+        this.canPlaceOnBottom() && "bottom",
+      ];
     }
-    if (placement === "top" || placement === "bottom") {
-      return [canPlaceOnLeft(args) && "left", canPlaceOnRight(args) && "right"];
+    if (position === "top" || position === "bottom") {
+      return [
+        this.canPlaceOnLeft() && "left",
+        this.canPlaceOnRight() && "right",
+      ];
     }
   };
 
-  const autoPlacement = (args) => {
+  autoPlacement = () => {
     const posiblePositions = [
-      getPosition(args),
-      getOppositePosition(args),
-      ...getAdjacentSides(args),
+      this.getPosition(),
+      this.getOppositePosition(),
+      ...this.getAdjacentSides(),
     ].filter(Boolean);
 
     if (posiblePositions.length !== 0) {
       let placement = `${posiblePositions[0]}-center`;
-      const popperRect = popperPositions[placement]?.(args);
-      setPopperPosition({ ...popperRect, placement });
+      let rect = this.popperPositions[placement]?.();
+      this.onchange({ popper: rect.popper, placement });
     } else {
-      popperPositions["bottom-start"]({ ...args, isDefault: true });
+      let rect = this.popperPositions["bottom-start"](true);
+      this.onchange({ popper: rect.popper, placaement: "bottom-start" });
     }
   };
 
-  const setPopperPosition = ({
-    popper: { x: X, y: Y } = {},
-    arrow: { x, y } = {},
-    placement,
-  }) => {
-    const { scrollX, scrollY } = window;
-    setState({
-      popper: {
-        ...state.popper,
-        transform: `translate(${X + scrollX}px,${Y + scrollY}px)`,
-      },
-      ...(arrow && {
-        arrow: {
-          ...state.arrow,
-          left: `${x + scrollX}px`,
-          top: `${y + scrollY}px`,
-        },
-      }),
-      position: placement ?? position,
-    });
-  };
+  handlePopper() {
+    const { innerWidth, innerHeight } = window;
 
-  return render({ ...state, ref });
-};
+    this.innerHeight = innerHeight;
+    this.innerWidth = innerWidth;
 
-Popper.propTypes = {
-  render: PropTypes.func.isRequired,
-  referenceElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  position: PropTypes.oneOf(PopperPlacements),
-  offset: PropTypes.number,
-  arrow: PropTypes.bool,
-  arrowRect: PropTypes.number,
-};
+    const rect = this.popperPositions[this.placement]?.();
 
-Popper.defaultProps = {
-  offset: 5,
-  arrow: false,
-  arrowRect: 16,
-};
+    if (rect) {
+      this.onchange({ popper: rect.popper, placement: this.placement });
+    } else {
+      this.autoPlacement();
+    }
+  }
+}

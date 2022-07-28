@@ -108,8 +108,8 @@ const DropDownPage = () => {
                 {label}
               </button>
               <DropDown
-                id={`#dropdown-${index}`}
-                position={position}
+                selector={`#dropdown-${index}`}
+                placement={position}
                 trigger={trigger}
               >
                 {children.map((list, index) => {

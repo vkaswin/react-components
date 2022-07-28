@@ -28,7 +28,7 @@ const TooltipPage = () => {
               <button id={`tooltip-${index}`} className="btn btn-secondary">
                 {label}
               </button>
-              <Tooltip selector={`#tooltip-${index}`} position={position}>
+              <Tooltip selector={`#tooltip-${index}`} placement={position}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's

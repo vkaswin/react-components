@@ -1,16 +1,25 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Popper, Portal } from "components";
+import { Portal } from "components";
 import PropTypes from "prop-types";
 import { clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
+import { usePopper } from "hooks";
 
 import styles from "./Popover.module.scss";
 
-export const Popover = ({ children, position, arrow, offset, selector }) => {
-  const targetRef = useRef();
+export const Popover = ({ children, placement, arrow, offset, selector }) => {
+  const referenceRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const [popperRef, setPopperRef] = useState();
+
+  const { popper, placement: position } = usePopper({
+    reference: referenceRef.current,
+    popper: popperRef,
+    placement,
+  });
 
   const show = () => {
     setIsOpen(true);
@@ -27,7 +36,7 @@ export const Popover = ({ children, position, arrow, offset, selector }) => {
 
     if (!ele) return;
 
-    targetRef.current = ele;
+    referenceRef.current = ele;
     ele.onclick = show;
   }, []);
 
@@ -36,7 +45,7 @@ export const Popover = ({ children, position, arrow, offset, selector }) => {
       ref: ele,
       onClose: hide,
       doNotClose: (event) => {
-        return targetRef.current.contains(event);
+        return referenceRef.current.contains(event);
       },
     });
   };
@@ -47,40 +56,20 @@ export const Popover = ({ children, position, arrow, offset, selector }) => {
         in={isOpen}
         timeout={250}
         classNames={{
-          enterActive: styles.popover_enter,
-          exitActive: styles.popover_exit,
+          enterActive: styles.enter,
+          exitActive: styles.exit,
         }}
         unmountOnExit
         onEntered={onEntered}
       >
-        <Popper
-          referenceElement={targetRef}
-          position={position}
-          offset={offset}
-          arrowRect={16}
-          arrow={arrow}
-          render={({ popper, arrow, position, ref }) => {
-            return (
-              <div
-                ref={ref}
-                className={styles.popover}
-                data-position={position}
-                style={popper}
-              >
-                <div className={styles.menu}>
-                  {children}
-                  {/* {arrow && (
-                  <div
-                    className={styles.arrow}
-                    style={arrow}
-                    data-position={position}
-                  ></div>
-                )} */}
-                </div>
-              </div>
-            );
-          }}
-        />
+        <div
+          ref={setPopperRef}
+          className={styles.container}
+          data-placement={position}
+          style={popper}
+        >
+          <div className={styles.menu}>{children}</div>
+        </div>
       </CSSTransition>
     </Portal>
   );
@@ -100,4 +89,5 @@ Popover.defaultProps = {
   arrow: true,
   offset: 15,
   className: null,
+  selector: "",
 };

@@ -28,7 +28,7 @@ const PopoverPage = () => {
               <button id={`popover-${index}`} className="btn btn-secondary">
                 {label}
               </button>
-              <Popover position={position} selector={`#popover-${index}`}>
+              <Popover placement={position} selector={`#popover-${index}`}>
                 <span>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's

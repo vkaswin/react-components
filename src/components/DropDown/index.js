@@ -6,10 +6,11 @@ import React, {
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import { Popper, Portal } from "components";
+import { Portal } from "components";
 import { clickOutside } from "utils";
 import { PopperPlacements } from "utils/constants";
 import { CSSTransition } from "react-transition-group";
+import { usePopper } from "hooks";
 
 import styles from "./DropDown.module.scss";
 
@@ -18,12 +19,18 @@ const DropDownContext = createContext();
 export const DropDown = ({
   children,
   selector,
-  position,
-  offset,
+  placement,
   trigger,
   className,
 }) => {
-  const targetRef = useRef();
+  const referenceRef = useRef();
+  const [popperRef, setPopperRef] = useState();
+
+  const { popper, placement: position } = usePopper({
+    popper: popperRef,
+    reference: referenceRef.current,
+    placement,
+  });
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,7 +49,7 @@ export const DropDown = ({
 
     if (!element) return;
 
-    targetRef.current = element;
+    referenceRef.current = element;
 
     if (trigger === "hover") {
       element.onmouseenter = show;
@@ -57,7 +64,7 @@ export const DropDown = ({
       ref: ele,
       onClose: hide,
       doNotClose: (event) => {
-        return targetRef.current.contains(event);
+        return referenceRef.current.contains(event);
       },
     });
   };
@@ -69,30 +76,21 @@ export const DropDown = ({
         timeout={200}
         unmountOnExit
         classNames={{
-          enterActive: styles.dropdown_enter,
-          exitActive: styles.dropdown_exit,
+          enterActive: styles.enter,
+          exitActive: styles.exit,
         }}
         onEntered={onEntered}
       >
-        <Popper
-          referenceElement={targetRef}
-          position={position}
-          offset={offset}
-          render={({ popper, arrow, position, ref }) => {
-            return (
-              <DropDownContext.Provider value={{ hide }}>
-                <div
-                  ref={ref}
-                  className={styles.dropdown}
-                  style={popper}
-                  data-position={position}
-                >
-                  <div className={styles.menu}>{children}</div>
-                </div>
-              </DropDownContext.Provider>
-            );
-          }}
-        />
+        <DropDownContext.Provider value={{ hide }}>
+          <div
+            ref={setPopperRef}
+            className={styles.container}
+            style={popper}
+            data-placement={position}
+          >
+            <div className={styles.menu}>{children}</div>
+          </div>
+        </DropDownContext.Provider>
       </CSSTransition>
     </Portal>
   );
@@ -112,6 +110,7 @@ DropDown.defaultProps = {
   offset: 10,
   trigger: "click",
   className: null,
+  selector: "",
 };
 
 const Item = ({ children, onClick }) => {
@@ -123,7 +122,7 @@ const Item = ({ children, onClick }) => {
   };
 
   return (
-    <button className={styles.dropdown_item} onClick={handleClick}>
+    <button className={styles.item} onClick={handleClick}>
       {children}
     </button>
   );

@@ -34,7 +34,6 @@ export const Swiper = ({ children }) => {
     const { clientX } = e;
     const { scrollWidth, clientWidth } = swiperRef.current;
     const left = swiperRef.current.left - clientX;
-    console.log(left);
     setLeft(Math.max(0, Math.min(scrollWidth - clientWidth, left)));
   };
 
@@ -79,7 +78,9 @@ export const Swiper = ({ children }) => {
 };
 
 const Slide = ({ children, className }) => {
-  return <div className={classNames(className)}>{children}</div>;
+  return (
+    <div className={classNames("rc-swiper-slide", className)}>{children}</div>
+  );
 };
 
 Slide.propTypes = {

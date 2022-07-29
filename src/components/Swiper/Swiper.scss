@@ -9,6 +9,9 @@
     width: 100%;
     max-width: 100%;
     user-select: none;
+    .rc-swiper-slide {
+      scroll-snap-align: center;
+    }
   }
   .rc-swiper-bullets {
     display: flex;

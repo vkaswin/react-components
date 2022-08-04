@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkreact_components=self.webpackChunkreact_components||[]).push([[5965],{65989:function(e,c,n){n.r(c),c.default={}}}]);
-//# sourceMappingURL=assets-scss-_animation-scss.9d9852fe.chunk.js.map

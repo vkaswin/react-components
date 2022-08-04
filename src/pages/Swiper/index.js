@@ -1,71 +1,69 @@
 import React from "react";
 import { Swiper } from "components";
 
-import image1 from "assets/images/swiper/img1.jpg";
-import image2 from "assets/images/swiper/img2.jpg";
-import image3 from "assets/images/swiper/img3.jpg";
+import image from "assets/images/swiper/img.webp";
 
 import "./Swiper.scss";
 
 const swiper = [
   {
-    img: image1,
+    img: image,
     name: "John Doe",
     designation: "Web Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
   {
-    img: image2,
+    img: image,
     name: "John Doe",
     designation: "Backend Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    img: image3,
+    img: image,
     name: "John Doe",
     designation: "Phython Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
   {
-    img: image1,
+    img: image,
     name: "John Doe",
     designation: "Web Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
   {
-    img: image2,
+    img: image,
     name: "John Doe",
     designation: "Backend Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    img: image3,
+    img: image,
     name: "John Doe",
     designation: "Phython Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
   {
-    img: image1,
+    img: image,
     name: "John Doe",
     designation: "Web Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
   {
-    img: image2,
+    img: image,
     name: "John Doe",
     designation: "Backend Developer",
     about:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    img: image3,
+    img: image,
     name: "John Doe",
     designation: "Phython Developer",
     about:

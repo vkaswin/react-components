@@ -150,4 +150,8 @@ export const routes = [
       },
     ],
   },
+  {
+    path: "scroll-animation",
+    componentPath: "pages/ScrollAnimation",
+  },
 ];

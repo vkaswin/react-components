@@ -22,6 +22,40 @@ export const debounce = (fn, delay) => {
   };
 };
 
+export const throttle = (fn, delay) => {
+  let inThrottle;
+  return (...args) => {
+    if (!inThrottle) {
+      fn(...args);
+      inThrottle = true;
+      setTimeout(() => {
+        inThrottle = false;
+      }, delay);
+    }
+  };
+};
+
+// const throttle = (func, limit) => {
+//     let lastFunc;
+//     let lastRan;
+//     return function() {
+//       const context = this;
+//       const args = arguments;
+//       if (!lastRan) {
+//         func.apply(context, args)
+//         lastRan = Date.now();
+//       } else {
+//         clearTimeout(lastFunc);
+//         lastFunc = setTimeout(function() {
+//             if ((Date.now() - lastRan) >= limit) {
+//               func.apply(context, args);
+//               lastRan = Date.now();
+//             }
+//          }, limit - (Date.now() - lastRan));
+//       }
+//     }
+//   }
+
 //? Cookies
 export const setCookie = ({ name, value, days }) => {
   let expireDate = new Date();
@@ -121,42 +155,50 @@ export const isLeapYear = (year) => {
 };
 
 //? Select a random element in an array
-// const getRandomElement = (array) => {
-//   if (!Array.isArray(array)) return;
+const getRandomElement = (array) => {
+  if (!Array.isArray(array)) return;
 
-//   return Math.floor(Math.random() * array.length);
-// };
+  return Math.floor(Math.random() * array.length);
+};
 
 //? Sort by name
-// const sortData = dataSet.sort((curr, prev) => {
-//   return curr.label.localeCompare(prev.label);
-// });
+const sortData = dataSet.sort((curr, prev) => {
+  return curr.label.localeCompare(prev.label);
+});
 
 //? Infinite scroll using onScroll event
-//* Note: window.addEventListener("scroll") if height is not defined or use onScroll event
-//   const handleScroll = ({
-//     target: {
-//       scrollingElement: { clientHeight, scrollTop, scrollHeight },
-//     },
-//   }) => {
-//     if (scrollHeight - scrollTop === clientHeight) {
-//       console.log("reached end");
-//     }
-//   };
+//? Note: window.addEventListener("scroll") if height is not defined or use onScroll event
+const handleScroll = ({
+  target: {
+    scrollingElement: { clientHeight, scrollTop, scrollHeight },
+  },
+}) => {
+  if (scrollHeight - scrollTop === clientHeight) {
+    console.log("reached end");
+  }
+};
 
 //? Generate unique id
-// const uuidv4 = () => {
-//   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-//     (
-//       c ^
-//       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-//     ).toString(16)
-//   );
-// };
+const uuidv4 = () => {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
+  );
+};
 
 //? Get day by date
-// const getDayByDate = ({ year, month, day }) => {
-//   return new Date(year, month, day).toLocaleDateString("en-us", {
-//     weekday: "long",
-//   });
-// };
+const getDayByDate = ({ year, month, day }) => {
+  return new Date(year, month, day).toLocaleDateString("en-us", {
+    weekday: "long",
+  });
+};
+
+//? Trigger events manually
+const triggerOnChange = (node, value = "") => {
+  const setValue = Object.getOwnPropertyDescriptor(node.__proto__, "value").set;
+  const event = new Event("input", { bubbles: true });
+  setValue.call(node, value);
+  node.dispatchEvent(event);
+};
